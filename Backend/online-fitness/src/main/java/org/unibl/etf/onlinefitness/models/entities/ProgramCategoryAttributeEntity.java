@@ -9,12 +9,12 @@ import lombok.*;
 public class ProgramCategoryAttributeEntity {
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProgramID", referencedColumnName = "ID", nullable = false)
     private ProgramEntity program;
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CategoryAttributeID", referencedColumnName = "ID", nullable = false)
     private CategoryAttributeEntity attribute;
 

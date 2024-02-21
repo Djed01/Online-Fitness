@@ -1,5 +1,6 @@
 package org.unibl.etf.onlinefitness.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -52,10 +53,11 @@ public class ProgramEntity {
     private String link;
     @OneToMany(mappedBy = "program")
     private List<ImageEntity> images;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CategoryID", referencedColumnName = "ID", nullable = false)
     private CategoryEntity category;
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", referencedColumnName = "ID", nullable = false)
     private UserEntity user;
     @OneToMany(mappedBy = "program")

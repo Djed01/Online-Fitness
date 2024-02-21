@@ -8,7 +8,7 @@ import java.sql.Date;
 @Data
 @Entity
 @Table(name = "bodyweight", schema = "fitness", catalog = "")
-public class BodyweightEntity {
+public class BodyWeightEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")

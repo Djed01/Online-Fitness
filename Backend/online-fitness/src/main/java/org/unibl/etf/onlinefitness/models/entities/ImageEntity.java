@@ -14,7 +14,7 @@ public class ImageEntity {
     @Basic
     @Column(name = "URL")
     private String url;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProgramID")
     private ProgramEntity program;
 
