@@ -19,10 +19,10 @@ public class CommentEntity {
     @Basic
     @Column(name = "Date")
     private Date date;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", referencedColumnName = "ID", nullable = false)
     private UserEntity user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProgramID", referencedColumnName = "ID", nullable = false)
     private ProgramEntity program;
 

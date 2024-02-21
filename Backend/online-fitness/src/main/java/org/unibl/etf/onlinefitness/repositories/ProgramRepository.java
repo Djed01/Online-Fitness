@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ProgramRepository extends JpaRepository<ProgramEntity,Integer> {
     List<ProgramEntity> findAllByStatus(Boolean status);
+    List<ProgramEntity> findAllByUserId(Integer id);
 }
