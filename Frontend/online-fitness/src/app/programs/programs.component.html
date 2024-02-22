@@ -1,13 +1,54 @@
+<div class="search-and-buttons-container">
+<input type="text" [(ngModel)]="searchTerm" placeholder="Search by title" (input)="onSearchChange()" class="search-input">
+
+<div class="buttons-container">
+<button mat-flat-button (click)="sortByPrice('desc')">
+  <i class="fas fa-sort-amount-down"></i> <span class="price-text"> Price Descending</span>
+</button>
+
+<button mat-flat-button (click)="sortByPrice('asc')">
+  <i class="fas fa-sort-amount-up"></i> <span class="price-text"> Price Ascending</span>
+</button>
+
+<button mat-flat-button (click)="sortByDuration('asc')">
+  <i class="fas fa-sort-amount-up"></i> <span class="duration-text">Duration Ascending</span>
+</button>
+
+<button mat-flat-button (click)="sortByDuration('desc')">
+  <i class="fas fa-sort-amount-down"></i> <span class="duration-text">Duration Descending</span>
+</button>
+
+<button mat-flat-button (click)="sortByDifficulty('asc')">
+  <i class="fas fa-sort-amount-up"></i> <span>Difficulty Ascending</span>
+</button>
+
+<button mat-flat-button (click)="sortByDifficulty('desc')">
+  <i class="fas fa-sort-amount-down"></i> <span>Difficulty Descending</span>
+</button>
+</div>
+</div>
+
 <div class="card-container">
-  <mat-card *ngFor="let program of programs" class="program-card">
+  <mat-card *ngFor="let program of filteredPrograms" class="program-card">
     <mat-card-header>
       <mat-card-title>{{ program.title }}</mat-card-title>
     </mat-card-header>
     <img mat-card-image [src]="photo" alt="Photo of {{program.title}}">
     <mat-card-content>
       <p>
-        {{ program.price }} $
+        <span class="price-text">Price: {{ program.price }} $</span>
+        <span class="difficulty-text">{{ program.difficulty }}</span>
       </p>
     </mat-card-content>
   </mat-card>
+</div>
+
+<div class="pagination-container">
+  <button mat-icon-button [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  <div class="page-number">Page {{ currentPage }}</div>
+  <button mat-icon-button [disabled]="currentPage * programsPerPage >= totalPrograms" (click)="onPageChange(currentPage + 1)">
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
 </div>

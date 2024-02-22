@@ -3,4 +3,6 @@ export interface Program{
     title: string;
     price : number;
     imageURL : string;
+    duration : number;
+    difficulty: string;
 }
