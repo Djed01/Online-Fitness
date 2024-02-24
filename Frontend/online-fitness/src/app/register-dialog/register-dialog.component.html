@@ -1,0 +1,36 @@
+<div class="wrapper">
+  <h2 mat-dialog-title>Register</h2>
+  <div mat-dialog-content class="form-container">
+    <form #registerForm="ngForm" (ngSubmit)="submitRegisterForm(registerForm)" class="form-container">
+      <mat-form-field>
+        <input matInput placeholder="Name" name="name" [(ngModel)]="registerFormValues.name" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Surname" name="surname" [(ngModel)]="registerFormValues.surname" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="City" name="city" [(ngModel)]="registerFormValues.city" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Username" name="username" [(ngModel)]="registerFormValues.username" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="registerFormValues.password" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email" name="email" [(ngModel)]="registerFormValues.email" required email>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Avatar URL (Optional)" name="avatar" [(ngModel)]="registerFormValues.avatar">
+      </mat-form-field>
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="closeDialog()" class="close-button">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

@@ -6,4 +6,5 @@ import lombok.Data;
 public class ProgramCategoryAttributeDTO {
     private Integer programId;
     private Integer attributeId;
+    private String attributeName;
 }

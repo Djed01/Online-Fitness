@@ -29,7 +29,7 @@
 </div>
 
 <div class="card-container">
-  <mat-card *ngFor="let program of filteredPrograms" class="program-card">
+  <mat-card *ngFor="let program of filteredPrograms" class="program-card" (click)="onProgramSelect(program)">
     <mat-card-header>
       <mat-card-title>{{ program.title }}</mat-card-title>
     </mat-card-header>
@@ -52,3 +52,25 @@
     <mat-icon>keyboard_arrow_right</mat-icon>
   </button>
 </div>
+
+<div class="scroll-down-container">
+  <i class="material-icons">keyboard_arrow_down</i>
+  <span>Scroll to see news</span>
+  <i class="material-icons">keyboard_arrow_down</i>
+</div>
+
+<div class="news-container">
+  <div class="news-card" *ngFor="let newsItem of newsItems">
+    <div class="news-header">
+      <h3>{{ newsItem.title }}</h3>
+    </div>
+    <div class="news-content">
+      <p>{{ newsItem.description }}</p>
+    </div>
+    <div class="news-footer">
+      <a mat-button color="primary" href="{{ newsItem.link }}" target="_blank">Read More</a>
+    </div>
+  </div>
+</div>
+
+

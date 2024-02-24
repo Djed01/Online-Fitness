@@ -1,5 +1,12 @@
 <mat-toolbar color="primary">
-    <label>Online Fitness</label>
-</mat-toolbar>
+    <div class="title-container">
+      <label [routerLink]="getLink()">Online Fitness</label>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button color="basic" (click)="openLoginDialog()">Login</button>
+    </div>
+  </mat-toolbar>
+  
+  <router-outlet></router-outlet>
 
-<router-outlet></router-outlet>
+  

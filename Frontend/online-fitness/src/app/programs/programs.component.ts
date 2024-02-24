@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Program } from '../models/program.model';
 import { ProgramService } from '../services/program.service';
 import { Router } from '@angular/router';
+import { NewsItem } from '../models/newsItem.model';
+import { HttpClient } from '@angular/common/http';
+import { NewsService } from '../services/news.service';
 
 @Component({
   selector: 'app-programs',
@@ -11,16 +14,23 @@ import { Router } from '@angular/router';
 export class ProgramsComponent implements OnInit {
   programs: Program[] = [];
   filteredPrograms: Program[] = [];
+  newsItems: NewsItem[] = [];
   photo: string = 'assets/images/gym.jpg';
   currentPage: number = 1;
   programsPerPage: number = 10;
   totalPrograms: number = 0;
   searchTerm: string = '';
+  showScroll: boolean = true;
 
-  constructor(private programService: ProgramService, private router: Router) {}
+  constructor(
+     private programService: ProgramService,
+     private router: Router,
+     private http: HttpClient,
+     private newsService: NewsService) {}
 
   ngOnInit() {
     this.loadPrograms();
+    this.fetchNews();
   }
 
   loadPrograms() {
@@ -93,5 +103,16 @@ export class ProgramsComponent implements OnInit {
     });
   }
   
-  
+
+  onProgramSelect(program: Program) {
+    console.log(program);
+    this.router.navigate(['/program', program.id]);
+  }
+
+  fetchNews() {
+    this.newsService.getAllNews().subscribe((data: NewsItem[]) => {
+      this.newsItems = data;
+    });
+  }
+
 }

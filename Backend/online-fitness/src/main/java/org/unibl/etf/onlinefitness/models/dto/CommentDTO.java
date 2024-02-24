@@ -9,6 +9,7 @@ public class CommentDTO {
     private Integer id;
     private String content;
     private Date date;
-    private String userUsername;
-    private String programId;
+    private String username;
+    private Integer userId;
+    private Integer programId;
 }

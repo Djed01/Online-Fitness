@@ -24,6 +24,12 @@ public class ProgramController {
         return this.programService.findAll();
     }
 
+    @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ProgramDTO findProgramByProgramId(@PathVariable Integer id){
+        return this.programService.findProgramByProgramId(id);
+    }
+
     @GetMapping("/user/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
     public List<ProgramDTO> findAllByUserId(@PathVariable Integer id){

@@ -14,11 +14,24 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { ConcreteProgramComponent } from './concrete-program/concrete-program.component';
+import { ImageCarouselComponent } from './image-carousel/image-carousel.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProgramsComponent
+    ProgramsComponent,
+    ConcreteProgramComponent,
+    ImageCarouselComponent,
+    PaymentDialogComponent,
+    LoginDialogComponent,
+    RegisterDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +44,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     FontAwesomeModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatRadioModule,
   ],
   providers: [
     provideAnimationsAsync()

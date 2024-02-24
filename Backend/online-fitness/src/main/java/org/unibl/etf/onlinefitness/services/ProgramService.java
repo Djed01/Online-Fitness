@@ -30,6 +30,12 @@ public class ProgramService {
                 .collect(Collectors.toList());
     }
 
+    public ProgramDTO findProgramByProgramId(Integer id){
+        ProgramEntity entity = programRepository.findAllById(id);
+        return modelMapper.map(entity, ProgramDTO.class);
+    }
+
+
     public List<ProgramDTO> findAllByUserId(Integer id){
         List<ProgramEntity> entities = programRepository.findAllByUserId(id);
         return entities.stream()

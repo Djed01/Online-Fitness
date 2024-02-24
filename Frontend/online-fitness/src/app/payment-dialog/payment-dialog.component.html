@@ -1,0 +1,63 @@
+<div class="wrapper">
+  <h2 mat-dialog-title>Choose Payment Method</h2>
+  <div mat-dialog-content>
+    <mat-radio-group [(ngModel)]="selectedPaymentMethod">
+      <mat-radio-button value="credit_card">
+        <i class="fa-regular fa-credit-card fa-xl"></i> Credit Card
+      </mat-radio-button>
+      <mat-radio-button value="paypal">
+        <i class="fa-brands fa-paypal fa-xl"></i> PayPal
+      </mat-radio-button>
+      <mat-radio-button value="in_person">
+        <i class="fa-solid fa-location-dot fa-xl"></i> In Person
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <!-- Credit Card Payment Form -->
+    <div *ngIf="selectedPaymentMethod === 'credit_card'">
+      <form #creditCardForm="ngForm" (ngSubmit)="submitCreditCardForm(creditCardForm)">
+        <mat-form-field>
+          <input matInput placeholder="Card Number" name="cardNumber" [(ngModel)]="creditCardFormValues.cardNumber" required pattern="[0-9]{16}">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Expiration Date" name="expirationDate" [(ngModel)]="creditCardFormValues.expirationDate" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="CVV" name="cvv" [(ngModel)]="creditCardFormValues.cvv" required pattern="[0-9]{3}">
+        </mat-form-field>
+        <br>
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="creditCardForm.invalid">Confirm</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- PayPal Payment Form -->
+    <div *ngIf="selectedPaymentMethod === 'paypal'">
+      <form #paypalForm="ngForm" (ngSubmit)="submitPayPalForm(paypalForm)">
+        <mat-form-field>
+          <input matInput placeholder="PayPal Email" name="paypalEmail" [(ngModel)]="paypalFormValues.paypalEmail" required email>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="paypalFormValues.password" required>
+        </mat-form-field>
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="paypalForm.invalid">Confirm</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- In Person Payment Form -->
+    <div *ngIf="selectedPaymentMethod === 'in_person'">
+      <p>Please confirm that you will pay in person.</p>
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="closeDialog()" [disabled]="false">Confirm</button>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="closeDialog()" class="cancel-button">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

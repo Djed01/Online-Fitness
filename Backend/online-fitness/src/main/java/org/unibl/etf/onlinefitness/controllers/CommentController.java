@@ -8,6 +8,7 @@ import org.unibl.etf.onlinefitness.services.CommentService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("api/comment")
 public class CommentController {
 
@@ -22,7 +23,7 @@ public class CommentController {
         return commentService.findAllComments();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/program/{id}")
     public List<CommentDTO> findAllCommentsByProgramId(@PathVariable Integer id) {
         return commentService.findAllByProgramId(id);
     }

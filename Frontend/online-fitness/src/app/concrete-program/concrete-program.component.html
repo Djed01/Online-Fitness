@@ -1,0 +1,85 @@
+<div class="wrapper">
+  <div *ngIf="program" class="program-details">
+    <div class="program-info">
+      <mat-card class="program-card">
+        <mat-card-header style="width: 100%;">
+          <div mat-card-avatar class="program-image"></div>
+          <mat-card-title style="font-size: 36px">{{
+            program.title
+          }}</mat-card-title>
+          <mat-card-subtitle style="font-size: 24px">{{
+            program.categoryName
+          }}</mat-card-subtitle>
+          <button mat-raised-button 
+          color="primary" 
+          (click)="openPaymentDialog()"
+          style="margin-top: 5px; font-size: 16px; margin-left: auto; margin-right: 40px;">Participate</button>
+        </mat-card-header>
+        <mat-card-content style="font-size: 20px">
+          <app-image-carousel [images]="program.images"></app-image-carousel>
+
+          <div style="margin-left: 10px;">
+          <p>Description: {{ program.description }}</p>
+          <p>Price: {{ program.price }}</p>
+          <p>Duration: {{ program.duration }} days</p>
+          <p>Difficulty: {{ program.difficulty }}</p>
+          <p>Location: {{ program.location }}</p>
+          <p>
+            Instructor: {{ program.instructorName }}
+            {{ program.instructorSurname }}
+          </p>
+          <p>Contact: {{ program.instructorContact }}</p>
+          <p>Creation Date: {{ program.creationDate | date }}</p>
+          <p>Attributes:</p>
+          <ul>
+            <li *ngFor="let attribute of program.attributes">
+               {{ attribute.attributeName }}
+            </li>
+          </ul>
+        </div>
+
+          <div class="comments-section">
+            <h3 style="margin-left: 10px;">Comments:</h3>
+            <mat-card class="comment-card" *ngFor="let comment of comments">
+              <mat-card-header>
+                <div mat-card-avatar>
+                  <img
+                    style="width: 50px; height: 50px"
+                    [src]="image"
+                    alt="User Image"
+                  />
+                </div>
+                <mat-card-title>{{ comment.username }}</mat-card-title>
+                <mat-card-subtitle>{{ comment.date | date }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p>{{ comment.content }}</p>
+              </mat-card-content>
+            </mat-card>
+
+            <!-- Form to add a new comment -->
+            <mat-card class="new-comment-card">
+              <mat-card-content>
+                <mat-form-field appearance="fill" style="width: 100%;">
+                  <textarea
+                    matInput
+                    [(ngModel)]="newComment.content"
+                    placeholder="Write a comment..."
+                  ></textarea>
+                </mat-form-field>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="addComment()"
+                  style="margin-left: 10px; float: right;"
+                >
+                  Post
+                </button>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
