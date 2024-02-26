@@ -1,0 +1,66 @@
+.user-profile {
+  display: flex;
+  align-items: center;
+  max-width: 600px; /* Adjust max-width as per your layout */
+  margin: 0 auto; /* Center align the profile */
+}
+
+.avatar-container {
+  margin-right: 20px;
+}
+
+.avatar {
+  width: 300px; /* Increase avatar size */
+  height: 300px;
+  border-radius: 50%;
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-profile{
+  margin-top: 100px;
+}
+
+.detail-item {
+  margin-bottom: 20px; /* Increase spacing between details */
+  font-size: 24px;
+}
+
+.avatar-container {
+  position: relative;
+}
+
+.edit-avatar-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+
+@media (max-width: 768px) {
+  .user-profile {
+      flex-direction: column; 
+      text-align: center; 
+  }
+
+  .avatar-container {
+      margin-right: 0; 
+      margin-bottom: 15px;
+  }
+
+  .avatar {
+      width: 200px;
+      height: 200px;
+  }
+
+  .details-container {
+    margin-top: 0px;
+  }
+
+  .user-profile{
+    margin-top: 50px;
+  }
+}

@@ -1,0 +1,16 @@
+<h1 style="text-align: center;">Daily exercise suggestions</h1>
+<div class="exercise-container">
+  <div class="exercise-card" *ngFor="let exercise of exercises">
+    <div class="exercise-header">
+      <h3>{{ exercise.name }}</h3>
+    </div>
+    <div class="exercise-content">
+      <p>Type: {{ exercise.type }}</p>
+      <p>Muscle: {{ exercise.muscle }}</p>
+      <p>Equipment: {{ exercise.equipment }}</p>
+      <p>Difficulty: {{ exercise.difficulty }}</p>
+      <p><strong>Instructions:</strong></p>
+      <p>{{ exercise.instructions }}</p>
+    </div>
+  </div>
+</div>

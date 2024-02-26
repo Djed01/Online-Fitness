@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterDialogComponent } from '../register-dialog/register-dialog.component';
+import { ActivationDialogComponent } from '../activation-dialog/activation-dialog.component';
 
 @Component({
   selector: 'app-login-dialog',
@@ -23,6 +24,8 @@ export class LoginDialogComponent {
       // Here you can add your login logic
       console.log('Logged in successfully.');
       this.closeDialog();
+      const dialogRef = this.dialog.open(ActivationDialogComponent, {
+      });
     } else {
       console.log('Invalid login form.');
     }

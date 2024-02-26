@@ -1,0 +1,27 @@
+<div class="user-profile">
+  <div class="avatar-container">
+    <img [src]="user.avatar" alt="Avatar" class="avatar">
+    <button mat-fab class="edit-avatar-button" color="secondary" aria-label="Edit avatar">
+        <mat-icon>edit</mat-icon>
+    </button>
+</div>
+  <div class="details-container">
+      <div class="detail-item">
+          <strong>Name:</strong> {{ user.name }}
+      </div>
+      <div class="detail-item">
+          <strong>Surname:</strong> {{ user.surname }}
+      </div>
+      <div class="detail-item">
+          <strong>City:</strong> {{ user.city }}
+      </div>
+      <div class="detail-item">
+          <strong>Username:</strong> {{ user.username }}
+      </div>
+      <div class="detail-item">
+          <strong>Email:</strong> {{ user.email }}
+      </div>
+      <button mat-raised-button color="primary" (click)="openEditProfileDialog()">Edit personal info</button><br/>
+      <button mat-raised-button color="primary" (click)="openChangePasswordDialog()">Change password</button>
+  </div>
+</div>

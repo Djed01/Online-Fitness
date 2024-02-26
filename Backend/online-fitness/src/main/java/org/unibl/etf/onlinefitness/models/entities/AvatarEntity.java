@@ -7,13 +7,12 @@ import lombok.*;
 @Entity
 @Table(name = "avatar", schema = "fitness", catalog = "")
 public class AvatarEntity {
-    @Basic
-    @Column(name = "URL")
-    private String url;
-
     @Id
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", referencedColumnName = "ID", nullable = false)
     private UserEntity user;
 
+    @Basic
+    @Column(name = "URL")
+    private String url;
 }

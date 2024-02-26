@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +21,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { RegisterDialogComponent } from './register-dialog/register-dialog.component';
-
+import { ActivationDialogComponent } from './activation-dialog/activation-dialog.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EditProfileDialogComponent } from './edit-profile-dialog/edit-profile-dialog.component';
+import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
+import { ExerciseListComponent } from './exercise-list/exercise-list.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -32,6 +37,11 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
     PaymentDialogComponent,
     LoginDialogComponent,
     RegisterDialogComponent,
+    ActivationDialogComponent,
+    UserProfileComponent,
+    EditProfileDialogComponent,
+    ChangePasswordDialogComponent,
+    ExerciseListComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +57,8 @@ import { RegisterDialogComponent } from './register-dialog/register-dialog.compo
     BrowserAnimationsModule,
     MatInputModule,
     MatRadioModule,
+    ReactiveFormsModule,
+    MatListModule
   ],
   providers: [
     provideAnimationsAsync()

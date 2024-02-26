@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <button mat-button (click)="closeDialog()" class="close-button">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2 mat-dialog-title>Regenerate activation link</h2>
+    <div mat-dialog-content>
+      <form #activationForm="ngForm" (ngSubmit)="submitActivationForm(activationForm)" class="form-container">
+        <mat-form-field>
+          <input matInput placeholder="Username" name="username" [(ngModel)]="activationFormValues.username" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="activationFormValues.password" required>
+        </mat-form-field>
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="activationForm.invalid">Send activation link</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

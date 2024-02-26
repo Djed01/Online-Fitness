@@ -1,0 +1,28 @@
+<div class="wrapper">
+    <h2 mat-dialog-title>Edit profile</h2>
+    <div mat-dialog-content class="form-container">
+      <form #editProfileForm="ngForm" (ngSubmit)="submitEditProfileForm(editProfileForm)" class="form-container">
+        <mat-form-field>
+          <input matInput placeholder="Name" name="name" [(ngModel)]="editProfileFormValues.name" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Surname" name="surname" [(ngModel)]="editProfileFormValues.surname" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="City" name="city" [(ngModel)]="editProfileFormValues.city" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" name="email" [(ngModel)]="editProfileFormValues.email" required email>
+        </mat-form-field>
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="editProfileForm.invalid">Save</button>
+        </div>
+      </form>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="closeDialog()" class="close-button">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  
