@@ -1,0 +1,34 @@
+<!-- user-programs.component.html -->
+
+<h1 style="text-align: center;">Participations</h1>
+
+<div class="radio-inputs">
+  <label class="radio">
+    <input type="radio" name="radio" (click)="filterPrograms(true)" [checked]="status === true">
+    <span class="name">Active</span>
+  </label>
+  <label class="radio">
+    <input type="radio" name="radio" (click)="filterPrograms(false)" [checked]="status === false">
+    <span class="name">Finished</span>
+  </label>
+</div>
+
+<div class="container">
+  <mat-card *ngFor="let program of filteredPrograms" class="program-card">
+    <mat-card-header>
+      <mat-card-title>{{ program.title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="content-left">
+        <p>Description: {{ program.description }}</p>
+        <p>Date: {{ program.creationDate }}</p>
+        <p>Duration: {{ program.duration }}</p>
+        <p>Difficulty: {{ program.difficulty }}</p>
+        <p>Status: {{ program.status }} </p>
+      </div>
+      <div class="content-right">
+        <button mat-raised-button color="warn">Delete</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

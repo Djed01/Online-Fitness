@@ -3,7 +3,7 @@
       <label [routerLink]="getLink()">Online Fitness</label>
     </div>
     <div class="button-container">
-      <button mat-raised-button color="basic" onclick="openLoginDialog()">Login</button>
+      <button mat-raised-button color="basic" (click)="openLoginDialog()">Login</button>
     </div>
   </mat-toolbar>
   

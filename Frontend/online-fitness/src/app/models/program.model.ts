@@ -17,4 +17,5 @@ export interface Program{
     categoryName: string;
     userId: number;
     attributes: ProgramAttribute[];
+    status:boolean;
 }

@@ -1,0 +1,54 @@
+<h1 style="text-align: center; margin-bottom: 50px;">Create a new program</h1>
+<div class="form-container">
+  <form [formGroup]="programForm" (ngSubmit)="onSubmit()" class="program-form">
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Title" formControlName="title">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <textarea matInput placeholder="Description" formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field class="half-width" style="margin-right: 4%;">
+      <input matInput type="number" placeholder="Price" formControlName="price">
+    </mat-form-field>
+    <!-- Add image upload functionality here -->
+    <mat-form-field class="half-width">
+      <input matInput type="number" placeholder="Duration" formControlName="duration">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Difficulty" formControlName="difficulty">
+        <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty">{{ difficulty }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Location" formControlName="location">
+    </mat-form-field>
+    <div class="half-width" style="margin-right: 4%;">
+      <mat-form-field style="width: 100%;">
+        <input matInput placeholder="Instructor Name" formControlName="instructorName">
+      </mat-form-field>
+    </div>
+    <div class="half-width">
+      <mat-form-field style="width: 100%;">
+        <input matInput placeholder="Instructor Surname" formControlName="instructorSurname">
+      </mat-form-field>
+    </div>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Instructor Contact" formControlName="instructorContact">
+    </mat-form-field>
+    <!-- Creation date is automatically set -->
+    <mat-form-field class="full-width">
+      <mat-select placeholder="Category" formControlName="categoryName">
+        <mat-option *ngFor="let category of categories">{{ category }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="attribute-checkbox-container">
+      <div *ngFor="let attribute of attributes" class="attribute-checkbox">
+        <mat-checkbox>{{ attribute.attributeName }}</mat-checkbox>
+      </div>
+    </div>
+    <!-- User ID is usually handled on the backend -->
+    <div class="submit-button-container">
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </div>
+  </form>
+</div>

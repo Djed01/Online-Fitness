@@ -1,0 +1,35 @@
+/* participations.component.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .program-card {
+    width: 80%; /* Adjust this as per your preference */
+    margin-bottom: 20px;
+  }
+  
+  .content-left {
+    float: left;
+    width: 70%; /* Adjust this value as per your preference */
+  }
+  
+  .content-right {
+    float: right;
+    width: 30%; /* Adjust this value as per your preference */
+  }
+  
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  .content-right p {
+    padding: 5px;
+    background-color: #fff; 
+    border: 1px solid #ccc;
+  }
+  

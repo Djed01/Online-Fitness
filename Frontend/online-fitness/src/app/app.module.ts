@@ -27,6 +27,11 @@ import { EditProfileDialogComponent } from './edit-profile-dialog/edit-profile-d
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
 import { ExerciseListComponent } from './exercise-list/exercise-list.component';
 import { MatListModule } from '@angular/material/list';
+import { ParticipationsComponent } from './participations/participations.component';
+import { CreateProgramComponent } from './create-program/create-program.component';
+import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { UserProgramsComponent } from './user-programs/user-programs.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +47,9 @@ import { MatListModule } from '@angular/material/list';
     EditProfileDialogComponent,
     ChangePasswordDialogComponent,
     ExerciseListComponent,
+    ParticipationsComponent,
+    CreateProgramComponent,
+    UserProgramsComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +66,9 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatRadioModule,
     ReactiveFormsModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule,
+    MatCheckboxModule
   ],
   providers: [
     provideAnimationsAsync()

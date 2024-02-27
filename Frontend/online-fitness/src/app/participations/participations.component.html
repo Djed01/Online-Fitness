@@ -1,0 +1,19 @@
+<h1 style="text-align: center;">Participations</h1>
+<div class="container">
+    <mat-card *ngFor="let program of programs" class="program-card">
+      <mat-card-header>
+        <mat-card-title>{{ program.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="content-left">
+          <p>Description{{ program.description }}</p>
+          <p>Date {{ program.creationDate }}</p>
+        </div>
+        <div class="content-right">
+          <p><strong>Duration:</strong> {{ program.duration }}</p>
+          <p><strong>Difficulty:</strong> {{ program.difficulty }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
