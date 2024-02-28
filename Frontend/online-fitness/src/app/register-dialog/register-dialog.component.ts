@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { AvatarService } from '../services/avatar.service';
 
 @Component({
   selector: 'app-register-dialog',
@@ -12,7 +13,11 @@ export class RegisterDialogComponent {
   registerFormValues: any = {};
   selectedFile: File | null = null;
 
-  constructor(public dialogRef: MatDialogRef<RegisterDialogComponent>, private http: HttpClient) {}
+  constructor(
+    public dialogRef: MatDialogRef<RegisterDialogComponent>,
+    private http: HttpClient,
+    private avatarService:AvatarService,
+    ) {}
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -23,7 +28,7 @@ export class RegisterDialogComponent {
       // Here you can add your registration logic
       console.log('Registered successfully.');
       this.uploadAvatar();
-      this.closeDialog();
+     // this.closeDialog();
     } else {
       console.log('Invalid registration form.');
     }
@@ -35,19 +40,10 @@ export class RegisterDialogComponent {
 
    uploadAvatar(): void {
     if (!this.selectedFile) return;
-
-    const formData = new FormData();
-    formData.append('avatar', this.selectedFile, `${this.registerFormValues.username}.png`);
-
-    // Assuming 'assets/avatars' is within the public directory
-    const url = '/assets/avatars/' + `${this.registerFormValues.username}.png`;
-    this.http.put(url, formData).subscribe(
-      (response) => {
-        console.log('Avatar saved successfully.');
-      },
-      (error) => {
-        console.error('Error saving avatar:', error);
-      }
-    );
+    this.avatarService.uploadAvatar(this.selectedFile).subscribe((data: any) => {
+      console.log(data);
+    });
   }
+
+
 }

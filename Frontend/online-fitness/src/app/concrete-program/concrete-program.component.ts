@@ -8,6 +8,7 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
+import { AvatarService } from '../services/avatar.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class ConcreteProgramComponent implements OnInit {
     private commentService : CommentService,
     private userService : UserService,
     private dialog: MatDialog,
+    private avatarService: AvatarService,
     ){}
 
   ngOnInit() {
@@ -49,15 +51,16 @@ export class ConcreteProgramComponent implements OnInit {
   loadComments() {
     this.commentService.getAllCommentsByProgramId(this.programId).subscribe((data: Comment[]) => {
       this.comments = data;
-
+  
       for (const comment of this.comments) {
         this.userService.getUserById(comment.userId).subscribe((user: User) => {
-            comment.username = user.username;
+          comment.username = user.username;
+          this.avatarService.downloadAvatar(comment.userId).subscribe((url: string) => {
+            comment.avatar = url;
+          });
         });
-    }
-    
+      }
     });
-    
   }
 
   addComment() {
