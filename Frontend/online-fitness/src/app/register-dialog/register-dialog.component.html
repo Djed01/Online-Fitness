@@ -1,39 +1,39 @@
 <div class="wrapper">
   <h2 mat-dialog-title>Register</h2>
   <div mat-dialog-content class="form-container">
-    <form #registerForm="ngForm" (ngSubmit)="submitRegisterForm(registerForm)" class="form-container">
+    <form [formGroup]="profileForm" (ngSubmit)="submitRegisterForm()" class="form-container">
       <mat-form-field>
-        <input matInput placeholder="Name" name="name" [(ngModel)]="registerFormValues.name" required>
+        <input matInput placeholder="Name" formControlName="name">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Surname" name="surname" [(ngModel)]="registerFormValues.surname" required>
+        <input matInput placeholder="Surname" formControlName="surname">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="City" name="city" [(ngModel)]="registerFormValues.city" required>
+        <input matInput placeholder="City" formControlName="city">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Username" name="username" [(ngModel)]="registerFormValues.username" required>
+        <input matInput placeholder="Username" formControlName="username">
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="registerFormValues.password" required>
+        <input matInput type="password" placeholder="Password" formControlName="password">
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Reenter Password" name="reenterPassword" [(ngModel)]="registerFormValues.reenterPassword" required>
+        <input matInput type="password" placeholder="Reenter Password" formControlName="repeatPassword">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Email" name="email" [(ngModel)]="registerFormValues.email" required email>
+        <input matInput placeholder="Email" formControlName="email">
       </mat-form-field>
       <div>
         <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;" #fileInput>
-        <button mat-button background="transparent" (click)="fileInput.click()">
+        <button mat-button background="transparent" type="button" (click)="fileInput.click()">
           <i class="fa-solid fa-image"></i> Upload avatar
         </button>
       </div>
-      <mat-error *ngIf="registerForm.controls['password'].value !== registerForm.controls['reenterPassword'].value && registerForm.controls['reenterPassword'].touched">
+      <mat-error *ngIf="profileForm.get('password')?.value !== profileForm.get('repeatPassword')?.value">
         Passwords do not match
       </mat-error>
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
+        <button mat-raised-button color="primary" type="submit">Register</button>
       </div>
     </form>
   </div>

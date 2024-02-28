@@ -1,23 +1,33 @@
 package org.unibl.etf.onlinefitness.services;
 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
 import org.unibl.etf.onlinefitness.models.dto.UserDTO;
+import org.unibl.etf.onlinefitness.models.entities.ProgramEntity;
 import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.repositories.UserRepository;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    private UserRepository userRepository;
-    private ModelMapper modelMapper;
+    private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
-    public UserService(UserRepository userRepository, ModelMapper modelMapper){
-        this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
-    }
 
     public UserDTO getUserByUserId(Integer id){
         UserEntity entity = userRepository.getUserEntityById(id);
         return modelMapper.map(entity, UserDTO.class);
     }
+
+    public UserDTO addUser(UserDTO userDTO){
+        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
+        userRepository.save(userEntity);
+        return modelMapper.map(userEntity, UserDTO.class);
+    }
+
 }

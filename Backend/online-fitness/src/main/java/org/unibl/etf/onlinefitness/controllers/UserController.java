@@ -21,4 +21,10 @@ public class UserController {
     public UserDTO findProgramByProgramId(@PathVariable Integer id){
         return this.userService.getUserByUserId(id);
     }
+
+    @PostMapping
+    @CrossOrigin(origins = "http://localhost:4200")
+    public UserDTO addProgram(@RequestBody UserDTO userDTO) {
+        return this.userService.addUser(userDTO);
+    }
 }
