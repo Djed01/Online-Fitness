@@ -2,6 +2,7 @@ package org.unibl.etf.onlinefitness.services;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,8 +15,10 @@ import org.unibl.etf.onlinefitness.repositories.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
-    private final UserRepository userRepository;
+public class UserService implements UserDetailsService{
+    @Autowired
+    UserRepository userRepository;
+
     private final ModelMapper modelMapper;
 
 
@@ -28,6 +31,12 @@ public class UserService {
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
         userRepository.save(userEntity);
         return modelMapper.map(userEntity, UserDTO.class);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username)
+    {
+        return modelMapper.map(this.userRepository.findByUsername(username), UserEntity.class);
     }
 
 }
