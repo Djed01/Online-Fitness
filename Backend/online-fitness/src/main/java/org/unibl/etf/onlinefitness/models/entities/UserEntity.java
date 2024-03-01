@@ -10,6 +10,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user", schema = "fitness", catalog = "")
 public class UserEntity implements UserDetails {
@@ -51,6 +54,7 @@ public class UserEntity implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
     }
+
     @Override
     public String getUsername() {
         return username;
@@ -80,6 +84,4 @@ public class UserEntity implements UserDetails {
     public String getPassword() {
         return passwordHash;
     }
-
-
 }

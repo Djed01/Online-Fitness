@@ -1,11 +1,6 @@
 package org.unibl.etf.onlinefitness.config;
+import java.io.IOException;
 
-
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,16 +10,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.unibl.etf.onlinefitness.services.UserDetailsJwtService;
-import org.unibl.etf.onlinefitness.services.UserService;
 
-import java.io.IOException;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.unibl.etf.onlinefitness.services.UserService;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtService jwtService;
-    private final UserDetailsJwtService userDetailsJwtService;
+    private final UserService userService;
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
@@ -40,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         username = jwtService.extractUserName(jwt);
         if (StringUtils.isNotEmpty(username)
                 && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsJwtService.loadUserByUsername(username);
+            UserDetails userDetails = userService.loadUserByUsername(username);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

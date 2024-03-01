@@ -1,6 +1,5 @@
 package org.unibl.etf.onlinefitness.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,10 @@ import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 
 @Service
 public class JwtService {
+
     @Value("${token.signing.key}")
     private String jwtSigningKey;
+
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -31,8 +32,8 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        return extractUserName(token).equals(userDetails.getUsername())
-                && !isTokenExpired(token);
+        final String userName = extractUserName(token);
+        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolvers) {
@@ -43,12 +44,12 @@ public class JwtService {
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         if(userDetails instanceof UserEntity){
             UserEntity user = (UserEntity) userDetails;
-            extraClaims.put("id", user.getId());
+            extraClaims.put("role", user.getRole().toString());
         }
         return Jwts.builder().setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
@@ -60,7 +61,7 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    Claims extractAllClaims(String token) {
+    private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
                 .getBody();
     }
@@ -69,7 +70,4 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
-
-
 }

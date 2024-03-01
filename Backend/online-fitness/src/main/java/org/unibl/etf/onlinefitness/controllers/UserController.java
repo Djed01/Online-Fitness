@@ -4,6 +4,7 @@ import org.apache.catalina.User;
 import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
 import org.unibl.etf.onlinefitness.models.dto.UserDTO;
+import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.services.UserService;
 
 @RestController
@@ -24,7 +25,7 @@ public class UserController {
 
     @PostMapping
     @CrossOrigin(origins = "http://localhost:4200")
-    public UserDTO addProgram(@RequestBody UserDTO userDTO) {
-        return this.userService.addUser(userDTO);
+    public UserEntity addProgram(@RequestBody UserEntity userEntity) {
+        return this.userService.addUser(userEntity);
     }
 }

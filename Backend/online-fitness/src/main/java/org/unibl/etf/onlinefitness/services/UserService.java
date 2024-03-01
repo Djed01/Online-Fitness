@@ -2,20 +2,22 @@ package org.unibl.etf.onlinefitness.services;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
+import org.unibl.etf.onlinefitness.exceptions.InvalidUsernameException;
 import org.unibl.etf.onlinefitness.models.dto.UserDTO;
-import org.unibl.etf.onlinefitness.models.entities.ProgramEntity;
 import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.repositories.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
-    private final UserRepository userRepository;
+public class UserService implements UserDetailsService {
+    @Autowired
+    UserRepository userRepository;
+
     private final ModelMapper modelMapper;
 
 
@@ -24,10 +26,13 @@ public class UserService {
         return modelMapper.map(entity, UserDTO.class);
     }
 
-    public UserDTO addUser(UserDTO userDTO){
-        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
-        userRepository.save(userEntity);
-        return modelMapper.map(userEntity, UserDTO.class);
+    public UserEntity addUser(UserEntity userEntity){
+        return userRepository.save(userEntity);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(() -> new InvalidUsernameException("Ne postoji korisnik."));
     }
 
 }

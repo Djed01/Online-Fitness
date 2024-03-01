@@ -15,19 +15,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.unibl.etf.onlinefitness.services.UserDetailsJwtService;
 import org.unibl.etf.onlinefitness.services.UserService;
-
-
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    private final UserDetailsJwtService userDetailsJwtService;
+    @Autowired
+    UserService userService;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -38,21 +38,25 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                //.csrf(csrf -> csrf.csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler()))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers( "/**").permitAll()
+                        //.requestMatchers("/csrf").permitAll()
+                        .requestMatchers("/**")
+                        .permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(daoAuthenticationProvider())
                 .addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        // .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
     @Bean
     DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsJwtService);
+        provider.setUserDetailsService(userService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
@@ -63,8 +67,5 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
+
 }
