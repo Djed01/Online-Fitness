@@ -13,5 +13,5 @@ public class UserDTO {
     private String email;
     private Boolean status;
     private Boolean activationStatus;
-    private AvatarDTO avatar;
+    private Integer avatarId;
 }

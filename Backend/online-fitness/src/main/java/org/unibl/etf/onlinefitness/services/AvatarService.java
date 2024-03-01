@@ -4,10 +4,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.unibl.etf.onlinefitness.models.dto.AvatarDTO;
+import org.unibl.etf.onlinefitness.models.dto.CommentDTO;
 import org.unibl.etf.onlinefitness.models.entities.AvatarEntity;
 import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.repositories.AvatarRepository;
@@ -25,6 +27,9 @@ public class AvatarService {
     private ModelMapper modelMapper;
     private File path;
 
+    @Autowired
+    UserService userService;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -37,13 +42,15 @@ public class AvatarService {
         }
     }
 
-    public Integer uploadAvatar(MultipartFile file) throws IOException {
+    public Integer uploadAvatar(MultipartFile file,Integer userId) throws IOException {
         var name = StringUtils.cleanPath(file.getOriginalFilename());
-        var avatar = AvatarEntity.builder().name(name).type(file.getContentType()).size(file.getSize()).build();
-        avatarRepository.saveAndFlush(avatar);
-        entityManager.refresh(avatar);//dobio sam id od baze sada cuvamo na fajl sistemu
-        Files.write(Path.of(generatePath(avatar)), file.getBytes());
-        return avatar.getId();
+        var avatar = AvatarDTO.builder().name(name).type(file.getContentType()).size(file.getSize()).build();
+        avatar.setUserId(userId);
+        var avatarEntity =  modelMapper.map(avatar, AvatarEntity.class);
+        avatarRepository.saveAndFlush(avatarEntity);
+        entityManager.refresh(avatarEntity);//dobio sam id od baze sada cuvamo na fajl sistemu
+        Files.write(Path.of(generatePath(avatarEntity)), file.getBytes());
+        return avatarEntity.getId();
     }
 
     public AvatarDTO downloadAvatar(Integer id) throws IOException {

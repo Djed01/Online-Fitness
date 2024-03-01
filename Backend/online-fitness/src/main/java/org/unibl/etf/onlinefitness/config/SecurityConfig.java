@@ -25,10 +25,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-<<<<<<< HEAD
 
-=======
->>>>>>> a9a1ba91a9db61eed7dc0519ea1c19585a03c409
     @Autowired
     UserService userService;
 

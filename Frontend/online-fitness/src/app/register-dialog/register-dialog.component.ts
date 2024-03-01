@@ -81,7 +81,7 @@ export class RegisterDialogComponent {
       }).subscribe(
         (response) => {
           console.log('User registered successfully:', response);
-          this.uploadAvatar();
+          this.uploadAvatar(response.id);
           // Optionally, you can close the dialog here
           // this.closeDialog();
         },
@@ -95,9 +95,9 @@ export class RegisterDialogComponent {
     this.selectedFile = event.target.files[0] as File;
   }
 
-   uploadAvatar(): void {
+   uploadAvatar(userId:number): void {
     if (!this.selectedFile) return;
-    this.avatarService.uploadAvatar(this.selectedFile).subscribe((data: any) => {
+    this.avatarService.uploadAvatar(this.selectedFile,userId).subscribe((data: any) => {
       console.log(data);
     });
   }

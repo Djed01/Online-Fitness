@@ -21,10 +21,10 @@ public class AvatarController {
         this.avatarService = avatarService;
     }
 
-    @PostMapping
+    @PostMapping("/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer uploadAvatar(@RequestParam("avatar")MultipartFile file) throws IOException{
-        return this.avatarService.uploadAvatar(file);
+    public Integer uploadAvatar(@RequestParam("avatar")MultipartFile file,@PathVariable Integer userId) throws IOException{
+        return this.avatarService.uploadAvatar(file,userId);
     }
 
     @GetMapping("/{id}")

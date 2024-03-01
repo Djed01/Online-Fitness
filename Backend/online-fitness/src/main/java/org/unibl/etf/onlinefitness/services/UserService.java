@@ -14,11 +14,8 @@ import org.unibl.etf.onlinefitness.repositories.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-<<<<<<< HEAD
 public class UserService implements UserDetailsService {
-=======
-public class UserService implements UserDetailsService{
->>>>>>> a9a1ba91a9db61eed7dc0519ea1c19585a03c409
+
     @Autowired
     UserRepository userRepository;
 
@@ -38,11 +35,4 @@ public class UserService implements UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> new InvalidUsernameException("Ne postoji korisnik."));
     }
-
-    @Override
-    public UserDetails loadUserByUsername(String username)
-    {
-        return modelMapper.map(this.userRepository.findByUsername(username), UserEntity.class);
-    }
-
 }

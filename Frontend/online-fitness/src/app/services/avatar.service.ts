@@ -11,10 +11,10 @@ export class AvatarService {
 
   constructor(private http:HttpClient, private sanitizer: DomSanitizer) { }
 
-  uploadAvatar(url: any){
+  uploadAvatar(url: any,userId:number){
     const formData = new FormData();
     formData.append('avatar', url);
-    return this.http.post('http://localhost:8080/api/avatar', formData);
+    return this.http.post(`http://localhost:8080/api/avatar/${userId}`, formData);
   }
 
 

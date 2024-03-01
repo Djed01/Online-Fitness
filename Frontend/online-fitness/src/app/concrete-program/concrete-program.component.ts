@@ -55,7 +55,7 @@ export class ConcreteProgramComponent implements OnInit {
       for (const comment of this.comments) {
         this.userService.getUserById(comment.userId).subscribe((user: User) => {
           comment.username = user.username;
-          this.avatarService.downloadAvatar(comment.userId).subscribe((url: string) => {
+          this.avatarService.downloadAvatar(user.avatarId).subscribe((url: string) => {
             comment.avatar = url;
           });
         });
