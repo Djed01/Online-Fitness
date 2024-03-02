@@ -37,13 +37,13 @@
     </mat-form-field>
     <!-- Creation date is automatically set -->
     <mat-form-field class="full-width">
-      <mat-select placeholder="Category" formControlName="categoryName">
-        <mat-option *ngFor="let category of categories">{{ category }}</mat-option>
+      <mat-select placeholder="Category" formControlName="categoryName" (selectionChange)="setCategoryAttributes()">
+        <mat-option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</mat-option>
       </mat-select>
     </mat-form-field>
     <div class="attribute-checkbox-container">
       <div *ngFor="let attribute of attributes" class="attribute-checkbox">
-        <mat-checkbox>{{ attribute.attributeName }}</mat-checkbox>
+        <mat-checkbox>{{ attribute.name }}</mat-checkbox>
       </div>
     </div>
     <!-- User ID is usually handled on the backend -->

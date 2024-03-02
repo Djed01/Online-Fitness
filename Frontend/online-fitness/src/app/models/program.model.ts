@@ -1,5 +1,5 @@
 import { Image } from "./image.model";
-import { ProgramAttribute } from "./programAttribute.model";
+import { CategoryAttribute } from "./attribute.model";
 
 export interface Program{
     id: number;
@@ -16,6 +16,6 @@ export interface Program{
     creationDate: Date;
     categoryName: string;
     userId: number;
-    attributes: ProgramAttribute[];
+    attributes: CategoryAttribute[];
     status:boolean;
 }

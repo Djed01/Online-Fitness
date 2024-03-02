@@ -1,5 +1,6 @@
 package org.unibl.etf.onlinefitness.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,9 @@ public class CategoryAttributeEntity {
     @Basic
     @Column(name = "Status")
     private Boolean status;
+
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "CategoryID", referencedColumnName = "ID", nullable = false)
     private CategoryEntity category;
 
