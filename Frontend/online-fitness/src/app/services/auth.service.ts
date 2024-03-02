@@ -14,4 +14,8 @@ export class AuthService {
   signup(request: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/signup`, request);
   }
+
+  activate(token:any):Observable<any>{
+    return this.http.get(`${this.baseUrl}/activate?token=${token}`);
+  }
 }

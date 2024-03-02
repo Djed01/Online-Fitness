@@ -14,7 +14,13 @@ public class AuthController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody SignUpRequestDTO signUpRequest) {
-        return ResponseEntity.ok(authService.signup(signUpRequest));
+    public void signup(@RequestBody SignUpRequestDTO signUpRequest) {
+         authService.signup(signUpRequest);
+    }
+
+
+    @GetMapping("/activate")
+    public void activateAccount(@RequestParam("token") String token) {
+        authService.activateUser(token);
     }
 }

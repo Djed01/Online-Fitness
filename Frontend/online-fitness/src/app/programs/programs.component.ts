@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { NewsItem } from '../models/newsItem.model';
 import { HttpClient } from '@angular/common/http';
 import { NewsService } from '../services/news.service';
+import { AuthService } from '../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-programs',
@@ -26,7 +28,11 @@ export class ProgramsComponent implements OnInit {
      private programService: ProgramService,
      private router: Router,
      private http: HttpClient,
-     private newsService: NewsService) {}
+     private newsService: NewsService,
+     private authService: AuthService,
+     private route: ActivatedRoute) {
+      this.activate();
+     }
 
   ngOnInit() {
     this.loadPrograms();
@@ -112,6 +118,24 @@ export class ProgramsComponent implements OnInit {
   fetchNews() {
     this.newsService.getAllNews().subscribe((data: NewsItem[]) => {
       this.newsItems = data;
+    });
+  }
+
+  activate(): void {
+    this.route.queryParams.subscribe(params => {
+      const token = params['token'];
+      if (token) {
+        this.authService.activate(token).subscribe(
+          response => {
+            console.log('Activation successful:', response);
+            // Optionally, you can redirect the user to another page after activation
+          },
+          error => {
+            console.error('Error occurred during activation:', error);
+            // Handle error as needed
+          }
+        );
+      }
     });
   }
 
