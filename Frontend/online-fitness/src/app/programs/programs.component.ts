@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { NewsService } from '../services/news.service';
 import { AuthService } from '../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { ImageService } from '../services/image.service';
 
 @Component({
   selector: 'app-programs',
@@ -30,7 +31,8 @@ export class ProgramsComponent implements OnInit {
      private http: HttpClient,
      private newsService: NewsService,
      private authService: AuthService,
-     private route: ActivatedRoute) {
+     private route: ActivatedRoute,
+     private imageService:ImageService) {
       this.activate();
      }
 
@@ -42,10 +44,27 @@ export class ProgramsComponent implements OnInit {
   loadPrograms() {
     this.programService.getAllPrograms().subscribe((data: Program[]) => {
       this.programs = data;
+      for (var program of this.programs) {
+        if (program.images && program.images.length > 0 && program.images[0].id) {
+          this.imageService.downloadImage(program.images[0].id).subscribe((url: string) => {
+            console.log(url);
+            program.url = url;
+          },
+            error => {
+              console.error('Error occurred during fetching images:', error);
+              // Handle error as needed
+            }
+          );
+        } else {
+          program.url = this.photo; // Set a default photo if no image is available
+        }
+      }
+      console.log(data);
       this.totalPrograms = this.programs.length;
       this.applyFilters();
     });
   }
+  
 
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;

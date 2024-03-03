@@ -46,6 +46,12 @@
         <mat-checkbox [formControlName]="'attribute' + attribute.id">{{ attribute.name }}</mat-checkbox>
       </div>        
     </div>
+    <div>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;" #fileInput multiple>
+      <button mat-button background="transparent" type="button" (click)="fileInput.click()">
+        <i class="fa-solid fa-image"></i> Upload images
+      </button>
+    </div>
     <!-- User ID is usually handled on the backend -->
     <div class="submit-button-container">
       <button mat-raised-button color="primary" type="submit">Submit</button>

@@ -11,9 +11,18 @@ public class ImageEntity {
     @Id
     @Column(name = "ID")
     private Integer id;
+
+    @Column(name="Name",nullable = false)
+    private String name;
     @Basic
-    @Column(name = "URL")
-    private String url;
+
+    @Column(name="Type",nullable = false)
+    private String type;
+    @Basic
+
+    @Column(name="Size",nullable = false)
+    private Long size;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProgramID")
     private ProgramEntity program;

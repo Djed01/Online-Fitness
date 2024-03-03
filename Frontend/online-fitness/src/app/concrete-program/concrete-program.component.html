@@ -3,7 +3,7 @@
     <div class="program-info">
       <mat-card class="program-card">
         <mat-card-header style="width: 100%;">
-          <div mat-card-avatar class="program-image"></div>
+          <div mat-card-avatar class="program-image" [style.background-image]="'url(' + images[0] + ')'"></div>
           <mat-card-title style="font-size: 36px">{{
             program.title
           }}</mat-card-title>
@@ -16,7 +16,7 @@
           style="margin-top: 5px; font-size: 16px; margin-left: auto; margin-right: 40px;">Participate</button>
         </mat-card-header>
         <mat-card-content style="font-size: 20px">
-          <app-image-carousel [images]="program.images"></app-image-carousel>
+          <app-image-carousel [images]="images"></app-image-carousel>
 
           <div style="margin-left: 10px;">
           <p>Description: {{ program.description }}</p>

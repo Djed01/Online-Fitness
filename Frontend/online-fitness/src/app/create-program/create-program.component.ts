@@ -6,6 +6,7 @@ import {Image} from '../models/image.model';
 import { CategoryAttribute } from '../models/attribute.model';
 import {CategoryService} from '../services/category.service';
 import { Category } from '../models/category.model';
+import { ImageService } from '../services/image.service';
 
 @Component({
   selector: 'app-create-program',
@@ -18,10 +19,12 @@ export class CreateProgramComponent implements OnInit {
   categories: Category[] = [];
   attributes: CategoryAttribute[] = []; 
   selectedCategory!: Category;
+  selectedFiles: File[] = [];
 
   constructor(private fb: FormBuilder,
     private categoryService:CategoryService,
-    private programService:ProgramService) { }
+    private programService:ProgramService,
+    private imageService:ImageService) { }
 
   ngOnInit(): void {
     this.programForm = this.fb.group({
@@ -71,12 +74,9 @@ export class CreateProgramComponent implements OnInit {
 
     console.log('Program data:', program);
     this.programService.createProgram(program).subscribe(result => {
+      this.uploadImages(result.id);
       console.log('Program created successfully:', result);
     }); 
-  }
-
-  onImageChange(event: any) {
-    // Handle image upload here if needed
   }
 
 
@@ -94,5 +94,18 @@ export class CreateProgramComponent implements OnInit {
     }
   }
   
+
+  onFileSelected(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
+
+   uploadImages(programId:number): void {
+    if (!this.selectedFiles) return;
+    for(var file of this.selectedFiles){
+    this.imageService.uploadImage(file,programId).subscribe((data: any) => {
+      console.log(data);
+    });
+    }
+  }
   
 }

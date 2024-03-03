@@ -19,4 +19,5 @@ export interface Program{
     userId: number;
     attributes: CategoryAttribute[];
     status:boolean;
+    url:string;
 }

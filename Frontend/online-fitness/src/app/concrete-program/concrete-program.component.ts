@@ -9,6 +9,7 @@ import { User } from '../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
 import { AvatarService } from '../services/avatar.service';
+import { ImageService } from '../services/image.service';
 
 
 @Component({
@@ -21,6 +22,8 @@ export class ConcreteProgramComponent implements OnInit {
   program: Program = {} as Program;
   comments: Comment[] = [];
   newComment: Comment = {} as Comment;
+  images: string[] = [];
+  photo:string = 'assets/images/gym.jpg';
   image:string = "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg";
 
   constructor(
@@ -30,6 +33,7 @@ export class ConcreteProgramComponent implements OnInit {
     private userService : UserService,
     private dialog: MatDialog,
     private avatarService: AvatarService,
+    private imageService: ImageService,
     ){}
 
   ngOnInit() {
@@ -40,6 +44,21 @@ export class ConcreteProgramComponent implements OnInit {
         this.programService.getProgramById(this.programId).subscribe((data: Program) => {
           if(data){
           this.program = data;
+          if (this.program.images && this.program.images.length > 0) {
+            for(var image of this.program.images){
+            this.imageService.downloadImage(image.id).subscribe((url: string) => {
+              console.log(url);
+              this.images.push(url);
+            },
+              error => {
+                console.error('Error occurred during fetching images:', error);
+                // Handle error as needed
+              }
+            );
+            }
+          } else {
+            this.images.push(this.photo) // Set a default photo if no image is available
+          }
           console.log(data);
           }
         });

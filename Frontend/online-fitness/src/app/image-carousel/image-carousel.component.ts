@@ -7,7 +7,7 @@ import { Image } from '../models/image.model';
   styleUrls: ['./image-carousel.component.css']
 })
 export class ImageCarouselComponent {
-  @Input() images: Image[] = [];
+  @Input() images: string[] = [];
   currentIndex: number = 0;
 
   prev(): void {
