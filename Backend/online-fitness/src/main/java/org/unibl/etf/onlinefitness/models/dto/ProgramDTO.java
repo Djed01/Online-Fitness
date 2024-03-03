@@ -26,5 +26,5 @@ public class ProgramDTO {
     private Integer categoryId;
     private String categoryName;
     private Integer userId;
-    private List<ProgramCategoryAttributeDTO> attributes;
+    private List<AttributeDTO> attributes;
 }

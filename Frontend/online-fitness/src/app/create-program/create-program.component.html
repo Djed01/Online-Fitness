@@ -43,8 +43,8 @@
     </mat-form-field>
     <div class="attribute-checkbox-container">
       <div *ngFor="let attribute of attributes" class="attribute-checkbox">
-        <mat-checkbox>{{ attribute.name }}</mat-checkbox>
-      </div>
+        <mat-checkbox [formControlName]="'attribute' + attribute.id">{{ attribute.name }}</mat-checkbox>
+      </div>        
     </div>
     <!-- User ID is usually handled on the backend -->
     <div class="submit-button-container">

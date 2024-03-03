@@ -16,5 +16,9 @@ export class ProgramService {
   getProgramById(id:number){
     return this.http.get<Program>(`http://localhost:8080/api/program/${id}`);
   }
+
+  createProgram(program:Program){
+    return this.http.post<Program>(`http://localhost:8080/api/program`,program);
+  }
   
 }

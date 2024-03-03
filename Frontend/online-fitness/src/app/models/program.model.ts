@@ -15,6 +15,7 @@ export interface Program{
     instructorContact: string;
     creationDate: Date;
     categoryName: string;
+    categoryId:number;
     userId: number;
     attributes: CategoryAttribute[];
     status:boolean;

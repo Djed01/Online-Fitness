@@ -1,3 +1,5 @@
+-- MySQL Workbench Forward Engineering
+
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -13,9 +15,9 @@ CREATE SCHEMA IF NOT EXISTS `fitness` DEFAULT CHARACTER SET utf8 ;
 USE `fitness` ;
 
 -- -----------------------------------------------------
--- Table `fitness`.`admin`
+-- Table `fitness`.`Admin`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`admin` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Admin` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(45) NOT NULL,
   `PasswordHash` VARCHAR(256) NOT NULL,
@@ -27,9 +29,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`advisor`
+-- Table `fitness`.`Advisor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`advisor` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Advisor` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(45) NOT NULL,
   `PasswordHash` VARCHAR(256) NOT NULL,
@@ -42,9 +44,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`category`
+-- Table `fitness`.`Category`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`category` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Category` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Status` TINYINT NOT NULL,
@@ -53,9 +55,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`categoryattribute`
+-- Table `fitness`.`CategoryAttribute`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`categoryattribute` (
+CREATE TABLE IF NOT EXISTS `fitness`.`CategoryAttribute` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Status` TINYINT NOT NULL,
@@ -64,16 +66,16 @@ CREATE TABLE IF NOT EXISTS `fitness`.`categoryattribute` (
   INDEX `fk_CategoryAttribute_Category1_idx` (`CategoryID` ASC) VISIBLE,
   CONSTRAINT `fk_CategoryAttribute_Category1`
     FOREIGN KEY (`CategoryID`)
-    REFERENCES `fitness`.`category` (`ID`)
+    REFERENCES `fitness`.`Category` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`user`
+-- Table `fitness`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`user` (
+CREATE TABLE IF NOT EXISTS `fitness`.`User` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(45) NOT NULL,
   `PasswordHash` VARCHAR(256) NOT NULL,
@@ -89,9 +91,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`program`
+-- Table `fitness`.`Program`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`program` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Program` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Title` VARCHAR(45) NOT NULL,
   `Description` VARCHAR(1000) NOT NULL,
@@ -112,21 +114,21 @@ CREATE TABLE IF NOT EXISTS `fitness`.`program` (
   INDEX `fk_Program_User1_idx` (`UserID` ASC) VISIBLE,
   CONSTRAINT `fk_Program_Category1`
     FOREIGN KEY (`CategoryID`)
-    REFERENCES `fitness`.`category` (`ID`)
+    REFERENCES `fitness`.`Category` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Program_User1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`image`
+-- Table `fitness`.`Image`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`image` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Image` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `ProgramID` INT NOT NULL,
   `Name` VARCHAR(45) NOT NULL,
@@ -136,16 +138,16 @@ CREATE TABLE IF NOT EXISTS `fitness`.`image` (
   INDEX `fk_Image_Program1_idx` (`ProgramID` ASC) VISIBLE,
   CONSTRAINT `fk_Image_Program1`
     FOREIGN KEY (`ProgramID`)
-    REFERENCES `fitness`.`program` (`ID`)
+    REFERENCES `fitness`.`Program` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`participation`
+-- Table `fitness`.`Participation`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`participation` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Participation` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Date` DATE NULL,
   `ProgramID` INT NOT NULL,
@@ -155,21 +157,21 @@ CREATE TABLE IF NOT EXISTS `fitness`.`participation` (
   INDEX `fk_Participation_User1_idx` (`UserID` ASC) VISIBLE,
   CONSTRAINT `fk_Participation_Program1`
     FOREIGN KEY (`ProgramID`)
-    REFERENCES `fitness`.`program` (`ID`)
+    REFERENCES `fitness`.`Program` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Participation_User1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`comment`
+-- Table `fitness`.`Comment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`comment` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Comment` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Comment` VARCHAR(1000) NOT NULL,
   `Date` DATE NOT NULL,
@@ -180,21 +182,21 @@ CREATE TABLE IF NOT EXISTS `fitness`.`comment` (
   INDEX `fk_Comment_Program1_idx` (`ProgramID` ASC) VISIBLE,
   CONSTRAINT `fk_Comment_User1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Comment_Program1`
     FOREIGN KEY (`ProgramID`)
-    REFERENCES `fitness`.`program` (`ID`)
+    REFERENCES `fitness`.`Program` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`log`
+-- Table `fitness`.`Log`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`log` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Log` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Description` VARCHAR(1000) NOT NULL,
   `Date` DATE NOT NULL,
@@ -204,9 +206,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`message`
+-- Table `fitness`.`Message`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`message` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Message` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Content` VARCHAR(1000) NOT NULL,
   `Date` DATE NULL,
@@ -217,21 +219,21 @@ CREATE TABLE IF NOT EXISTS `fitness`.`message` (
   INDEX `fk_Message_User2_idx` (`Receiver` ASC) VISIBLE,
   CONSTRAINT `fk_Message_User1`
     FOREIGN KEY (`Sender`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Message_User2`
     FOREIGN KEY (`Receiver`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`token`
+-- Table `fitness`.`Token`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`token` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Token` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Token` VARCHAR(150) NOT NULL,
   `UserID` INT NOT NULL,
@@ -239,16 +241,16 @@ CREATE TABLE IF NOT EXISTS `fitness`.`token` (
   INDEX `fk_Token_User1_idx` (`UserID` ASC) VISIBLE,
   CONSTRAINT `fk_Token_User1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`subscription`
+-- Table `fitness`.`Subscription`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`subscription` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Subscription` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `CategoryID` INT NOT NULL,
   `UserID` INT NOT NULL,
@@ -257,21 +259,21 @@ CREATE TABLE IF NOT EXISTS `fitness`.`subscription` (
   INDEX `fk_Subscription_User1_idx` (`UserID` ASC) VISIBLE,
   CONSTRAINT `fk_Subscription_Category1`
     FOREIGN KEY (`CategoryID`)
-    REFERENCES `fitness`.`category` (`ID`)
+    REFERENCES `fitness`.`Category` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Subscription_User1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`question`
+-- Table `fitness`.`Question`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`question` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Question` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Content` VARCHAR(1000) NOT NULL,
   `Date` DATE NOT NULL,
@@ -283,21 +285,21 @@ CREATE TABLE IF NOT EXISTS `fitness`.`question` (
   INDEX `fk_Question_Program1_idx` (`ProgramID` ASC) VISIBLE,
   CONSTRAINT `fk_Question_User1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Question_Program1`
     FOREIGN KEY (`ProgramID`)
-    REFERENCES `fitness`.`program` (`ID`)
+    REFERENCES `fitness`.`Program` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`activity`
+-- Table `fitness`.`Activity`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`activity` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Activity` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Sets` INT NOT NULL,
@@ -310,16 +312,16 @@ CREATE TABLE IF NOT EXISTS `fitness`.`activity` (
   INDEX `fk_Activity_User1_idx` (`UserID` ASC) VISIBLE,
   CONSTRAINT `fk_Activity_User1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`bodyweight`
+-- Table `fitness`.`BodyWeight`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`bodyweight` (
+CREATE TABLE IF NOT EXISTS `fitness`.`BodyWeight` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `Weight` DOUBLE NOT NULL,
   `Date` DATE NOT NULL,
@@ -328,16 +330,16 @@ CREATE TABLE IF NOT EXISTS `fitness`.`bodyweight` (
   INDEX `fk_BodyWeight_User1_idx` (`UserID` ASC) VISIBLE,
   CONSTRAINT `fk_BodyWeight_User1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`avatar`
+-- Table `fitness`.`Avatar`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`avatar` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Avatar` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `UserID` INT NOT NULL,
   `Name` VARCHAR(50) NOT NULL,
@@ -347,29 +349,30 @@ CREATE TABLE IF NOT EXISTS `fitness`.`avatar` (
   PRIMARY KEY (`ID`),
   CONSTRAINT `fk_Avatar_User1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `fitness`.`user` (`ID`)
+    REFERENCES `fitness`.`User` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `fitness`.`program_has_categoryattribute`
+-- Table `fitness`.`Program_has_CategoryAttribute`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `fitness`.`program_has_categoryattribute` (
+CREATE TABLE IF NOT EXISTS `fitness`.`Program_has_CategoryAttribute` (
+  `ID` INT NOT NULL,
   `ProgramID` INT NOT NULL,
   `CategoryAttributeID` INT NOT NULL,
-  PRIMARY KEY (`ProgramID`, `CategoryAttributeID`),
+  PRIMARY KEY (`ID`),
   INDEX `fk_Program_has_CategoryAttribute_CategoryAttribute1_idx` (`CategoryAttributeID` ASC) VISIBLE,
   INDEX `fk_Program_has_CategoryAttribute_Program1_idx` (`ProgramID` ASC) VISIBLE,
   CONSTRAINT `fk_Program_has_CategoryAttribute_Program1`
     FOREIGN KEY (`ProgramID`)
-    REFERENCES `fitness`.`program` (`ID`)
+    REFERENCES `fitness`.`Program` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Program_has_CategoryAttribute_CategoryAttribute1`
     FOREIGN KEY (`CategoryAttributeID`)
-    REFERENCES `fitness`.`categoryattribute` (`ID`)
+    REFERENCES `fitness`.`CategoryAttribute` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

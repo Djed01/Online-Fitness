@@ -17,8 +17,11 @@ export class CreateProgramComponent implements OnInit {
   difficulties: string[] = ['Easy', 'Medium', 'Hard'];
   categories: Category[] = [];
   attributes: CategoryAttribute[] = []; 
+  selectedCategory!: Category;
 
-  constructor(private fb: FormBuilder,private categoryService:CategoryService) { }
+  constructor(private fb: FormBuilder,
+    private categoryService:CategoryService,
+    private programService:ProgramService) { }
 
   ngOnInit(): void {
     this.programForm = this.fb.group({
@@ -38,25 +41,38 @@ export class CreateProgramComponent implements OnInit {
       attributes: [[]]
     });
 
-    /* this.programService.getCategories().subscribe(categories => {
-      this.categories = categories;
-    }); */
     this.categoryService.getAllCategorys().subscribe(data =>{
       this.categories = data;
     })
   }
 
   onSubmit() {
+    this.setCategoryAttributes();
+    console.log(this.attributes);
     const formData = this.programForm.value;
     const program: Program = {
-      id: 0, // You may want to handle this differently based on your backend logic
       ...formData
     };
-    // Mock call to log the program data
+
+    program.userId = 1; // KASNIJE DODATI ID KOSRINIKA
+    program.categoryId = this.selectedCategory.id;
+
+    console.log('ATRIBUTI PRIJE SUBMITA:', this.attributes.map(attribute => attribute.name).join(','));
+    program.attributes = [];
+    this.attributes.forEach(attribute => {
+      const attributeControl = this.programForm.get(`attribute${attribute.id}`)!;
+      // Check if the checkbox is checked
+      if (attributeControl.value) {
+        // If selected, add the attribute to the program's attributes array
+        program.attributes.push(attribute);
+      }
+    });
+
+
     console.log('Program data:', program);
-    /* this.programService.createProgram(program).subscribe(result => {
+    this.programService.createProgram(program).subscribe(result => {
       console.log('Program created successfully:', result);
-    }); */
+    }); 
   }
 
   onImageChange(event: any) {
@@ -66,11 +82,17 @@ export class CreateProgramComponent implements OnInit {
 
   setCategoryAttributes() {
     const selectedCategoryName = this.programForm.get('categoryName')?.value;
-    const selectedCategory = this.categories.find(category => category.name === selectedCategoryName);
-    if (selectedCategory) {
-      this.attributes = selectedCategory.categoryAttributes;
+    this.selectedCategory = this.categories.find(category => category.name === selectedCategoryName)!;
+    if (this.selectedCategory) {
+      this.attributes = this.selectedCategory.categoryAttributes;
+           // Generate form controls for attributes
+      this.attributes.forEach(attribute => {
+        this.programForm.addControl('attribute' + attribute.id, this.fb.control(false));
+      });
     } else {
       this.attributes = [];
     }
   }
+  
+  
 }
