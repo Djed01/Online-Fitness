@@ -2,8 +2,11 @@ package org.unibl.etf.onlinefitness.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.unibl.etf.onlinefitness.auth.dto.LoginRequestDTO;
@@ -11,6 +14,7 @@ import org.unibl.etf.onlinefitness.auth.dto.SignUpRequestDTO;
 import org.unibl.etf.onlinefitness.auth.dto.TokenDTO;
 import org.unibl.etf.onlinefitness.config.JwtService;
 import org.unibl.etf.onlinefitness.exceptions.InvalidUsernameException;
+import org.unibl.etf.onlinefitness.exceptions.NotActivatedException;
 import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
 import org.unibl.etf.onlinefitness.models.dto.UserDTO;
 import org.unibl.etf.onlinefitness.models.entities.TokenEntity;
@@ -18,6 +22,7 @@ import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.repositories.TokenRepository;
 import org.unibl.etf.onlinefitness.repositories.UserRepository;
 import org.unibl.etf.onlinefitness.services.EmailService;
+import org.unibl.etf.onlinefitness.services.TokenService;
 import org.unibl.etf.onlinefitness.services.UserService;
 
 import java.util.Objects;
@@ -54,12 +59,29 @@ public class AuthService {
     }
 
     public TokenDTO login(LoginRequestDTO request) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            var user = userRepository.findByUsername(request.getUsername())
+                    .orElseThrow(() -> new BadCredentialsException("Invalid username or password."));
+            if (user.getActivationStatus()) {
+                var jwt = jwtService.generateToken(user);
+                return TokenDTO.builder().token(jwt).build();
+            } else {
+                throw new NotActivatedException("Account not activated!");
+            }
+        }catch (AuthenticationException e){
+            throw new BadCredentialsException("Invalid username or password.");
+        }
+    }
+
+    public ResponseEntity<?> regenerateActivationLink(LoginRequestDTO request){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         var user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new InvalidUsernameException("Invalid username or password."));
-        var jwt = jwtService.generateToken(user);
-        return TokenDTO.builder().token(jwt).build();
+                .orElseThrow(() -> new BadCredentialsException("Invalid username or password."));
+        emailService.sendActivationEmail(user.getEmail(), tokenRepository.findByUserId(user.getId()).getToken());
+        return ResponseEntity.ok("New link sent.");
     }
 
     public void activateUser(String token){

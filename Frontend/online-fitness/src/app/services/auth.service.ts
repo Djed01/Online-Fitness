@@ -11,6 +11,14 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  login(request: any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/login`,request);
+  }
+
+  regenerateLink(request:any):Observable<any>{
+    return this.http.post(`${this.baseUrl}/regenerate`,request);
+  }
+
   signup(request: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/signup`, request);
   }

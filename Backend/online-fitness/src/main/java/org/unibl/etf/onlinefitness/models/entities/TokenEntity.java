@@ -15,7 +15,7 @@ public class TokenEntity {
     @Basic
     @Column(name = "Token")
     private String token;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", referencedColumnName = "ID", nullable = false)
     private UserEntity user;
 

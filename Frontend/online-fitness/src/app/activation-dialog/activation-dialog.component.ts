@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-activation-dialog',
@@ -11,7 +12,9 @@ import { MatDialog } from '@angular/material/dialog';
 export class ActivationDialogComponent {
   activationFormValues: any = {};
 
-  constructor(public dialogRef: MatDialogRef<ActivationDialogComponent>,private dialog: MatDialog,) {}
+  constructor(public dialogRef: MatDialogRef<ActivationDialogComponent>,
+    private dialog: MatDialog,
+    private authService:AuthService) {}
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -19,11 +22,14 @@ export class ActivationDialogComponent {
 
   submitActivationForm(activationForm: NgForm): void {
     if (activationForm.valid) {
-      // Here you can add your login logic
-      console.log('Logged in successfully.');
+     this.authService.regenerateLink(this.activationFormValues).subscribe(
+      (response)=>{
+        console.log('Link sent successfully.');
       this.closeDialog();
+      }
+     );
     } else {
-      console.log('Invalid login form.');
+      console.log('Invalid form.');
     }
   }
 }
