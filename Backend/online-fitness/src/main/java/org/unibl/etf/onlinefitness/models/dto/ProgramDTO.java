@@ -1,8 +1,6 @@
 package org.unibl.etf.onlinefitness.models.dto;
 
 import lombok.Data;
-import org.unibl.etf.onlinefitness.models.entities.ImageEntity;
-import org.unibl.etf.onlinefitness.models.entities.ProgramCategoryAttributeEntity;
 
 import java.sql.Date;
 import java.util.List;

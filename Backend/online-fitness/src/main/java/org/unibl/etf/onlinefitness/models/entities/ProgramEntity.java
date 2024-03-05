@@ -60,7 +60,12 @@ public class ProgramEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", referencedColumnName = "ID", nullable = false)
     private UserEntity user;
-    @OneToMany(mappedBy = "program")
-    private List<ProgramCategoryAttributeEntity> attributes;
+
+    @ManyToMany
+    @JoinTable(
+            name = "program_has_categoryattribute",
+            joinColumns = @JoinColumn(name = "ProgramID"),
+            inverseJoinColumns = @JoinColumn(name = "CategoryAttributeID"))
+    List<CategoryAttributeEntity> attributes;
 
 }

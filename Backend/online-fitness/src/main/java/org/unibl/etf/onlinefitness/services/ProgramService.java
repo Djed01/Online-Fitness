@@ -1,14 +1,11 @@
 package org.unibl.etf.onlinefitness.services;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.unibl.etf.onlinefitness.models.dto.AttributeDTO;
 import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
 import org.unibl.etf.onlinefitness.models.entities.CategoryAttributeEntity;
-import org.unibl.etf.onlinefitness.models.entities.ProgramCategoryAttributeEntity;
 import org.unibl.etf.onlinefitness.models.entities.ProgramEntity;
-import org.unibl.etf.onlinefitness.repositories.ProgramCategoryAttributeRepository;
 import org.unibl.etf.onlinefitness.repositories.ProgramRepository;
 
 import java.util.List;
@@ -19,14 +16,12 @@ import java.util.stream.Collectors;
 public class ProgramService {
 
     private ProgramRepository programRepository;
-    private ProgramCategoryAttributeRepository programCategoryAttributeRepository;
 
     private ModelMapper modelMapper;
 
-    public ProgramService(ProgramRepository programRepository, ModelMapper modelMapper,ProgramCategoryAttributeRepository programCategoryAttributeRepository){
+    public ProgramService(ProgramRepository programRepository, ModelMapper modelMapper){
         this.programRepository = programRepository;
         this.modelMapper = modelMapper;
-        this.programCategoryAttributeRepository = programCategoryAttributeRepository;
     }
 
     public List<ProgramDTO> findAll(){
@@ -54,15 +49,7 @@ public class ProgramService {
         programEntity.setStatus(true);
         programEntity = programRepository.save(programEntity);
 
-        // Iterating over the attributes
-        if (programDTO.getAttributes() != null) {
-            for (AttributeDTO attributeDTO : programDTO.getAttributes()) {
-                ProgramCategoryAttributeEntity programCategoryAttributeEntity = new ProgramCategoryAttributeEntity();
-                programCategoryAttributeEntity.setProgram(programEntity);
-                programCategoryAttributeEntity.setAttribute(modelMapper.map(attributeDTO, CategoryAttributeEntity.class));
-                programCategoryAttributeRepository.save(programCategoryAttributeEntity);
-            }
-        }
+
         return modelMapper.map(programEntity, ProgramDTO.class);
     }
 

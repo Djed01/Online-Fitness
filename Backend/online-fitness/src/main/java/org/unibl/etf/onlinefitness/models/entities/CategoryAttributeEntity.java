@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "categoryattribute", schema = "fitness", catalog = "")
@@ -23,5 +25,8 @@ public class CategoryAttributeEntity {
     @JsonIgnore
     @JoinColumn(name = "CategoryID", referencedColumnName = "ID", nullable = false)
     private CategoryEntity category;
+
+    @ManyToMany(mappedBy = "attributes")
+    List<ProgramEntity> programs;
 
 }
