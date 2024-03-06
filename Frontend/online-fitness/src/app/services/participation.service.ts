@@ -13,4 +13,8 @@ export class ParticipationService {
   addParticipation(participation:Participation): Observable<any>{
     return this.http.post(`${this.baseUrl}`,participation);
   }
+
+  participates(programId:number,userId:number):Observable<any>{
+    return this.http.get(`${this.baseUrl}?programId=${programId}&userId=${userId}`);
+  }
 }

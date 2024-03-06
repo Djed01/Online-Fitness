@@ -19,4 +19,9 @@ public class ParticipationService {
         participationRepository.save(participationEntity);
         return modelMapper.map(participationEntity,ParticipationDTO.class);
     }
+
+    public Boolean participates(Integer programId, Integer userId) {
+        ParticipationEntity participationEntity = participationRepository.findByProgramIdAndUserId(programId, userId);
+        return participationEntity != null;
+    }
 }

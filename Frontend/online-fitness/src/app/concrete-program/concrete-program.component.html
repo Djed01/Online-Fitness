@@ -38,6 +38,9 @@
           </ul>
         </div>
 
+        <button *ngIf="participates && program.link" mat-raised-button color="primary" (click)="openLinkInNewTab()">Open Link</button>
+
+
           <div class="comments-section">
             <h3 style="margin-left: 10px;">Comments:</h3>
             <mat-card class="comment-card" *ngFor="let comment of comments">

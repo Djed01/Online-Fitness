@@ -18,4 +18,9 @@ public class ParticipationController {
     public ParticipationDTO addProgram(@RequestBody ParticipationDTO participationDTO) {
         return this.participationService.addParticipation(participationDTO);
     }
+
+    @GetMapping
+    public Boolean participates(@RequestParam Integer programId,@RequestParam Integer userId){
+        return this.participationService.participates(programId,userId);
+    }
 }

@@ -30,8 +30,7 @@ export class PaymentDialogComponent {
     this.dialogRef.close();
   }
 
-  submitCreditCardForm(creditCardForm: NgForm): void {
-    if (creditCardForm.valid) {
+  participate(){
       const token = localStorage.getItem('token');
       if(token){
         const decodedToken: any = jwtDecode(token);
@@ -41,11 +40,15 @@ export class PaymentDialogComponent {
           this.participation.programId = this.programId;
           this.participation.userId = userId;
           this.participationService.addParticipation(this.participation).subscribe((response)=>{
-            console.log('Credit card payment processed successfully.');
           this.closeDialog();
           });
         }
       }
+  }
+
+  submitCreditCardForm(creditCardForm: NgForm): void {
+    if (creditCardForm.valid) {
+      this.participate();
     } else {
       console.log('Invalid credit card payment form.');
     }
@@ -53,8 +56,8 @@ export class PaymentDialogComponent {
 
   submitPayPalForm(paypalForm: NgForm): void {
     if (paypalForm.valid) {
+      this.participate();
       console.log('PayPal payment processed successfully.');
-      this.closeDialog();
     } else {
       console.log('Invalid PayPal payment form.');
     }
@@ -67,7 +70,7 @@ export class PaymentDialogComponent {
     } else if (this.selectedPaymentMethod === 'paypal') {
       this.submitPayPalForm(this.paypalFormValues);
     } else if(this.selectedPaymentMethod == 'in_person'){
-      this.closeDialog();
+      this.participate();
     }
   }
 }

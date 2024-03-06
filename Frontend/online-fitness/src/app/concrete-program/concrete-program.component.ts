@@ -11,7 +11,8 @@ import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.compone
 import { AvatarService } from '../services/avatar.service';
 import { ImageService } from '../services/image.service';
 import { jwtDecode } from 'jwt-decode';
-
+import { ParticipationService } from '../services/participation.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-concrete-program',
@@ -26,6 +27,7 @@ export class ConcreteProgramComponent implements OnInit {
   images: string[] = [];
   photo:string = 'assets/images/gym.jpg';
   image:string = "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg";
+  participates: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +37,8 @@ export class ConcreteProgramComponent implements OnInit {
     private dialog: MatDialog,
     private avatarService: AvatarService,
     private imageService: ImageService,
+    private participationService: ParticipationService,
+    private sanitizer: DomSanitizer,
     ){}
 
   ngOnInit() {
@@ -66,6 +70,7 @@ export class ConcreteProgramComponent implements OnInit {
       }
     });
     this.loadComments();
+    this.checkParticipation();
   }
 
   loadComments() {
@@ -120,5 +125,34 @@ export class ConcreteProgramComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     }); 
+  }
+
+
+  checkParticipation() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      const userId = decodedToken.id;
+      if (userId) {
+        this.participationService.participates(this.programId, userId).subscribe(
+          (response) => {
+            this.participates = response; 
+          },
+          (error) => {
+            console.error('Error occurred while checking participation:', error);
+          }
+        );
+      }
+    }
+  }
+
+  sanitizeURL(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  openLinkInNewTab() {
+    if (this.program && this.program.link) {
+      window.open(this.program.link, '_blank');
+    }
   }
 }
