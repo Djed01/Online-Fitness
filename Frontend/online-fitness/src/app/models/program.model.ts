@@ -20,4 +20,5 @@ export interface Program{
     attributes: CategoryAttribute[];
     status:boolean;
     url:string;
+    link:string;
 }

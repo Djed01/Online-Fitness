@@ -21,11 +21,12 @@ public class CategoryAttributeEntity {
     @Column(name = "Status")
     private Boolean status;
 
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "CategoryID", referencedColumnName = "ID", nullable = false)
     private CategoryEntity category;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "attributes")
     List<ProgramEntity> programs;
 

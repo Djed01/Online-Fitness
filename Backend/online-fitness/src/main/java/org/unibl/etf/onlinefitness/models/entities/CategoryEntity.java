@@ -1,5 +1,7 @@
 package org.unibl.etf.onlinefitness.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +21,7 @@ public class CategoryEntity {
     @Basic
     @Column(name = "Status")
     private Boolean status;
+
     @OneToMany(mappedBy = "category")
     private List<CategoryAttributeEntity> categoryAttributes;
 

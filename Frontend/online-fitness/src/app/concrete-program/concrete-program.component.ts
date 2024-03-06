@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PaymentDialogComponent } from '../payment-dialog/payment-dialog.component';
 import { AvatarService } from '../services/avatar.service';
 import { ImageService } from '../services/image.service';
+import { jwtDecode } from 'jwt-decode';
 
 
 @Component({
@@ -74,25 +75,46 @@ export class ConcreteProgramComponent implements OnInit {
       for (const comment of this.comments) {
         this.userService.getUserById(comment.userId).subscribe((user: User) => {
           comment.username = user.username;
+          if(user.avatarId){
           this.avatarService.downloadAvatar(user.avatarId).subscribe((url: string) => {
             comment.avatar = url;
           });
+        }else{
+          comment.avatar = this.image;
+        }
         });
       }
     });
   }
 
   addComment() {
-    // Assuming the new comment object is filled elsewhere in the code
-    // Push the new comment to the comments array
-    this.newComment.date = new Date(); // Set current date for the new comment
-    this.comments.push(this.newComment);
-    // Clear the new comment object for the next comment
-    this.newComment = {} as Comment;
+    if(this.newComment.content.trim()){
+      const token = localStorage.getItem('token');
+      if(token){
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.id;
+        if (userId) {
+          this.newComment.userId = userId; 
+          this.newComment.programId = this.programId; 
+          this.newComment.date = new Date(); 
+          this.commentService.addComment(this.newComment).subscribe(
+            (response) => {
+              console.log('Comment posted successfully:', response);
+              this.newComment = {} as Comment;
+              this.loadComments();
+            },
+            (error) => {
+              console.error('Error occurred while posting comment:', error);
+            }
+          );
+        }
+        }
+      }
   }
 
   openPaymentDialog(): void {
     const dialogRef = this.dialog.open(PaymentDialogComponent, {
+      data: { programId: this.programId } 
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -7,6 +7,7 @@ import { CategoryAttribute } from '../models/attribute.model';
 import {CategoryService} from '../services/category.service';
 import { Category } from '../models/category.model';
 import { ImageService } from '../services/image.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-create-program',
@@ -41,7 +42,8 @@ export class CreateProgramComponent implements OnInit {
       creationDate: [new Date()],
       categoryName: ['', Validators.required],
       userId: ['', Validators.required],
-      attributes: [[]]
+      attributes: [[]],
+      link:[''],
     });
 
     this.categoryService.getAllCategorys().subscribe(data =>{
@@ -56,6 +58,12 @@ export class CreateProgramComponent implements OnInit {
     const program: Program = {
       ...formData
     };
+
+    const token = localStorage.getItem('token');
+      // if(token){
+      //   const decodedToken: any = jwtDecode(token);
+      //   const userId = decodedToken.id;
+      //   if (userId) {
 
     program.userId = 1; // KASNIJE DODATI ID KOSRINIKA
     program.categoryId = this.selectedCategory.id;
@@ -78,13 +86,15 @@ export class CreateProgramComponent implements OnInit {
       console.log('Program created successfully:', result);
     }); 
   }
+//}
+//}
 
 
   setCategoryAttributes() {
     const selectedCategoryName = this.programForm.get('categoryName')?.value;
     this.selectedCategory = this.categories.find(category => category.name === selectedCategoryName)!;
     if (this.selectedCategory) {
-      this.attributes = this.selectedCategory.categoryAttributes;
+      this.attributes =  this.selectedCategory.categoryAttributes;
            // Generate form controls for attributes
       this.attributes.forEach(attribute => {
         this.programForm.addControl('attribute' + attribute.id, this.fb.control(false));

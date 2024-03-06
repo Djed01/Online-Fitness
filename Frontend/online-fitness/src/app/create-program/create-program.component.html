@@ -41,6 +41,9 @@
         <mat-option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Link (optional)" formControlName="link">
+    </mat-form-field>
     <div class="attribute-checkbox-container">
       <div *ngFor="let attribute of attributes" class="attribute-checkbox">
         <mat-checkbox [formControlName]="'attribute' + attribute.id">{{ attribute.name }}</mat-checkbox>

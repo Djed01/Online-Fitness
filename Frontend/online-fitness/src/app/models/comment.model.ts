@@ -4,5 +4,6 @@ export interface Comment{
     date:Date;
     username:string;
     userId:number;
+    programId:number;
     avatar:string;
 }
