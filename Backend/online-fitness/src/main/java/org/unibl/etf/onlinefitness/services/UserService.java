@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.unibl.etf.onlinefitness.exceptions.InvalidUsernameException;
 import org.unibl.etf.onlinefitness.models.dto.UserDTO;
+import org.unibl.etf.onlinefitness.models.dto.UserInfoDTO;
 import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.repositories.UserRepository;
 
@@ -43,5 +44,17 @@ public class UserService implements UserDetailsService {
 
         userEntity.setActivationStatus(true);
         userRepository.save(userEntity);
+    }
+
+    public UserEntity updateUserInfo(UserInfoDTO userInfoDTO){
+        UserEntity userEntity = userRepository.findByUsername(userInfoDTO.getUsername())
+                .orElseThrow(() -> new IllegalArgumentException("User with username " + userInfoDTO.getUsername() + " not found"));
+
+        userEntity.setName(userInfoDTO.getName());
+        userEntity.setSurname(userInfoDTO.getSurname());
+        userEntity.setCity(userInfoDTO.getCity());
+        userEntity.setEmail(userInfoDTO.getEmail());
+
+        return userRepository.save(userEntity);
     }
 }

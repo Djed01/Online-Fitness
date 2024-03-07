@@ -17,6 +17,11 @@ export class AvatarService {
     return this.http.post(`http://localhost:8080/api/avatar/${userId}`, formData);
   }
 
+  updateAvatar(url: any,userId:number){
+    const formData = new FormData();
+    formData.append('avatar', url);
+    return this.http.post(`http://localhost:8080/api/avatar/update/${userId}`, formData);
+  }
 
   downloadAvatar(id: number): Observable<string> {
     return new Observable(observer => {

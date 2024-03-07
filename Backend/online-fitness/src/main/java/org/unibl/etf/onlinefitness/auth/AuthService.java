@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.unibl.etf.onlinefitness.auth.dto.ChangePasswordDTO;
 import org.unibl.etf.onlinefitness.auth.dto.LoginRequestDTO;
 import org.unibl.etf.onlinefitness.auth.dto.SignUpRequestDTO;
 import org.unibl.etf.onlinefitness.auth.dto.TokenDTO;
@@ -82,6 +83,14 @@ public class AuthService {
                 .orElseThrow(() -> new BadCredentialsException("Invalid username or password."));
         emailService.sendActivationEmail(user.getEmail(), tokenRepository.findByUserId(user.getId()).getToken());
         return ResponseEntity.ok("New link sent.");
+    }
+
+    public void changePassword(ChangePasswordDTO request){
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(),request.getOldPassword()));
+        var user = userRepository.findByUsername(request.getUsername()).orElseThrow(()->new BadCredentialsException("Invalid password"));
+        user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
     }
 
     public void activateUser(String token){

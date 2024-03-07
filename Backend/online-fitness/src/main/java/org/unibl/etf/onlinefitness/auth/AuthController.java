@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
+import org.unibl.etf.onlinefitness.auth.dto.ChangePasswordDTO;
 import org.unibl.etf.onlinefitness.auth.dto.LoginRequestDTO;
 import org.unibl.etf.onlinefitness.auth.dto.SignUpRequestDTO;
 import org.unibl.etf.onlinefitness.exceptions.InvalidUsernameException;
@@ -53,5 +54,15 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
         }
 
+    }
+
+    @PostMapping("/changepassword")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
+        try {
+            authService.changePassword(changePasswordDTO);
+            return ResponseEntity.ok().body("Successfully changed the password!");
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password!");
+        }
     }
 }

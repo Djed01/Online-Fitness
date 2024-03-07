@@ -83,7 +83,7 @@ export class RegisterDialogComponent {
           console.log('User registered successfully:', response);
           this.uploadAvatar(response.id);
           // Optionally, you can close the dialog here
-          // this.closeDialog();
+          this.closeDialog();
         },
         (error) => {
           console.error('Error registering user:', error);

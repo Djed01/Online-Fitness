@@ -26,4 +26,8 @@ export class AuthService {
   activate(token:any):Observable<any>{
     return this.http.get(`${this.baseUrl}/activate?token=${token}`);
   }
+
+  changePassword(request:any):Observable<any>{
+    return this.http.post(`${this.baseUrl}/changepassword`,request);
+  }
 }

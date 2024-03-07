@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.unibl.etf.onlinefitness.models.dto.AvatarDTO;
-import org.unibl.etf.onlinefitness.models.dto.CommentDTO;
 import org.unibl.etf.onlinefitness.models.entities.AvatarEntity;
-import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.repositories.AvatarRepository;
 
 import java.io.File;
@@ -49,6 +47,27 @@ public class AvatarService {
         var avatarEntity =  modelMapper.map(avatar, AvatarEntity.class);
         avatarRepository.saveAndFlush(avatarEntity);
         entityManager.refresh(avatarEntity);//dobio sam id od baze sada cuvamo na fajl sistemu
+        Files.write(Path.of(generatePath(avatarEntity)), file.getBytes());
+        return avatarEntity.getId();
+    }
+
+    public Integer updateAvatar(MultipartFile file,Integer userId) throws IOException {
+        var name = StringUtils.cleanPath(file.getOriginalFilename());
+        var avatar = AvatarDTO.builder().name(name).type(file.getContentType()).size(file.getSize()).build();
+        avatar.setUserId(userId);
+        var avatarEntity =  modelMapper.map(avatar, AvatarEntity.class);
+
+        //Delete if exists
+        AvatarEntity oldAvatar = avatarRepository.findByUserId(userId);
+        if(oldAvatar != null){
+            avatarRepository.delete(oldAvatar);
+            var path = generatePath(oldAvatar);
+            File oldFile = new File(path);
+            oldFile.delete();
+        }
+
+        avatarRepository.saveAndFlush(avatarEntity);
+        entityManager.refresh(avatarEntity);
         Files.write(Path.of(generatePath(avatarEntity)), file.getBytes());
         return avatarEntity.getId();
     }

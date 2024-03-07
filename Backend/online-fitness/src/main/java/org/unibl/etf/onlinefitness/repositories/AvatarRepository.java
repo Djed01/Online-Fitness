@@ -6,4 +6,5 @@ import org.unibl.etf.onlinefitness.models.entities.AvatarEntity;
 import java.util.Optional;
 
 public interface AvatarRepository extends JpaRepository<AvatarEntity,Integer> {
+    AvatarEntity findByUserId(Integer userId);
 }

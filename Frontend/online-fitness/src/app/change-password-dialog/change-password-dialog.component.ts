@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef} from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../services/auth.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-change-password-dialog',
@@ -11,8 +13,10 @@ import { MatDialog } from '@angular/material/dialog';
 export class ChangePasswordDialogComponent {
   changePasswordFormValues: any = {};
 
-
-  constructor(public dialogRef: MatDialogRef<ChangePasswordDialogComponent>, private dialog: MatDialog) {}
+  constructor(public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
+     private dialog: MatDialog,
+     private authService:AuthService) {
+     }
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -20,9 +24,18 @@ export class ChangePasswordDialogComponent {
 
   submitChangePasswordForm(changePasswordForm: NgForm): void {
     if (changePasswordForm.valid) {
-      // Here you can add your login logic
-      console.log('Changed successfully.');
-      this.closeDialog();
+      const token = localStorage.getItem('token');
+      if(token){
+        const decodedToken: any = jwtDecode(token);
+        const username = decodedToken.sub;
+        this.changePasswordFormValues.username = username;
+      console.log(this.changePasswordFormValues);
+      this.authService.changePassword(this.changePasswordFormValues).subscribe((response)=>{
+        console.log('Changed successfully.');
+        this.closeDialog();
+        return response;
+      });
+    }
     } else {
       console.log('Invalid change.');
     }

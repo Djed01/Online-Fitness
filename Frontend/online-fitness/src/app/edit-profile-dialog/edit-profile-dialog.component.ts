@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-edit-profile-dialog',
@@ -12,7 +13,11 @@ export class EditProfileDialogComponent {
   editProfileFormValues: any = {};
   selectedFile: File | null = null;
 
-  constructor(public dialogRef: MatDialogRef<EditProfileDialogComponent>, private http: HttpClient) {}
+  constructor(public dialogRef: MatDialogRef<EditProfileDialogComponent>, 
+    private http: HttpClient, @Inject(MAT_DIALOG_DATA) public data: any,
+    private userService:UserService) {
+      this.editProfileFormValues = { ...data.user };
+    }
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -20,9 +25,10 @@ export class EditProfileDialogComponent {
 
   submitEditProfileForm(registerForm: NgForm): void {
     if (registerForm.valid) {
-      // Here you can add your registration logic
-      console.log('Registered successfully.');
-      this.closeDialog();
+      this.userService.updateUserInfo(this.editProfileFormValues).subscribe((response)=>{
+        console.log('Registered successfully.');
+        this.closeDialog();
+      });
     } else {
       console.log('Invalid registration form.');
     }

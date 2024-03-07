@@ -27,6 +27,12 @@ public class AvatarController {
         return this.avatarService.uploadAvatar(file,userId);
     }
 
+    @PostMapping("/update/{userId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Integer update(@RequestParam("avatar")MultipartFile file,@PathVariable Integer userId) throws IOException{
+        return this.avatarService.updateAvatar(file,userId);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> downloadAvatar(@PathVariable Integer id) throws IOException{
         var avatar = avatarService.downloadAvatar(id);
@@ -34,5 +40,7 @@ public class AvatarController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + avatar.getName() + "\"")
                 .body(avatar.getData());
     }
+
+
 
 }
