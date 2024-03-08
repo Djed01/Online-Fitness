@@ -42,7 +42,7 @@ export class ProgramsComponent implements OnInit {
   }
 
   loadPrograms() {
-    this.programService.getAllPrograms().subscribe((data: Program[]) => {
+    this.programService.getAllByStatusPrograms().subscribe((data: Program[]) => {
       this.programs = data;
       for (var program of this.programs) {
         if (program.images && program.images.length > 0 && program.images[0].id) {

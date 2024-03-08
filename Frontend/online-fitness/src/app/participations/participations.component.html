@@ -1,4 +1,4 @@
-<h1 style="text-align: center;">Participations</h1>
+<h1 style="text-align: center;">History of Participations</h1>
 <div class="container">
     <mat-card *ngFor="let program of programs" class="program-card">
       <mat-card-header>
@@ -6,12 +6,16 @@
       </mat-card-header>
       <mat-card-content>
         <div class="content-left">
-          <p>Description{{ program.description }}</p>
-          <p>Date {{ program.creationDate }}</p>
+          <p>Description: {{ program.description }}</p>
+          <p>Date: {{ program.creationDate }}</p>
+          <p>Instructor: {{ program.instructorName }} {{ program.instructorSurname }}</p>
+          <p>Contact: {{ program.instructorContact }}</p>
+          <p>Category: {{ program.categoryName }}</p>
         </div>
         <div class="content-right">
           <p><strong>Duration:</strong> {{ program.duration }}</p>
           <p><strong>Difficulty:</strong> {{ program.difficulty }}</p>
+          <p><strong>Price: {{ program.price }} </strong></p>
         </div>
       </mat-card-content>
     </mat-card>

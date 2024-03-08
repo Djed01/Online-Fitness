@@ -1,0 +1,17 @@
+<div class="wrapper">
+    <button mat-button (click)="closeDialog()" class="close-button">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2 mat-dialog-title>Ask a Question</h2>
+    <p mat-dialog-title>(Your question will be answered to your mail.)</p>
+    <div mat-dialog-content>
+      <form #questionForm="ngForm" (ngSubmit)="submitQuestionForm(questionForm)" class="form-container">
+        <mat-form-field style="width: 100%; height: 300px;">
+          <textarea style="width: 100%; height: 250px;" matInput placeholder="Write your question here..." name="content" [(ngModel)]="questionFormValues.content" required></textarea>
+        </mat-form-field>
+        <div class="button-container">
+          <button mat-raised-button type="submit" [disabled]="questionForm.invalid">Send Question</button>
+        </div>
+      </form>
+    </div>
+</div>

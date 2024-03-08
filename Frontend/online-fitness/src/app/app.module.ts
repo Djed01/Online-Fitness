@@ -32,6 +32,7 @@ import { CreateProgramComponent } from './create-program/create-program.componen
 import { MatSelectModule } from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { UserProgramsComponent } from './user-programs/user-programs.component';
+import { QuestionDialogComponent } from './question-dialog/question-dialog.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { UserProgramsComponent } from './user-programs/user-programs.component';
     ParticipationsComponent,
     CreateProgramComponent,
     UserProgramsComponent,
+    QuestionDialogComponent,
   ],
   imports: [
     BrowserModule,

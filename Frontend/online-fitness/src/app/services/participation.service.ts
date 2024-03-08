@@ -17,4 +17,8 @@ export class ParticipationService {
   participates(programId:number,userId:number):Observable<any>{
     return this.http.get(`${this.baseUrl}?programId=${programId}&userId=${userId}`);
   }
+
+  getAllByUserId(userId:number):Observable<any>{
+    return this.http.get(`${this.baseUrl}/${userId}`);
+  }
 }

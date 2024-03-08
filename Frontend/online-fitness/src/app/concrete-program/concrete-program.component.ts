@@ -13,6 +13,7 @@ import { ImageService } from '../services/image.service';
 import { jwtDecode } from 'jwt-decode';
 import { ParticipationService } from '../services/participation.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
 
 @Component({
   selector: 'app-concrete-program',
@@ -120,6 +121,16 @@ export class ConcreteProgramComponent implements OnInit {
   openPaymentDialog(): void {
     const dialogRef = this.dialog.open(PaymentDialogComponent, {
       data: { programId: this.programId } 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    }); 
+  }
+
+  openQuestionDialog(): void {
+    const dialogRef = this.dialog.open(QuestionDialogComponent, {
+      data: { programId: this.programId }
     });
 
     dialogRef.afterClosed().subscribe(result => {

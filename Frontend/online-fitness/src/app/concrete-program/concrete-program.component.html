@@ -10,10 +10,17 @@
           <mat-card-subtitle style="font-size: 24px">{{
             program.categoryName
           }}</mat-card-subtitle>
-          <button mat-raised-button 
+          <div style="display: flex; flex-direction: column; margin-top: 5px; font-size: 16px; margin-left: auto; margin-right: 40px;">
+          <button mat-raised-button
+          *ngIf="!participates"
           color="primary" 
           (click)="openPaymentDialog()"
-          style="margin-top: 5px; font-size: 16px; margin-left: auto; margin-right: 40px;">Participate</button>
+          >Participate</button>
+          <button mat-raised-button
+          color="primary" 
+          (click)="openQuestionDialog()"
+          style="margin-top: 20px;">Ask question</button>
+        </div>
         </mat-card-header>
         <mat-card-content style="font-size: 20px">
           <app-image-carousel [images]="images"></app-image-carousel>

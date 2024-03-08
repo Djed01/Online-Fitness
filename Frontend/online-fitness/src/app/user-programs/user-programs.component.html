@@ -1,6 +1,6 @@
 <!-- user-programs.component.html -->
 
-<h1 style="text-align: center;">Participations</h1>
+<h1 style="text-align: center;">My Programs</h1>
 
 <div class="radio-inputs">
   <label class="radio">
@@ -27,7 +27,7 @@
         <p>Status: {{ program.status }} </p>
       </div>
       <div class="content-right">
-        <button mat-raised-button color="warn">Delete</button>
+        <button mat-raised-button color="warn" (click)="deleteProgram(program.id)">Delete</button>
       </div>
     </mat-card-content>
   </mat-card>

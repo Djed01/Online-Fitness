@@ -1,5 +1,6 @@
 package org.unibl.etf.onlinefitness.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
@@ -23,6 +24,10 @@ public class ProgramController {
     public List<ProgramDTO> findAll(){
         return this.programService.findAll();
     }
+
+    @GetMapping("/status")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public List<ProgramDTO> findAllByStatus(){return this.programService.findAllByStatus();}
 
     @GetMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
@@ -50,8 +55,12 @@ public class ProgramController {
 
     @DeleteMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Void> deleteProgram(@PathVariable Integer id) {
-        this.programService.deleteProgram(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> deleteProgram(@PathVariable Integer id) {
+        try {
+            programService.deleteProgram(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting program: " + e.getMessage());
+        }
     }
 }

@@ -1,6 +1,7 @@
 package org.unibl.etf.onlinefitness.services;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.unibl.etf.onlinefitness.models.dto.AttributeDTO;
 import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
@@ -26,6 +27,13 @@ public class ProgramService {
 
     public List<ProgramDTO> findAll(){
         List<ProgramEntity> entities = programRepository.findAll();
+        return entities.stream()
+                .map(entity -> modelMapper.map(entity, ProgramDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProgramDTO> findAllByStatus(){
+        List<ProgramEntity> entities = programRepository.findAllByStatus(true);
         return entities.stream()
                 .map(entity -> modelMapper.map(entity, ProgramDTO.class))
                 .collect(Collectors.toList());
@@ -67,7 +75,7 @@ public class ProgramService {
     }
 
     public void deleteProgram(Integer id) {
-        programRepository.deleteById(id);
+         programRepository.deleteById(id);
     }
 
 }
