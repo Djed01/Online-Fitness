@@ -13,6 +13,8 @@ import org.unibl.etf.onlinefitness.models.dto.UserInfoDTO;
 import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.repositories.UserRepository;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -26,6 +28,16 @@ public class UserService implements UserDetailsService {
     public UserDTO getUserByUserId(Integer id){
         UserEntity entity = userRepository.getUserEntityById(id);
         return modelMapper.map(entity, UserDTO.class);
+    }
+
+    public UserDTO getUserByUsername(String username){
+        Optional<UserEntity> entity = userRepository.findByUsername(username);
+        return modelMapper.map(entity, UserDTO.class);
+    }
+
+    public Integer getIdByUsername(String username){
+        Optional<UserEntity> entity = userRepository.findByUsername(username);
+        return entity.get().getId();
     }
 
     public UserEntity addUser(UserEntity userEntity){

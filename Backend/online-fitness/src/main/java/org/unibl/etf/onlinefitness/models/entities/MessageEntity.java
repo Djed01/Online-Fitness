@@ -3,7 +3,7 @@ package org.unibl.etf.onlinefitness.models.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @Entity

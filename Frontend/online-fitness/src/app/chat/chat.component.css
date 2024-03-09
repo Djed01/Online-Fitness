@@ -1,0 +1,107 @@
+.container {
+    display: flex;
+  }
+  
+  .inbox {
+    width: 400px;
+    height: 90vh;
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+
+  .inbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .inbox ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .inbox ul li.selected {
+    background-color: #e0e0e0;
+  }
+  
+  
+  .inbox li {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .inbox li:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .chat {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .chat-container {
+    max-width: 100%;
+    height: 90vh;
+  }
+  
+  .message-container {
+    height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  .message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .message-content {
+    background-color: #e5e5e5;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%;
+  }
+  
+  .message-sender {
+    font-weight: bold;
+  }
+  
+  .input-field {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+  
+
+  .no-conversation {
+    font-size: 24px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-left: 20vw;
+    padding: 20px;
+    font-style: italic;
+  }
+  

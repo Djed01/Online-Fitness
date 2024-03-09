@@ -20,10 +20,21 @@ public class UserController {
 
     @GetMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public UserDTO findProgramByProgramId(@PathVariable Integer id){
+    public UserDTO getUserByUserId(@PathVariable Integer id){
         return this.userService.getUserByUserId(id);
     }
 
+    @GetMapping("/username/{username}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public UserDTO getUserByUsername(@PathVariable String username){
+        return this.userService.getUserByUsername(username);
+    }
+
+    @GetMapping("/id/{username}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Integer getIdByUsername(@PathVariable String username){
+        return this.userService.getIdByUsername(username);
+    }
     @PostMapping
     @CrossOrigin(origins = "http://localhost:4200")
     public UserEntity addProgram(@RequestBody UserEntity userEntity) {

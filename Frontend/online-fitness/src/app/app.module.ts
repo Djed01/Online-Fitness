@@ -33,6 +33,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { UserProgramsComponent } from './user-programs/user-programs.component';
 import { QuestionDialogComponent } from './question-dialog/question-dialog.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { QuestionDialogComponent } from './question-dialog/question-dialog.compo
     CreateProgramComponent,
     UserProgramsComponent,
     QuestionDialogComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
