@@ -1,0 +1,20 @@
+<div class="wrapper">
+<h1 mat-dialog-title>Select User</h1>
+<mat-form-field appearance="fill">
+  <input matInput placeholder="Search by username" (input)="filterUsers($event)">
+</mat-form-field>
+<div mat-dialog-content class="user-list">
+  <mat-list>
+    <mat-list-item *ngFor="let user of filteredUsers" 
+                   (click)="selectUser(user)" 
+                   [class.selected]="user === selectedUser">
+      {{ user.username }}
+    </mat-list-item>
+    <div *ngIf="filteredUsers.length === 0" class="no-results">No matching users found</div>
+  </mat-list>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [disabled]="!selectedUser" (click)="submit()">Select</button>
+  <button mat-button (click)="cancel()">Cancel</button>
+</div>
+</div>

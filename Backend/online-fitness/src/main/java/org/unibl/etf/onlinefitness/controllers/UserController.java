@@ -8,6 +8,8 @@ import org.unibl.etf.onlinefitness.models.dto.UserInfoDTO;
 import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.services.UserService;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("api/user")
@@ -16,6 +18,12 @@ public class UserController {
 
     public UserController(UserService userService){
         this.userService = userService;
+    }
+
+    @GetMapping
+    @CrossOrigin(origins = "http://localhost:4200")
+    public List<UserDTO> getAllUsers(){
+        return userService.getAll();
     }
 
     @GetMapping("/{id}")

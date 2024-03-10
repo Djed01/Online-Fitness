@@ -24,4 +24,8 @@ export class UserService {
   getIdByUsername(username:string){
     return this.http.get<number>(`http://localhost:8080/api/user/id/${username}`);
   }
+
+  getAllUsers(){
+    return this.http.get<User[]>(`http://localhost:8080/api/user`);
+  }
 }

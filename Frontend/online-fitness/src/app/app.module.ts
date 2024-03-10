@@ -34,6 +34,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { UserProgramsComponent } from './user-programs/user-programs.component';
 import { QuestionDialogComponent } from './question-dialog/question-dialog.component';
 import { ChatComponent } from './chat/chat.component';
+import { UserSelectionDialogComponent } from './user-selection-dialog/user-selection-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { ChatComponent } from './chat/chat.component';
     UserProgramsComponent,
     QuestionDialogComponent,
     ChatComponent,
+    UserSelectionDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ import { ChatComponent } from './chat/chat.component';
     ReactiveFormsModule,
     MatListModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule
   ],
   providers: [
     provideAnimationsAsync()

@@ -2,16 +2,18 @@
     <div class="inbox">
         <div class="inbox-header">
             <h2><i class="fa-solid fa-message"></i> Inbox</h2>
-            <button mat-raised-button style="margin-left: 10px;">New Message</button>
+            <button mat-raised-button style="margin-left: 10px;" (click)="openUserSelectionDialog()">New Message</button>
           </div>
-      <ul>
-        <li *ngFor="let user of users" 
-            (click)="selectUser(user)"
-            [class.selected]="user === activeUser">
-            <img [src]="user.avatar" alt="Avatar" class="avatar"> 
-          <span>{{ user.username }}</span>
-        </li>
-      </ul>
+          <ul>
+            <ng-container *ngFor="let user of users">
+              <li *ngIf="user.username !== ownUsername"
+                  (click)="selectUser(user)"
+                  [class.selected]="user === activeUser">
+                <img [src]="user.avatar" alt="Avatar" class="avatar"> 
+                <span>{{ user.username }}</span>
+              </li>
+            </ng-container>
+          </ul>
     </div>
 
     <div *ngIf="!activeUser" class="no-conversation">

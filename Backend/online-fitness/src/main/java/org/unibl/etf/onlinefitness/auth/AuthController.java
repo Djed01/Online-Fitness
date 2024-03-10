@@ -11,6 +11,7 @@ import org.unibl.etf.onlinefitness.auth.dto.LoginRequestDTO;
 import org.unibl.etf.onlinefitness.auth.dto.SignUpRequestDTO;
 import org.unibl.etf.onlinefitness.exceptions.InvalidUsernameException;
 import org.unibl.etf.onlinefitness.exceptions.NotActivatedException;
+import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -21,8 +22,8 @@ public class AuthController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/signup")
-    public void signup(@RequestBody SignUpRequestDTO signUpRequest) {
-         authService.signup(signUpRequest);
+    public UserEntity signup(@RequestBody SignUpRequestDTO signUpRequest) {
+         return authService.signup(signUpRequest);
     }
 
 
@@ -60,7 +61,7 @@ public class AuthController {
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
         try {
             authService.changePassword(changePasswordDTO);
-            return ResponseEntity.ok().body("Successfully changed the password!");
+            return ResponseEntity.ok(HttpStatus.OK);
         }catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password!");
         }

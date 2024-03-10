@@ -1,5 +1,6 @@
 package org.unibl.etf.onlinefitness.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,7 +45,7 @@ public class UserEntity implements UserDetails {
     @Basic
     @Column(name = "ActivationStatus")
     private Boolean activationStatus;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user",fetch = FetchType.LAZY)
     private AvatarEntity avatar;
     @Column(name = "Role")
     private String role;

@@ -8,6 +8,7 @@ import { NewsService } from '../services/news.service';
 import { AuthService } from '../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { ImageService } from '../services/image.service';
+import { of, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-programs',
@@ -44,24 +45,25 @@ export class ProgramsComponent implements OnInit {
   loadPrograms() {
     this.programService.getAllByStatusPrograms().subscribe((data: Program[]) => {
       this.programs = data;
-      for (var program of this.programs) {
+      const imageRequests = this.programs.map(program => {
         if (program.images && program.images.length > 0 && program.images[0].id) {
-          this.imageService.downloadImage(program.images[0].id).subscribe((url: string) => {
-            console.log(url);
-            program.url = url;
-          },
-            error => {
-              console.error('Error occurred during fetching images:', error);
-              // Handle error as needed
-            }
-          );
+          return this.imageService.downloadImage(program.images[0].id);
         } else {
-          program.url = this.photo; // Set a default photo if no image is available
+          return of(this.photo); // Use a default photo if no image is available
         }
-      }
-      console.log(data);
-      this.totalPrograms = this.programs.length;
-      this.applyFilters();
+      });
+  
+      forkJoin(imageRequests).subscribe((urls: string[]) => {
+        this.programs.forEach((program, index) => {
+          program.url = urls[index];
+        });
+        console.log(data);
+        this.totalPrograms = this.programs.length;
+        this.applyFilters();
+      }, error => {
+        console.error('Error occurred during fetching images:', error);
+        // Handle error as needed
+      });
     });
   }
   

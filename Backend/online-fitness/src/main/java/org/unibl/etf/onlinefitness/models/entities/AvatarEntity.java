@@ -1,5 +1,7 @@
 package org.unibl.etf.onlinefitness.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +17,7 @@ public class AvatarEntity {
     @Column(name = "ID")
     private Integer id;
 
+    @JsonIgnoreProperties("avatar")
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", referencedColumnName = "ID")
     private UserEntity user;

@@ -6,6 +6,10 @@ import { jwtDecode } from 'jwt-decode';
 import { AvatarService } from '../services/avatar.service';
 import { UserDetails } from '../models/userDetails.model';
 import { MessageRequest } from '../models/messageRequest.model';
+import { forkJoin, Observable, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { UserSelectionDialogComponent } from '../user-selection-dialog/user-selection-dialog.component';
 
 
 @Component({
@@ -16,6 +20,7 @@ import { MessageRequest } from '../models/messageRequest.model';
 export class ChatComponent {
   @ViewChild('messageContainer') messageContainer!: ElementRef;
 
+  ownUsername:string = ""; 
   avatarUrl:string = "";
   users: UserDetails[] = [];
   activeUser: UserDetails | null = null;
@@ -23,9 +28,11 @@ export class ChatComponent {
   newMessage: string = '';
   image:string = "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg";
 
+
   constructor(private messageService: MessageService, 
     private userService: UserService,
-    private avatarService: AvatarService) {
+    private avatarService: AvatarService,
+    private dialog: MatDialog) {
     this.getMessages();
   }
 
@@ -55,11 +62,7 @@ export class ChatComponent {
 
         this.messageService.sendMessage(messageRequest).subscribe((response)=>{
           const newMessage:Message= response;
-          const token = localStorage.getItem('token');
-          if (token) {
-          const decodedToken: any = jwtDecode(token);
-          newMessage.sender.name = decodedToken.sub;
-          }
+          newMessage.sender.name = this.ownUsername;
           this.messages.push(newMessage);
           this.newMessage = '';
           setTimeout(() => {
@@ -76,21 +79,24 @@ export class ChatComponent {
     if (token) {
       const decodedToken: any = jwtDecode(token);
       const userId = decodedToken.id;
-      const ownUsername = decodedToken.sub;
+      this.ownUsername = decodedToken.sub;
+      console.log(this.ownUsername);
       if (userId) {
         this.messageService.getMessagesByUserId(userId).subscribe((response) => {
           // Assuming response is in the format you provided
           // Map messages to users
           this.users = this.mapMessagesToUsers(response);
-          this.users = this.users.filter(user => user.username !== ownUsername);
+          //this.users = this.users.filter(user => user.username !== ownUsername);
+          console.log(this.users);
         });
       }
     }
   }
 
-  private mapMessagesToUsers(messages: Message[]): UserDetails[] {
+  private mapMessagesToUsers(messages: Message[]):UserDetails[] {
     const users: UserDetails[] = [];
     const usersMap: Map<string, UserDetails> = new Map();
+    const avatarRequests: Observable<any>[] = [];
 
     for (const message of messages) {
       const senderKey = message.sender.username;
@@ -128,19 +134,31 @@ export class ChatComponent {
 
     }
 
-    for (const user of usersMap.values()) {
-      users.push(user);
+    for (const [username, user] of usersMap.entries()) {
+      avatarRequests.push(
+        this.userService.getUserByUsername(username).pipe(
+          switchMap(response => {
+            if (response.avatarId) {
+              return this.avatarService.downloadAvatar(response.avatarId).pipe(
+                tap(url => {
+                  user.avatar = url;
+                })
+              );
+            } else {
+              return of(null); // Return a placeholder if no avatarId is available
+            }
+          })
+        )
+      );
     }
-
-    for(var user of users){
-      this.userService.getUserByUsername(user.username).subscribe((response)=>{
-        if(response.avatarId)
-        this.avatarService.downloadAvatar(response.avatarId).subscribe((url: string)=>{
-          user.avatar = url;
-        })
-      })
-    }
-
+  
+    forkJoin(avatarRequests).subscribe(() => {
+      for (const user of usersMap.values()) {
+        users.push(user);
+      }
+    });
+    
+   // console.log(users);
     return users;
   }
 
@@ -149,4 +167,22 @@ export class ChatComponent {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     } catch (err) { }
   }
+
+  openUserSelectionDialog(): void {
+    const dialogRef = this.dialog.open(UserSelectionDialogComponent, {
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result); // Result will be the selected user
+      if (result) {
+        this.selectUser(result);
+        this.avatarService.downloadAvatar(result.avatarId).subscribe(
+          (url) => {
+            result.avatar = url;
+          });
+        this.users.push(result);
+      }
+    });
+}
 }

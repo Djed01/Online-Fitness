@@ -42,7 +42,7 @@ public class AuthService {
     private final UserService userService;
 
 
-    public void signup(SignUpRequestDTO signUpRequest) {
+    public UserEntity signup(SignUpRequestDTO signUpRequest) {
         UserEntity  user = new UserEntity ();
         user.setName(signUpRequest.getName());
         user.setSurname(signUpRequest.getSurname());
@@ -57,6 +57,7 @@ public class AuthService {
         TokenEntity tokenEntity = generateToken(user);
         tokenRepository.save(tokenEntity);
         emailService.sendActivationEmail(user.getEmail(),tokenEntity.getToken());
+        return user;
     }
 
     public TokenDTO login(LoginRequestDTO request) {

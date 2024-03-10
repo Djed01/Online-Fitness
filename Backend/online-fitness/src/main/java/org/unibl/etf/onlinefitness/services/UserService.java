@@ -13,7 +13,9 @@ import org.unibl.etf.onlinefitness.models.dto.UserInfoDTO;
 import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.repositories.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -68,5 +70,15 @@ public class UserService implements UserDetailsService {
         userEntity.setEmail(userInfoDTO.getEmail());
 
         return userRepository.save(userEntity);
+    }
+
+    public List<UserDTO> getAll(){
+        List<UserEntity> userEntities = userRepository.findAll();
+        return userEntities.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+    private UserDTO convertToDTO(UserEntity userEntity) {
+        return modelMapper.map(userEntity, UserDTO.class);
     }
 }
