@@ -19,8 +19,8 @@ public class BodyWeightController {
         return bodyWeightService.getAllBodyWeightsByUserId(id);
     }
 
-    @PostMapping
-    public BodyWeightDTO addBodyWeight(@RequestBody BodyWeightDTO bodyWeightDTO){
-        return bodyWeightService.addBodyWeight(bodyWeightDTO);
+    @PostMapping("/{userId}")
+    public BodyWeightDTO addBodyWeight(@RequestBody BodyWeightDTO bodyWeightDTO,@PathVariable Integer userId){
+        return bodyWeightService.addBodyWeight(bodyWeightDTO,userId);
     }
 }

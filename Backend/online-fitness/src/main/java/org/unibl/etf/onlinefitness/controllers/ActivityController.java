@@ -22,9 +22,9 @@ public class ActivityController {
         return activityService.getAllActivityByUserId(id);
     }
 
-    @PostMapping
-    public ActivityDTO addActivity(@RequestBody ActivityDTO activityDTO){
-        return activityService.addActivity(activityDTO);
+    @PostMapping("/{id}")
+    public ActivityDTO addActivity(@RequestBody ActivityDTO activityDTO,@PathVariable Integer id){
+        return activityService.addActivity(activityDTO,id);
     }
 
     @DeleteMapping("/{id}")

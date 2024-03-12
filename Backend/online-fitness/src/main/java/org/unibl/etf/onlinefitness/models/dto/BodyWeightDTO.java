@@ -8,5 +8,4 @@ import java.util.Date;
 public class BodyWeightDTO {
     private Double weight;
     private Date date;
-    private Integer userId;
 }

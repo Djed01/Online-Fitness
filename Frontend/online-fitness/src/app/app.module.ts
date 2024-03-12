@@ -41,6 +41,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AddActivityDialogComponent } from './add-activity-dialog/add-activity-dialog.component';
 import { AddWeightDialogComponent } from './add-weight-dialog/add-weight-dialog.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import org.unibl.etf.onlinefitness.models.dto.ActivityDTO;
 import org.unibl.etf.onlinefitness.models.dto.MessageDTO;
 import org.unibl.etf.onlinefitness.models.entities.ActivityEntity;
+import org.unibl.etf.onlinefitness.models.entities.UserEntity;
 import org.unibl.etf.onlinefitness.repositories.ActivityRepository;
 
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,9 +30,13 @@ public class ActivityService {
                 .collect(Collectors.toList());
     }
 
-    public ActivityDTO addActivity(ActivityDTO activityDTO){
+    public ActivityDTO addActivity(ActivityDTO activityDTO,Integer userId){
         ActivityEntity entity = modelMapper.map(activityDTO,ActivityEntity.class);
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+        entity.setUser(userEntity);
         entity.setStatus(true);
+        entity.setDate(new Date());
         return modelMapper.map(activityRepository.save(entity),ActivityDTO.class);
     }
 

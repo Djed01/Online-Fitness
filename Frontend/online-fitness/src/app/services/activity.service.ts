@@ -1,45 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable,of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Activity } from '../models/activity.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActivityService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getActivities(): Observable<any[]> {
-    // Simulated mock data
-    const activities = [
-      { id: 1, userName: 'John Doe', sets: 3, reps: 12, weight: 50, date: new Date('2024-03-10') },
-      { id: 2, userName: 'Alice Smith', sets: 4, reps: 10, weight: 65, date: new Date('2024-03-09') },
-      { id: 3, userName: 'Bob Johnson', sets: 2, reps: 8, weight: 80, date: new Date('2024-03-08') },
-      { id: 4, userName: 'John Doe', sets: 3, reps: 12, weight: 50, date: new Date('2024-03-10') },
-      { id: 5, userName: 'Alice Smith', sets: 4, reps: 10, weight: 65, date: new Date('2024-03-09') },
-      { id: 6, userName: 'Bob Johnson', sets: 2, reps: 8, weight: 80, date: new Date('2024-03-08') }
-    ];
-    return of(activities);
+  getActivities(userId: number) {
+    return this.http.get<Activity[]>(`http://localhost:8080/api/activity/${userId}`);
   }
 
-  deleteActivity(activityId: number): Observable<void> {
-    // Simulate delete action
-    return of();
+  addActivity(activity: Activity, userId:number): Observable<any> {
+    return this.http.post(`http://localhost:8080/api/activity/${userId}`, activity);
   }
 
+  deleteActivity(id: number) {
+    return this.http.delete(`http://localhost:8080/api/activity/${id}`);
+  }
 
-  getBodyWeightData(): Observable<any[]> {
-    // Mock data with body weight and date
-    const mockData = [
-      { weight: 70, date: '2024-03-10' },
-      { weight: 71, date: '2024-03-11' },
-      { weight: 69, date: '2024-03-12' }
-    ];
-    return of(mockData);
+  getBodyWeightData(id:number):Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:8080/api/body-weight/${id}`);
   }
 
   // Mock function to add a new record of body weight
-  addBodyWeightRecord(weight: number, date: Date): Observable<any> {
-    // Mock adding record functionality
-    return of({ weight, date });
+  addBodyWeightRecord(weight: number, id:number): Observable<any> {
+    return this.http.post(`http://localhost:8080/api/body-weight/${id}`,weight);
   }
 }
