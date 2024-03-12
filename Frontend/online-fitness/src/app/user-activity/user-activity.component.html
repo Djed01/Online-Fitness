@@ -1,0 +1,48 @@
+<div class="activity-container">
+    <div class="header">
+        <h1 class="activity-header">Activity History</h1>
+        <button mat-raised-button class="add-button" color="accent" (click)="openAddActivityDialog()">Add Activity
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+
+    <div class="activity-scroll-container">
+        <div class="activity-card" *ngFor="let activity of activities">
+            <div class="activity-details">
+                <div class="user-info">
+                    <span class="user-name">{{ activity.userName }}</span>
+                    <span class="activity-date">{{ activity.date | date: 'mediumDate' }}</span>
+                </div>
+                <div class="activity-info">
+                    <span class="activity-sets">{{ activity.sets }} Sets</span>
+                    <span class="activity-reps">{{ activity.reps }} Reps</span>
+                    <span class="activity-weight">{{ activity.weight }} lbs</span>
+                </div>
+            </div>
+            <button mat-icon-button class="delete-button" (click)="deleteActivity(activity.id)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="activity-container" style="margin-top: 20px;">
+    <div class="header">
+      <h1 class="activity-header">Body Weight History</h1>
+      <button mat-raised-button class="add-button" color="accent" (click)="openAddWeightDialog()">Add Weight
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+    <ngx-charts-bar-vertical
+      [scheme]="colorScheme"
+      [results]="weightData"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+    ></ngx-charts-bar-vertical>
+  </div>

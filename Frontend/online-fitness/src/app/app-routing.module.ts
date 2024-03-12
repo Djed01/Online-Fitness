@@ -8,6 +8,7 @@ import { ParticipationsComponent } from './participations/participations.compone
 import { CreateProgramComponent } from './create-program/create-program.component';
 import { UserProgramsComponent } from './user-programs/user-programs.component';
 import { ChatComponent } from './chat/chat.component';
+import { UserActivityComponent } from './user-activity/user-activity.component';
 
 const routes: Routes = [
   { path: '', component: ProgramsComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'participations', component:ParticipationsComponent},
   { path: 'create', component:CreateProgramComponent },
   { path: 'myprograms', component:UserProgramsComponent},
-  { path: 'chat', component:ChatComponent}
+  { path: 'chat', component:ChatComponent},
+  { path: 'activities', component:UserActivityComponent},
 ];
 
 @NgModule({

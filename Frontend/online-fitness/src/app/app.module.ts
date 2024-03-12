@@ -36,6 +36,10 @@ import { QuestionDialogComponent } from './question-dialog/question-dialog.compo
 import { ChatComponent } from './chat/chat.component';
 import { UserSelectionDialogComponent } from './user-selection-dialog/user-selection-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UserActivityComponent } from './user-activity/user-activity.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { AddActivityDialogComponent } from './add-activity-dialog/add-activity-dialog.component';
+import { AddWeightDialogComponent } from './add-weight-dialog/add-weight-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +61,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     QuestionDialogComponent,
     ChatComponent,
     UserSelectionDialogComponent,
+    UserActivityComponent,
+    AddActivityDialogComponent,
+    AddWeightDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +83,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatListModule,
     MatSelectModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxChartsModule
   ],
   providers: [
     provideAnimationsAsync()

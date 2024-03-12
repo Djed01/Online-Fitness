@@ -1,0 +1,17 @@
+<div class="wrapper">
+    <button mat-button (click)="closeDialog()" class="close-button">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2 mat-dialog-title>Add Weight Record</h2>
+    <div mat-dialog-content>
+      <form #weightForm="ngForm" (ngSubmit)="submitWeightForm(weightForm)" class="form-container">
+        <mat-form-field>
+            <input matInput placeholder="Weight" type="number" name="weight" [(ngModel)]="weightFormValues.weight" required>
+        </mat-form-field>
+        <div class="button-container">
+          <button mat-raised-button color="accent" type="submit" [disabled]="weightForm.invalid">Add <i class="fa-solid fa-plus"></i></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

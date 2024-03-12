@@ -1,0 +1,27 @@
+<div class="wrapper">
+    <button mat-button (click)="closeDialog()" class="close-button">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2 mat-dialog-title>Add Activity</h2>
+    <div mat-dialog-content>
+      <form #activityForm="ngForm" (ngSubmit)="submitActivityForm(activityForm)" class="form-container">
+        <mat-form-field>
+          <input matInput placeholder="Activity name" name="name" [(ngModel)]="activityFormValues.name" required>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Sets" type="number" name="sets" [(ngModel)]="activityFormValues.sets" required>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Reps" type="number" name="reps" [(ngModel)]="activityFormValues.reps" required>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Weight" type="number" name="weight" [(ngModel)]="activityFormValues.weight" required>
+        </mat-form-field>
+       
+        <div class="button-container">
+          <button mat-raised-button color="accent" type="submit" [disabled]="activityForm.invalid">Add <i class="fa-solid fa-plus"></i></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
