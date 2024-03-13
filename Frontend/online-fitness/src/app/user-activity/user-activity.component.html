@@ -1,9 +1,14 @@
 <div class="activity-container">
     <div class="header">
         <h1 class="activity-header">Activity History</h1>
+        <div>
+        <button mat-raised-button (click)="downloadPdf($event)" class="pdf-button" color="secoundary">Download PDF
+            <i class="fa-regular fa-file-pdf"></i>
+        </button>
         <button mat-raised-button class="add-button" color="accent" (click)="openAddActivityDialog()">Add Activity
             <i class="fa-solid fa-plus"></i>
         </button>
+    </div>
     </div>
 
     <div class="activity-scroll-container">
@@ -29,7 +34,7 @@
 <div class="activity-container" style="margin-top: 20px;">
     <div class="header">
       <h1 class="activity-header">Body Weight History</h1>
-      <button mat-raised-button class="add-button" color="accent" (click)="openAddWeightDialog()">Add Weight
+      <button mat-raised-button class="add-weight-button" color="accent" (click)="openAddWeightDialog()">Add Weight
         <i class="fa-solid fa-plus"></i>
       </button>
     </div>

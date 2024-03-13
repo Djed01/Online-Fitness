@@ -2,12 +2,17 @@ package org.unibl.etf.onlinefitness.controllers;
 
 import com.sun.tools.jconsole.JConsoleContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.onlinefitness.models.dto.ActivityDTO;
 import org.unibl.etf.onlinefitness.models.dto.CommentDTO;
+import org.unibl.etf.onlinefitness.models.dto.PdfDTO;
 import org.unibl.etf.onlinefitness.services.ActivityService;
+import org.unibl.etf.onlinefitness.services.PdfService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,6 +21,7 @@ import java.util.List;
 @RequestMapping("api/activity")
 public class ActivityController {
     private final ActivityService activityService;
+    private final PdfService pdfService;
 
     @GetMapping("/{id}")
     public List<ActivityDTO> getAllActivitiesByUserId(@PathVariable Integer id) {
@@ -34,5 +40,13 @@ public class ActivityController {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @GetMapping("/pdf/{id}")
+    public ResponseEntity<?> downloadPdf(@PathVariable Integer id) throws IOException {
+        PdfDTO pdfDTO = pdfService.generatePDFByUserId(id);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/pdf"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + pdfDTO.getFileName()+".pdf" + "\"")
+                .body(pdfDTO.getData());
     }
 }

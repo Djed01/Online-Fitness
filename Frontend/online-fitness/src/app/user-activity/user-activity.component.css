@@ -13,6 +13,15 @@
   margin-bottom: 15px;
 }
 
+.add-weight-button{
+  margin-bottom: 15px;
+}
+
+.pdf-button {
+  margin-bottom: 15px;
+  margin-right: 15px;
+}
+
 .activity-scroll-container {
   max-height: 350px;
   overflow-y: auto;
@@ -116,5 +125,13 @@
   .ngx-charts-bar-vertical {
     width: 100%; /* Make the chart fill the container */
     height: 300px; /* Adjust chart height for smaller screens */
+  }
+
+  .activity-header {
+    padding: 5px;
+  }
+
+  .add-weight-button{
+    margin-right: 10px;
   }
 }

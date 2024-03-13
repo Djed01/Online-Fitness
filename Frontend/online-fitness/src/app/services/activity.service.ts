@@ -32,4 +32,8 @@ export class ActivityService {
   addBodyWeightRecord(weight: number, id:number): Observable<any> {
     return this.http.post(`http://localhost:8080/api/body-weight/${id}`,weight);
   }
+
+  downloadPdf(userId:number){
+    return this.http.get(`http://localhost:8080/api/activity/pdf/${userId}`);
+  }
 }
