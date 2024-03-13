@@ -29,4 +29,18 @@ public class EmailService {
             e.printStackTrace();
         }
     }
+
+    public void sendNewsletterEmail(String content, String email) {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
+        try {
+            helper.setTo(email);
+            helper.setSubject("Online Fitness Newsletter");
+            helper.setText(content, false);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            // Handle exception
+            e.printStackTrace();
+        }
+    }
 }

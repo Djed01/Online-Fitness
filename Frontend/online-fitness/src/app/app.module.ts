@@ -40,6 +40,7 @@ import { UserActivityComponent } from './user-activity/user-activity.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AddActivityDialogComponent } from './add-activity-dialog/add-activity-dialog.component';
 import { AddWeightDialogComponent } from './add-weight-dialog/add-weight-dialog.component';
+import { SubscriptionComponent } from './subscription/subscription.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { AddWeightDialogComponent } from './add-weight-dialog/add-weight-dialog.
     UserActivityComponent,
     AddActivityDialogComponent,
     AddWeightDialogComponent,
+    SubscriptionComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { CreateProgramComponent } from './create-program/create-program.componen
 import { UserProgramsComponent } from './user-programs/user-programs.component';
 import { ChatComponent } from './chat/chat.component';
 import { UserActivityComponent } from './user-activity/user-activity.component';
+import { SubscriptionComponent } from './subscription/subscription.component';
 
 const routes: Routes = [
   { path: '', component: ProgramsComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'myprograms', component:UserProgramsComponent},
   { path: 'chat', component:ChatComponent},
   { path: 'activities', component:UserActivityComponent},
+  { path: 'subscription', component:SubscriptionComponent}
 ];
 
 @NgModule({

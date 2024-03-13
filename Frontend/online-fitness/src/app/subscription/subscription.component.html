@@ -1,0 +1,10 @@
+<h1 style="text-align: center;">Subscriptions</h1>
+<div class="categories-container">
+    <div *ngFor="let subscription of subscriptions" class="category-item">
+      <p style="font-size: 20px;"><b>{{ subscription.category }}</b></p>
+      <button mat-raised-button  style="font-size: 20px;" [color]="subscription.subscribed ? 'warn' : 'accent'" (click)="toggleSubscription(subscription)">
+        {{ subscription.subscribed ? 'Unsubscribe' : 'Subscribe' }}
+      </button>
+    </div>
+  </div>
+  
