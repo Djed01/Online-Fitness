@@ -1,12 +1,47 @@
 <mat-toolbar color="primary">
-    <div class="title-container">
-      <label [routerLink]="getLink()">Online Fitness</label>
-    </div>
-    <div class="button-container">
-      <button mat-raised-button color="basic" (click)="openLoginDialog()">Login</button>
-    </div>
-  </mat-toolbar>
-  
-  <router-outlet></router-outlet>
+  <div class="title-container">
+    <i class="fas fa-dumbbell fa-lg"></i>
+    <label [routerLink]="getLink()"> Online Fitness</label>
+  </div>
+  <div class="menu-container" *ngIf="isLoggedIn" [matMenuTriggerFor]="menu">
+    <button mat-icon-button>
+      <i class="fas fa-bars"></i>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['/profile']">
+        <i class="fas fa-user"></i> Profile
+      </button>
+      <button mat-menu-item [routerLink]="['/exercises']">
+        <i class="fas fa-dumbbell"></i> Exercises
+      </button>
+      <button mat-menu-item [routerLink]="['/participations']">
+        <i class="fas fa-users"></i> Participations
+      </button>
+      <button mat-menu-item [routerLink]="['/create']">
+        <i class="fas fa-plus-circle"></i> Create Program
+      </button>
+      <button mat-menu-item [routerLink]="['/myprograms']">
+        <i class="fas fa-list"></i> My Programs
+      </button>
+      <button mat-menu-item [routerLink]="['/chat']">
+        <i class="fas fa-comment"></i> Chat
+      </button>
+      <button mat-menu-item [routerLink]="['/activities']">
+        <i class="fas fa-chart-bar"></i> Activities
+      </button>
+      <button mat-menu-item [routerLink]="['/subscription']">
+        <i class="fas fa-credit-card"></i> Subscription
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </mat-menu>
+  </div>
+  <div class="button-container" *ngIf="!isLoggedIn">
+    <button mat-raised-button color="basic" (click)="openLoginDialog()">
+      <i class="fas fa-sign-in-alt"></i> Login
+    </button>
+  </div>
+</mat-toolbar>
 
-  
+<router-outlet></router-outlet>

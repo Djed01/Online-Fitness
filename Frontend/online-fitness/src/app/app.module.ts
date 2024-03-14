@@ -41,7 +41,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AddActivityDialogComponent } from './add-activity-dialog/add-activity-dialog.component';
 import { AddWeightDialogComponent } from './add-weight-dialog/add-weight-dialog.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
-
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -87,7 +87,8 @@ import { SubscriptionComponent } from './subscription/subscription.component';
     MatSelectModule,
     MatCheckboxModule,
     MatDialogModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatMenuModule
   ],
   providers: [
     provideAnimationsAsync()

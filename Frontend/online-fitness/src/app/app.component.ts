@@ -5,12 +5,18 @@ import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'online-fitness';
+  isLoggedIn: boolean = false;
 
-  constructor(private dialog: MatDialog,){
+  constructor(private dialog: MatDialog) {
+    this.isLoggedIn = this.isUserLoggedIn();
+  }
+
+  isUserLoggedIn(): boolean {
+    return localStorage.getItem('token') !== null;
   }
 
   getLink(): string[] {
@@ -18,11 +24,16 @@ export class AppComponent {
   }
 
   openLoginDialog(): void {
-    const dialogRef = this.dialog.open(LoginDialogComponent, {
-    });
+    const dialogRef = this.dialog.open(LoginDialogComponent, {});
 
     dialogRef.afterClosed().subscribe(result => {
+      this.isLoggedIn = this.isUserLoggedIn();
       console.log('The dialog was closed');
-    }); 
+    });
+  }
+
+  logout(): void {
+    localStorage.removeItem('token'); // Remove token from local storage
+    this.isLoggedIn = false; // Update login status
   }
 }
