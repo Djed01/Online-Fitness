@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Participation } from '../models/participation.model';
 import { ParticipationService } from '../services/participation.service';
 import { jwtDecode } from 'jwt-decode';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-payment-dialog',
@@ -21,6 +22,7 @@ export class PaymentDialogComponent {
     public dialogRef: MatDialogRef<PaymentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private participationService:ParticipationService,
+    private snackBar: MatSnackBar,
   ) {
     this.programId = data.programId;
     console.log("ID;:"+this.programId);
@@ -50,6 +52,9 @@ export class PaymentDialogComponent {
     if (creditCardForm.valid) {
       this.participate();
     } else {
+      this.snackBar.open("Invalid credit card payment form.", 'Close', {
+        duration: 3000,
+      });
       console.log('Invalid credit card payment form.');
     }
   }
@@ -57,8 +62,14 @@ export class PaymentDialogComponent {
   submitPayPalForm(paypalForm: NgForm): void {
     if (paypalForm.valid) {
       this.participate();
+      this.snackBar.open("PayPal payment processed successfully.", 'Close', {
+        duration: 3000,
+      });
       console.log('PayPal payment processed successfully.');
     } else {
+      this.snackBar.open("Invalid PayPal payment form.", 'Close', {
+        duration: 3000,
+      });
       console.log('Invalid PayPal payment form.');
     }
   }

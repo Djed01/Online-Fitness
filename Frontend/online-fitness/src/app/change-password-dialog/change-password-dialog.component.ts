@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../services/auth.service';
 import { jwtDecode } from 'jwt-decode';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-change-password-dialog',
@@ -15,7 +16,8 @@ export class ChangePasswordDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
      private dialog: MatDialog,
-     private authService:AuthService) {
+     private authService:AuthService,
+     private snackBar: MatSnackBar,) {
      }
 
   closeDialog(): void {
@@ -31,13 +33,19 @@ export class ChangePasswordDialogComponent {
         this.changePasswordFormValues.username = username;
       console.log(this.changePasswordFormValues);
       this.authService.changePassword(this.changePasswordFormValues).subscribe((response)=>{
-        console.log('Changed successfully.');
+        //console.log('Changed successfully.');
+        this.snackBar.open("Changed successfully.", 'Close', {
+          duration: 3000,
+        });
         this.closeDialog();
         return response;
       });
     }
     } else {
-      console.log('Invalid change.');
+      this.snackBar.open("Invalid change.", 'Close', {
+        duration: 3000,
+      });
+      //console.log('Invalid change.');
     }
   }
 

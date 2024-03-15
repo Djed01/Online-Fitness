@@ -1,4 +1,3 @@
-// user-selection-dialog.component.ts
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from '../services/user.service';
@@ -12,12 +11,16 @@ export class UserSelectionDialogComponent {
   users: any[] = [];
   filteredUsers: any[] = [];
   selectedUser: any;
+  currentUsername: string;
 
   constructor(
     private userService: UserService,
     public dialogRef: MatDialogRef<UserSelectionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+    this.users = data.users;
+    this.currentUsername = data.currentUsername;
+  }
 
   ngOnInit() {
     this.loadUsers();
@@ -25,9 +28,16 @@ export class UserSelectionDialogComponent {
 
   loadUsers() {
     this.userService.getAllUsers().subscribe(users => {
-      this.users = users;
-      this.filteredUsers = users;
+      // Filter out users that are already in the inbox
+      this.users = users.filter(user => !this.isUserInInbox(user));
+      // Filter out the current user
+      this.users = this.users.filter(user => user.username !== this.currentUsername);
+      this.filteredUsers = this.users;
     });
+  }
+
+  isUserInInbox(user: any): boolean {
+    return this.data.users.some((existingUser: any) => existingUser.username === user.username);
   }
 
   filterUsers(event: Event) {

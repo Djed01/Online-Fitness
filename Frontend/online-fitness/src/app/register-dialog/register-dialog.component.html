@@ -1,5 +1,12 @@
 <div class="wrapper">
-  <h2 mat-dialog-title>Register</h2>
+  
+  <div mat-dialog-actions>
+    <h2 mat-dialog-title>Register</h2>
+    <button mat-button (click)="closeDialog()" class="close-button">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  
   <div mat-dialog-content class="form-container">
     <form [formGroup]="profileForm" (ngSubmit)="submitRegisterForm()" class="form-container">
       <mat-form-field>
@@ -36,10 +43,5 @@
         <button mat-raised-button color="primary" type="submit">Register</button>
       </div>
     </form>
-  </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="closeDialog()" class="close-button">
-      <i class="fas fa-times"></i>
-    </button>
   </div>
 </div>

@@ -8,6 +8,7 @@ import {CategoryService} from '../services/category.service';
 import { Category } from '../models/category.model';
 import { ImageService } from '../services/image.service';
 import { jwtDecode } from 'jwt-decode';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-program',
@@ -25,7 +26,8 @@ export class CreateProgramComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private categoryService:CategoryService,
     private programService:ProgramService,
-    private imageService:ImageService) { }
+    private imageService:ImageService,
+    private snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
     this.programForm = this.fb.group({
@@ -68,7 +70,7 @@ export class CreateProgramComponent implements OnInit {
     program.userId = 1; // KASNIJE DODATI ID KOSRINIKA
     program.categoryId = this.selectedCategory.id;
 
-    console.log('ATRIBUTI PRIJE SUBMITA:', this.attributes.map(attribute => attribute.name).join(','));
+    //console.log('ATRIBUTI PRIJE SUBMITA:', this.attributes.map(attribute => attribute.name).join(','));
     program.attributes = [];
     this.attributes.forEach(attribute => {
       const attributeControl = this.programForm.get(`attribute${attribute.id}`)!;
@@ -83,11 +85,13 @@ export class CreateProgramComponent implements OnInit {
     console.log('Program data:', program);
     this.programService.createProgram(program).subscribe(result => {
       this.uploadImages(result.id);
+      this.snackBar.open("Program created successfully.", 'Close', {
+        duration: 3000,
+      });
       console.log('Program created successfully:', result);
     }); 
   }
-//}
-//}
+
 
 
   setCategoryAttributes() {

@@ -14,6 +14,7 @@ import { jwtDecode } from 'jwt-decode';
 import { ParticipationService } from '../services/participation.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-concrete-program',
@@ -29,6 +30,7 @@ export class ConcreteProgramComponent implements OnInit {
   photo:string = 'assets/images/gym.jpg';
   image:string = "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg";
   participates: boolean = false;
+  isLoggedIn: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,10 +42,19 @@ export class ConcreteProgramComponent implements OnInit {
     private imageService: ImageService,
     private participationService: ParticipationService,
     private sanitizer: DomSanitizer,
+    private snackBar: MatSnackBar,
     ){}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
+      const token = localStorage.getItem('token');
+      if(token){
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.id;
+        if (userId) {
+          this.isLoggedIn = true;
+        }
+      }
       const programId = +params['programId']; // '+' converts the string 'topicId' to a number
       if (programId) {
         this.programId = programId;
@@ -110,6 +121,9 @@ export class ConcreteProgramComponent implements OnInit {
               this.loadComments();
             },
             (error) => {
+              this.snackBar.open("Error occurred while posting comment.", 'Close', {
+                duration: 3000,
+              });
               console.error('Error occurred while posting comment:', error);
             }
           );

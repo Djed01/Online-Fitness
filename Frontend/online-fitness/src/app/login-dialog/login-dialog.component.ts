@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RegisterDialogComponent } from '../register-dialog/register-dialog.component';
 import { ActivationDialogComponent } from '../activation-dialog/activation-dialog.component';
 import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-dialog',
@@ -16,7 +17,8 @@ export class LoginDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<LoginDialogComponent>,
     private dialog: MatDialog,
-    private authService:AuthService) {}
+    private authService:AuthService,
+    private snackBar: MatSnackBar,) {}
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -32,15 +34,24 @@ export class LoginDialogComponent {
       (error) => {
         if (error.status === 401) {
           // InvalidUsernameException
-          console.log('Invalid username or password!');
+          this.snackBar.open("Invalid username or password!", 'Close', {
+            duration: 3000,
+          });
+          //console.log('Invalid username or password!');
         } else if (error.status === 403) {
           // NotActivatedException
           this.closeDialog();
           const dialogRef = this.dialog.open(ActivationDialogComponent, {});
-          console.log('Account not activated!');
+          this.snackBar.open("Account not activated!", 'Close', {
+            duration: 3000,
+          });
+          //console.log('Account not activated!');
         } else {
           // Other errors
-          console.error('An error occurred:', error);
+          this.snackBar.open("An error occurred!", 'Close', {
+            duration: 3000,
+          });
+          //console.error('An error occurred:', error);
         }
       }
     );

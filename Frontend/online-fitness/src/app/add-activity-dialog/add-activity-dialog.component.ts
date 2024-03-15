@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivityService } from '../services/activity.service';
 import { jwtDecode } from 'jwt-decode';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-activity-dialog',
@@ -17,6 +18,7 @@ export class AddActivityDialogComponent {
   constructor(public dialogRef: MatDialogRef<AddActivityDialogComponent>,
     private dialog: MatDialog,
     private activityService:ActivityService,
+    private snackBar: MatSnackBar,
     ) {}
 
     closeDialog(): void {

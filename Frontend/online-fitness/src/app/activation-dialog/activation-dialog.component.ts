@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-activation-dialog',
@@ -14,7 +15,8 @@ export class ActivationDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<ActivationDialogComponent>,
     private dialog: MatDialog,
-    private authService:AuthService) {}
+    private authService:AuthService,
+    private snackBar: MatSnackBar,) {}
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -24,12 +26,18 @@ export class ActivationDialogComponent {
     if (activationForm.valid) {
      this.authService.regenerateLink(this.activationFormValues).subscribe(
       (response)=>{
-        console.log('Link sent successfully.');
+        this.snackBar.open("Activation link sent to your email.", 'Close', {
+          duration: 3000,
+        });
+        // console.log('Link sent successfully.');
       this.closeDialog();
       }
      );
     } else {
-      console.log('Invalid form.');
+      this.snackBar.open("Invalid form.", 'Close', {
+        duration: 3000,
+      });
+      //console.log('Invalid form.');
     }
   }
 }

@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-profile-dialog',
@@ -15,7 +16,8 @@ export class EditProfileDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<EditProfileDialogComponent>, 
     private http: HttpClient, @Inject(MAT_DIALOG_DATA) public data: any,
-    private userService:UserService) {
+    private userService:UserService,
+    private snackBar: MatSnackBar,) {
       this.editProfileFormValues = { ...data.user };
     }
 
@@ -26,11 +28,17 @@ export class EditProfileDialogComponent {
   submitEditProfileForm(registerForm: NgForm): void {
     if (registerForm.valid) {
       this.userService.updateUserInfo(this.editProfileFormValues).subscribe((response)=>{
-        console.log('Registered successfully.');
+        this.snackBar.open("Updated successfully.", 'Close', {
+          duration: 3000,
+        });
+        //console.log('Updated successfully.');
         this.closeDialog();
       });
     } else {
-      console.log('Invalid registration form.');
+      this.snackBar.open("Invalid registration form.", 'Close', {
+        duration: 3000,
+      });
+      //console.log('Invalid registration form.');
     }
   }
 }

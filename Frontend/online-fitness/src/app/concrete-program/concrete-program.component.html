@@ -11,15 +11,8 @@
             program.categoryName
           }}</mat-card-subtitle>
           <div style="display: flex; flex-direction: column; margin-top: 5px; font-size: 16px; margin-left: auto; margin-right: 40px;">
-          <button mat-raised-button
-          *ngIf="!participates"
-          color="primary" 
-          (click)="openPaymentDialog()"
-          >Participate</button>
-          <button mat-raised-button
-          color="primary" 
-          (click)="openQuestionDialog()"
-          style="margin-top: 20px;">Ask question</button>
+            <button mat-raised-button *ngIf="isLoggedIn && !participates" color="primary" (click)="openPaymentDialog()">Participate</button>
+            <button mat-raised-button *ngIf="isLoggedIn" color="primary" (click)="openQuestionDialog()" style="margin-top: 20px;">Ask question</button>
         </div>
         </mat-card-header>
         <mat-card-content style="font-size: 20px">
@@ -71,13 +64,13 @@
             <mat-card class="new-comment-card">
               <mat-card-content>
                 <mat-form-field appearance="fill" style="width: 100%;">
-                  <textarea
-                    matInput
-                    [(ngModel)]="newComment.content"
-                    placeholder="Write a comment..."
-                  ></textarea>
+                  <textarea matInput [(ngModel)]="newComment.content" 
+                  placeholder="Write a comment..." 
+                  [disabled]="!isLoggedIn">
+                </textarea>
                 </mat-form-field>
                 <button
+                  [disabled]="!isLoggedIn"
                   mat-raised-button
                   color="primary"
                   (click)="addComment()"

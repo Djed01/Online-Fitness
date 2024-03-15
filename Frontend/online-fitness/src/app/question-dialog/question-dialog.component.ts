@@ -7,6 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Question } from '../models/question.model';
 import { UserService } from '../services/user.service';
 import { ProgramService } from '../services/program.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-question-dialog',
@@ -23,7 +24,8 @@ export class QuestionDialogComponent {
     private dialog: MatDialog,
     private questionService:QuestionService,
     private userService:UserService,
-    private programService:ProgramService) {
+    private programService:ProgramService,
+    private snackBar: MatSnackBar,) {
       this.programId = data.programId;
     }
 
@@ -49,6 +51,9 @@ export class QuestionDialogComponent {
           //   this.question.program = response;
           // })
       this.questionService.createQuestion(this.question).subscribe((response)=>{
+        this.snackBar.open("Question succesfully sent.", 'Close', {
+          duration: 3000,
+        });
         console.log("Succesfully added a new question!");
         this.closeDialog();
       });

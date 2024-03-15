@@ -25,6 +25,8 @@ export class UserActivityComponent implements OnInit {
   yAxisLabel = 'Weight';
   autoScale = true;
 
+  chartDataUpdated: boolean = false;
+
   activities: Activity[] = [];
   weightData: any[] = [];
   pdfUrl: any = {};
@@ -90,12 +92,18 @@ export class UserActivityComponent implements OnInit {
   openAddWeightDialog() {
     const dialogRef = this.dialog.open(AddWeightDialogComponent, {});
     dialogRef.componentInstance.weightAdded.subscribe((addedWeight) => {
-      this.weightData.push(addedWeight);
+      if (addedWeight) { // Check if addedWeight is not undefined
+        this.weightData.push(addedWeight);
+        if(this.userId)
+        this.fetchWeightData(this.userId);
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
+  
+
 
   downloadPdf(event: Event) {
     event.preventDefault(); // Prevent default behavior of anchor element

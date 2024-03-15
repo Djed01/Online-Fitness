@@ -4,6 +4,7 @@ import { FormBuilder, NgForm, FormControl, Validators, } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AvatarService } from '../services/avatar.service';
 import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register-dialog',
@@ -47,6 +48,7 @@ export class RegisterDialogComponent {
     private avatarService:AvatarService,
     private authService:AuthService,
     private formBuilder:FormBuilder,
+    private snackBar: MatSnackBar,
     ) {}
 
     profileForm = this.formBuilder.group(
@@ -80,6 +82,9 @@ export class RegisterDialogComponent {
         city: this.city.value,
       }).subscribe(
         (response) => {
+          this.snackBar.open("Successfully registered.", 'Close', {
+            duration: 3000,
+          });
           console.log('User registered successfully:', response);
           this.uploadAvatar(response.id);
           // Optionally, you can close the dialog here

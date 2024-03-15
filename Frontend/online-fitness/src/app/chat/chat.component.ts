@@ -170,8 +170,12 @@ export class ChatComponent {
 
   openUserSelectionDialog(): void {
     const dialogRef = this.dialog.open(UserSelectionDialogComponent, {
+      data: {
+        users: this.users, // Pass the users already in the inbox
+        currentUsername: this.ownUsername // Pass the current user's username
+      }
     });
-  
+    
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log(result); // Result will be the selected user
@@ -184,5 +188,5 @@ export class ChatComponent {
         this.users.push(result);
       }
     });
-}
+  }  
 }

@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { ImageService } from '../services/image.service';
 import { of, forkJoin } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-programs',
@@ -32,6 +33,7 @@ export class ProgramsComponent implements OnInit {
      private http: HttpClient,
      private newsService: NewsService,
      private authService: AuthService,
+     private snackBar: MatSnackBar,
      private route: ActivatedRoute,
      private imageService:ImageService) {
       this.activate();
@@ -148,6 +150,9 @@ export class ProgramsComponent implements OnInit {
       if (token) {
         this.authService.activate(token).subscribe(
           response => {
+            this.snackBar.open("Activation successful.", 'Close', {
+              duration: 3000,
+            });
             console.log('Activation successful:', response);
             // Optionally, you can redirect the user to another page after activation
           },
