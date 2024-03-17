@@ -2,7 +2,7 @@ package org.unibl.etf.model.dto;
 
 import java.io.Serializable;
 
-public class Category implements Serializable{
+public class CategoryDTO implements Serializable{
 	/**
 	 * 
 	 */
@@ -10,13 +10,13 @@ public class Category implements Serializable{
 	private Integer id;
 	private String name;
 	
-	public Category(Integer id, String name) {
+	public CategoryDTO(Integer id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
 	
-	public Category() {
+	public CategoryDTO() {
 		super();
 	}
 

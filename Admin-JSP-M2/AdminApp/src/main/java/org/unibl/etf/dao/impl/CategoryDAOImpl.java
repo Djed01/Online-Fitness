@@ -8,7 +8,7 @@ import java.util.List;
 import org.unibl.etf.dao.CategoryDAO;
 import org.unibl.etf.dao.ConnectionPool;
 import org.unibl.etf.dao.DAOUtil;
-import org.unibl.etf.model.dto.Category;
+import org.unibl.etf.model.dto.CategoryDTO;
 
 public class CategoryDAOImpl implements CategoryDAO {
 
@@ -24,8 +24,8 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
     
     @Override
-    public List<Category> getAllCategories() {
-        List<Category> categories = new ArrayList<>();
+    public List<CategoryDTO> getAllCategories() {
+        List<CategoryDTO> categories = new ArrayList<>();
         Connection connection = null;
         ResultSet resultSet = null;
         Object values[] = {};
@@ -36,7 +36,7 @@ public class CategoryDAOImpl implements CategoryDAO {
         	resultSet = pstmt.executeQuery();	
         	 
             while (resultSet.next()) {
-                Category category = new Category();
+                CategoryDTO category = new CategoryDTO();
                 category.setId(resultSet.getInt("id"));
                 category.setName(resultSet.getString("name"));
                 categories.add(category);
@@ -50,7 +50,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
     
     
-    public boolean insertCategory(Category category) {
+    public boolean insertCategory(CategoryDTO category) {
         Connection connection = null;
         PreparedStatement pstmt = null;
         try {
@@ -86,8 +86,9 @@ public class CategoryDAOImpl implements CategoryDAO {
         }
         return false;
     }
-
-    public boolean updateCategory(Category category) {
+    
+    @Override
+    public boolean updateCategory(CategoryDTO category) {
         Connection connection = null;
         PreparedStatement pstmt = null;
         try {

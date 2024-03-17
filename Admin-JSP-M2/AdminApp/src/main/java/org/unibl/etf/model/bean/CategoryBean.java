@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.unibl.etf.dao.CategoryDAO;
 import org.unibl.etf.dao.impl.CategoryDAOImpl;
-import org.unibl.etf.model.dto.Category;
+import org.unibl.etf.model.dto.CategoryDTO;
 
 public class CategoryBean implements Serializable{
 
@@ -26,8 +26,8 @@ public class CategoryBean implements Serializable{
 
 
 
-	public List<Category> getAllCategories(){
-		List<Category> categories = new ArrayList<Category>();
+	public List<CategoryDTO> getAllCategories(){
+		List<CategoryDTO> categories = new ArrayList<CategoryDTO>();
 		try {
 			categories = this.categoryDAO.getAllCategories();
 		}catch(Exception e) {
@@ -45,5 +45,14 @@ public class CategoryBean implements Serializable{
 		}
 	}
 	
+	
+	public boolean updateCategory(CategoryDTO category) {
+		try {
+			return this.categoryDAO.updateCategory(category);
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }
