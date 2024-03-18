@@ -32,4 +32,23 @@ public class AttributeBean implements Serializable {
 		return attributes;
 	}
 	
+	public boolean deleteAttribute(Integer id) {
+		try {
+			return this.attributeDAO.deleteAttribute(id);
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	public boolean updateCategory(AttributeDTO attributeDTO) {
+		try {
+			return this.attributeDAO.updateAttribute(attributeDTO);
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }

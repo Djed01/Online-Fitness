@@ -54,6 +54,34 @@
         var formId = "editCategoryForm" + categoryId;
         document.getElementById(formId).submit();
     }
+    
+    function submitEditAttributeForm(attributeId) {
+        var formId = "editAttributeForm" + attributeId;
+        document.getElementById(formId).submit();
+    }
+    
+    function submitAddCategoryForm() {
+        // Handle form submission for adding a new category
+        var categoryName = document.getElementById("newCategoryName").value;
+        // Perform any additional validation if needed
+        // Submit the form using AJAX or let it submit normally
+    }
+    
+    function openAddAttributeModal(categoryId) {
+        // Set the category ID in the hidden input field
+        document.getElementById("categoryId").value = categoryId;
+        // Open the add attribute modal
+        var modal = new bootstrap.Modal(document.getElementById('addAttributeModal'));
+        modal.show();
+    }
+
+    function submitAddAttributeForm() {
+        // Handle form submission for adding a new attribute
+        var attributeName = document.getElementById("newAttributeName").value;
+        var categoryId = document.getElementById("categoryId").value;
+        // Perform any additional validation if needed
+        // Submit the form using AJAX or let it submit normally
+    }
 </script>
     
 </head>
@@ -62,7 +90,12 @@
     <%@ include file="navbar.jsp" %>
     <div class="container">
         <h1>Categories Management</h1>
+        <div style="display: flex; flex-direction: row;">
         <h2>Existing Categories</h2>
+        <button style="margin-left:20px" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+		    Add New Category
+		</button>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -95,6 +128,9 @@
                                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#categoryAttributesModal<%= category.getId() %>">
                                     Attributes
                                 </button>
+                                     <button type="button" class="btn btn-primary" onclick="openAddAttributeModal(categoryId)">
+												    Add New Attribute
+												</button>                             
                             </td>
                         </tr>
                     <% } %>
@@ -103,7 +139,7 @@
         </table>
     </div>
     
-    <!-- MODALS -->
+    <!-- ================== MODALS ================== -->
     <% 
     for (CategoryDTO category : categories) {
         List<AttributeDTO> attributes = attributeBean.getAllAttributesByCategoryId(category.getId());
@@ -135,7 +171,7 @@
             </div>
         </div>
 
-        <!-- Attributes Table -->
+        <!-- ========= Attributes Table ========= -->
         <div class="modal fade" id="categoryAttributesModal<%= category.getId() %>" tabindex="-1" aria-labelledby="categoryAttributesModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -165,11 +201,12 @@
                                                 <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editAttributeModal<%= attribute.getId() %>">Edit</a>
                                                 
                                                 <!-- Delete button for attribute -->
-                                                <form id="deleteAttributeForm<%= attribute.getId() %>" action="Attribute" method="post">
-                                                    <input type="hidden" name="action" value="delete">
+                                                <form id="deleteAttributeForm<%= attribute.getId() %>" action="Category" method="post">
+                                                    <input type="hidden" name="action" value="delete_attribute">
                                                     <input type="hidden" name="attributeId" value="<%= attribute.getId() %>">
                                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this attribute?')">Delete</button>
                                                 </form>
+           
                                             </td>
                                         </tr>
                                 <% 
@@ -187,7 +224,7 @@
             </div>
         </div>
         
-        <!-- Edit Attributes Modal -->
+        <!-- ========= Edit Attributes Modal ========= -->
         <% 
         for (AttributeDTO attribute : attributes) {
         %>
@@ -199,11 +236,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="editCategoryForm<%= attribute.getId() %>" onsubmit="submitEditCategoryForm(<%= attribute.getId() %>)" action="Attribute" method="post">
-                                <input type="hidden" name="action" value="update">
-                                <input type="hidden" name="categoryId" value="<%= attribute.getId() %>">
+                            <form id="editCategoryForm<%= attribute.getId() %>" onsubmit="submitEditAttributeForm(<%= attribute.getId() %>)" action="Category" method="post">
+                                <input type="hidden" name="action" value="update_attribute">
+                                <input type="hidden" name="attributeId" value="<%= attribute.getId() %>">
                                 <div class="mb-3">
-                                    <label for="editCategoryName" class="form-label">Attribute Name</label>
+                                    <label for="editAttributeName" class="form-label">Attribute Name</label>
                                     <input type="text" class="form-control" id="editAttributeName" name="editAttributeName" value="<%= attribute.getName() %>">
                                 </div>
                                 <!-- Add other fields for updating category attributes if needed -->
@@ -218,5 +255,59 @@
             </div>
         <% } %>
     <% } %>
+    
+    <!-- ================================================================================================================ -->
+    
+    <!-- Add Category Modal -->
+	<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <form id="addCategoryForm" onsubmit="submitAddCategoryForm()" action="Category" method="post">
+	                    <input type="hidden" name="action" value="add">
+	                    <div class="mb-3">
+	                        <label for="newCategoryName" class="form-label">Category Name</label>
+	                        <input type="text" class="form-control" id="newCategoryName" name="newCategoryName" required>
+	                    </div>
+	                    <div class="modal-footer">
+	                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	                        <button type="submit" class="btn btn-primary">Add Category</button>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+	<!-- =================== Add Attribute Modal ======================== -->
+	<div class="modal fade" id="addAttributeModal" tabindex="-1" aria-labelledby="addAttributeModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="addAttributeModalLabel">Add Attribute</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <form id="addAttributeForm" onsubmit="submitAddAttributeForm()" action="Attribute" method="post">
+	                    <input type="hidden" id="categoryId" name="categoryId"> <!-- Hidden input for category ID -->
+	                    <input type="hidden" name="action" value="add">
+	                    <div class="mb-3">
+	                        <label for="newAttributeName" class="form-label">Attribute Name</label>
+	                        <input type="text" class="form-control" id="newAttributeName" name="newAttributeName" required>
+	                    </div>
+	                    <div class="modal-footer">
+	                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	                        <button type="submit" class="btn btn-primary">Add Attribute</button>
+	                    </div>
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
 </body>
 </html>

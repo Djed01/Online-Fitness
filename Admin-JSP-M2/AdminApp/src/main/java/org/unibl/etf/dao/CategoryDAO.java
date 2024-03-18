@@ -9,4 +9,5 @@ public interface CategoryDAO {
 	List<CategoryDTO> getAllCategories() throws Exception;
 	boolean deleteCategory(int categoryId) throws SQLException;
 	boolean updateCategory(CategoryDTO category) throws SQLException;
+	boolean insertCategory(CategoryDTO category) throws SQLException;
 }

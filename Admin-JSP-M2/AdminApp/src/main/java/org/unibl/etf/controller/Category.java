@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.unibl.etf.model.bean.AttributeBean;
 import org.unibl.etf.model.bean.CategoryBean;
+import org.unibl.etf.model.dto.AttributeDTO;
 import org.unibl.etf.model.dto.CategoryDTO;
 
 /**
@@ -73,6 +74,51 @@ public class Category extends HttpServlet {
 	        CategoryBean categoryBean = (CategoryBean) request.getSession().getAttribute("categoryBean");
 	        boolean success = categoryBean.updateCategory(updatedCategory);
 
+	        if (success) {
+	            // Category updated successfully
+	            // Redirect or set a success message as needed
+	        } else {
+	            // Category update failed
+	            // Redirect or set an error message as needed
+	        }
+	    }else if(action != null && action.equals("add")){
+	    	String categoryName = request.getParameter("newCategoryName");
+	    	
+	    	CategoryDTO newCategory = new CategoryDTO();
+	    	newCategory.setName(categoryName);
+	    	// Add the category
+	        CategoryBean categoryBean = (CategoryBean) request.getSession().getAttribute("categoryBean");
+	        boolean success = categoryBean.insertCategory(newCategory);
+	        if (success) {
+	            // Category added successfully
+	            // Redirect or set a success message as needed
+	        } else {
+	            // Category add failed
+	            // Redirect or set an error message as needed
+	        }
+	    	
+	    }else if (action != null && action.equals("delete_attribute")) {
+	    	int attributeId = Integer.parseInt(request.getParameter("attributeId"));
+	    	AttributeBean attributeBean = (AttributeBean) request.getSession().getAttribute("attributeBean");
+	    	boolean success = attributeBean.deleteAttribute(attributeId);
+	        if (success) {
+	        	System.out.println("\n\n\nDeleted!\n\n\n");
+	            // TODO Success
+	        } else {
+	        	System.out.println("\n\n\nNot Deleted!\n\n\n");
+	            // TODO Error
+	        }
+	    }else if (action != null && action.equals("update_attribute")) {
+	    	int attributeId = Integer.parseInt(request.getParameter("attributeId"));
+	    	String attributeName = request.getParameter("editAttributeName");
+	    	
+	    	AttributeDTO updatedAttribute = new AttributeDTO();
+	    	updatedAttribute.setId(attributeId);
+	    	updatedAttribute.setName(attributeName);
+	    	
+	    	AttributeBean attributeBean = (AttributeBean) request.getSession().getAttribute("attributeBean");
+	        boolean success = attributeBean.updateCategory(updatedAttribute);
+	        
 	        if (success) {
 	            // Category updated successfully
 	            // Redirect or set a success message as needed

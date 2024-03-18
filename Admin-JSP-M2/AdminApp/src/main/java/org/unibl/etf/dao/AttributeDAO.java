@@ -7,4 +7,6 @@ import org.unibl.etf.model.dto.AttributeDTO;
 
 public interface AttributeDAO {
 	List<AttributeDTO> getAllAttributesByCategoryId(Integer id) throws SQLException;
+	boolean deleteAttribute(int attributeId) throws SQLException;
+	boolean updateAttribute(AttributeDTO attribute) throws SQLException;
 }

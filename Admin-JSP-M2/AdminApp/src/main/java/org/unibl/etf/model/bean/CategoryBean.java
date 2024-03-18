@@ -22,6 +22,15 @@ public class CategoryBean implements Serializable{
 	public CategoryBean() {
 		this.categoryDAO=new CategoryDAOImpl();
 	}
+	
+	public boolean insertCategory(CategoryDTO categoryDTO) {
+		try {
+			return this.categoryDAO.insertCategory(categoryDTO);
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 
 

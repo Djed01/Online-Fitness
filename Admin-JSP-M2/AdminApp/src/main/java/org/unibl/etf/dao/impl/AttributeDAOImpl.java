@@ -15,8 +15,10 @@ public class AttributeDAOImpl implements AttributeDAO {
 	
 	private static ConnectionPool connectionPool = ConnectionPool.getConnectionPool();
 	private static final String SELECT_ALL_ATTRIBUTES_BY_CATEGORY_ID_QUERY = "SELECT * FROM categoryattribute WHERE CategoryID=? AND status=true";
+	private static final String DELETE_ATTRIBUTE_QUERY = "UPDATE categoryattribute SET status=? WHERE id = ?";
+	private static final String UPDATE_CATEGORY_QUERY = "UPDATE categoryattribute SET name = ? WHERE id = ?";
 	
-    public AttributeDAOImpl() {
+	public AttributeDAOImpl() {
 		
 	}
 	
@@ -45,6 +47,45 @@ public class AttributeDAOImpl implements AttributeDAO {
 		}
 		return attributes;
 	}
+	
+	
+	@Override
+    public boolean deleteAttribute(int attributeId) {
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            connection = connectionPool.checkOut();
+            pstmt = connection.prepareStatement(DELETE_ATTRIBUTE_QUERY);
+            pstmt.setBoolean(1, false);
+            pstmt.setInt(2, attributeId);
+            int rowsDeleted = pstmt.executeUpdate();
+            return rowsDeleted > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionPool.checkIn(connection);
+        }
+        return false;
+    }
+	
+	@Override
+    public boolean updateAttribute(AttributeDTO attribute) {
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        try {
+            connection = connectionPool.checkOut();
+            pstmt = connection.prepareStatement(UPDATE_CATEGORY_QUERY);
+            pstmt.setString(1, attribute.getName());
+            pstmt.setInt(2, attribute.getId());
+            int rowsUpdated = pstmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionPool.checkIn(connection);
+        }
+        return false;
+    }
 	
 }
 
