@@ -9,4 +9,5 @@ public interface AttributeDAO {
 	List<AttributeDTO> getAllAttributesByCategoryId(Integer id) throws SQLException;
 	boolean deleteAttribute(int attributeId) throws SQLException;
 	boolean updateAttribute(AttributeDTO attribute) throws SQLException;
+	boolean insertAttribute(AttributeDTO attribute) throws SQLException;
 }

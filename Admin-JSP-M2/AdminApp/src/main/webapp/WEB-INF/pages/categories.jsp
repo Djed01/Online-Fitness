@@ -21,7 +21,7 @@
         }
         .btn-group .btn {
             margin-right: 5px;
-        }
+        }http://localhost:8080/User
     </style>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -75,10 +75,12 @@
         modal.show();
     }
 
+
     function submitAddAttributeForm() {
         // Handle form submission for adding a new attribute
-        var attributeName = document.getElementById("newAttributeName").value;
-        var categoryId = document.getElementById("categoryId").value;
+         var attributeName = document.getElementById("newAttributeName").value;
+    	 var categoryId = document.getElementById("categoryId").value; // Corrected line
+    	//console.log("CategoryID="+categoryId);
         // Perform any additional validation if needed
         // Submit the form using AJAX or let it submit normally
     }
@@ -128,9 +130,10 @@
                                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#categoryAttributesModal<%= category.getId() %>">
                                     Attributes
                                 </button>
-                                     <button type="button" class="btn btn-primary" onclick="openAddAttributeModal(categoryId)">
-												    Add New Attribute
-												</button>                             
+                                     <button type="button" class="btn btn-primary" onclick="openAddAttributeModal('<%= category.getId() %>')">
+									    Add New Attribute
+									</button>
+                            
                             </td>
                         </tr>
                     <% } %>
@@ -243,7 +246,9 @@
                                     <label for="editAttributeName" class="form-label">Attribute Name</label>
                                     <input type="text" class="form-control" id="editAttributeName" name="editAttributeName" value="<%= attribute.getName() %>">
                                 </div>
-                                <!-- Add other fields for updating category attributes if needed -->
+          var attributeName = document.getElementById("newAttributeName").value;
+    var categoryId = document.getElementById("categoryId").value; // Corrected line
+                           <!-- Add other fields for updating category attributes if needed -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Save changes</button>
@@ -292,16 +297,16 @@
 	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	            </div>
 	            <div class="modal-body">
-	                <form id="addAttributeForm" onsubmit="submitAddAttributeForm()" action="Attribute" method="post">
+	                <form id="addAttributeForm" onsubmit="submitAddAttributeForm()" action="Category" method="post">
 	                    <input type="hidden" id="categoryId" name="categoryId"> <!-- Hidden input for category ID -->
-	                    <input type="hidden" name="action" value="add">
+	                    <input type="hidden" name="action" value="add_attribute">
 	                    <div class="mb-3">
 	                        <label for="newAttributeName" class="form-label">Attribute Name</label>
 	                        <input type="text" class="form-control" id="newAttributeName" name="newAttributeName" required>
 	                    </div>
 	                    <div class="modal-footer">
 	                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	                        <button type="submit" class="btn btn-primary">Add Attribute</button>
+	                        <button type="submit" class="btn btn-primary" onclick="submitAddAttributeForm()">Add Attribute</button>
 	                    </div>
 	                </form>
 	            </div>

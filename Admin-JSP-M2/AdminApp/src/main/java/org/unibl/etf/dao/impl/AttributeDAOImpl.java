@@ -16,7 +16,8 @@ public class AttributeDAOImpl implements AttributeDAO {
 	private static ConnectionPool connectionPool = ConnectionPool.getConnectionPool();
 	private static final String SELECT_ALL_ATTRIBUTES_BY_CATEGORY_ID_QUERY = "SELECT * FROM categoryattribute WHERE CategoryID=? AND status=true";
 	private static final String DELETE_ATTRIBUTE_QUERY = "UPDATE categoryattribute SET status=? WHERE id = ?";
-	private static final String UPDATE_CATEGORY_QUERY = "UPDATE categoryattribute SET name = ? WHERE id = ?";
+	private static final String UPDATE_ATTRIBUTE_QUERY = "UPDATE categoryattribute SET name = ? WHERE id = ?";
+	private static final String INSERT_ATTRIBUTE_QUERY = "INSERT INTO categoryattribute (name,status,categoryId) VALUES (?,?,?)";
 	
 	public AttributeDAOImpl() {
 		
@@ -74,7 +75,7 @@ public class AttributeDAOImpl implements AttributeDAO {
         PreparedStatement pstmt = null;
         try {
             connection = connectionPool.checkOut();
-            pstmt = connection.prepareStatement(UPDATE_CATEGORY_QUERY);
+            pstmt = connection.prepareStatement(UPDATE_ATTRIBUTE_QUERY);
             pstmt.setString(1, attribute.getName());
             pstmt.setInt(2, attribute.getId());
             int rowsUpdated = pstmt.executeUpdate();
@@ -86,6 +87,26 @@ public class AttributeDAOImpl implements AttributeDAO {
         }
         return false;
     }
+	
+	@Override
+	public boolean insertAttribute(AttributeDTO attribute) throws SQLException{
+		 Connection connection = null;
+	        PreparedStatement pstmt = null;
+	        try {
+	            connection = connectionPool.checkOut();
+	            pstmt = connection.prepareStatement(INSERT_ATTRIBUTE_QUERY);
+	            pstmt.setString(1, attribute.getName());
+	            pstmt.setBoolean(2,true);
+	            pstmt.setInt(3, attribute.getCategoryId());
+	            int rowsInserted = pstmt.executeUpdate();
+	            return rowsInserted > 0;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            connectionPool.checkIn(connection);
+	        }
+	        return false;
+	}
 	
 }
 

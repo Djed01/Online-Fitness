@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:useBean id="loginBean" type="org.unibl.etf.model.bean.LoginBean" scope="session"></jsp:useBean>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin App</title>
-    <link href="<c:url value='/webjars/bootstrap/5.3.0/css/bootstrap.min.css' />" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         body {
@@ -67,7 +68,8 @@
 <body>
     <div class="login-container">
         <h2><i class="fas fa-user icon"></i> Admin Login</h2>
-        <form action="LoginServlet" method="post">
+        <form action="Login" method="post">
+        	<input type="hidden" name="action" value="login">
             <div class="form-group">
                 <i class="fas fa-user icon"></i>
                 <input type="text" class="form-control" name="username" placeholder="Username">

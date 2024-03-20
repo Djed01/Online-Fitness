@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.unibl.etf.model.bean.AttributeBean;
 import org.unibl.etf.model.bean.CategoryBean;
+import org.unibl.etf.model.dto.AdminDTO;
 import org.unibl.etf.model.dto.AttributeDTO;
 import org.unibl.etf.model.dto.CategoryDTO;
 
@@ -34,12 +35,21 @@ public class Category extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	CategoryBean categoryBean = new CategoryBean();
-    	AttributeBean attributeBean = new AttributeBean();
-    	HttpSession session = request.getSession();
-    	session.setAttribute("categoryBean", categoryBean);
-    	session.setAttribute("attributeBean", attributeBean);
-    	
+        HttpSession session = request.getSession();
+        AdminDTO admin = (AdminDTO) session.getAttribute("admin");
+        if (admin == null || !admin.isLoggedIn()) {
+            response.sendRedirect("Login");
+            return;
+        }
+        
+        System.out.println("\n\n\n\n"+admin.getUsername()+"\n\n\n");
+
+        CategoryBean categoryBean = new CategoryBean();
+        AttributeBean attributeBean = new AttributeBean();
+        
+        session.setAttribute("categoryBean", categoryBean);
+        session.setAttribute("attributeBean", attributeBean);
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/pages/categories.jsp");
         dispatcher.forward(request, response);
     }
@@ -117,7 +127,7 @@ public class Category extends HttpServlet {
 	    	updatedAttribute.setName(attributeName);
 	    	
 	    	AttributeBean attributeBean = (AttributeBean) request.getSession().getAttribute("attributeBean");
-	        boolean success = attributeBean.updateCategory(updatedAttribute);
+	        boolean success = attributeBean.updateAttribute(updatedAttribute);
 	        
 	        if (success) {
 	            // Category updated successfully
@@ -126,6 +136,25 @@ public class Category extends HttpServlet {
 	            // Category update failed
 	            // Redirect or set an error message as needed
 	        }
+	    }else if(action != null && action.equals("add_attribute")){
+	    	String attributeName = request.getParameter("newAttributeName");
+	    	System.out.println("\n\n\n\n"+request.getParameter("categoryId")+"\n\n\n\n\n");
+	    	Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
+	    	
+	    	AttributeDTO newAttribute = new AttributeDTO();
+	    	newAttribute.setName(attributeName);
+	    	newAttribute.setCategoryId(categoryId);
+	    	// Add the category
+	        AttributeBean attributeBean = (AttributeBean) request.getSession().getAttribute("attributeBean");
+	        boolean success = attributeBean.insertAttribute(newAttribute);
+	        if (success) {
+	            // Category added successfully
+	            // Redirect or set a success message as needed
+	        } else {
+	            // Category add failed
+	            // Redirect or set an error message as needed
+	        }
+	    	
 	    }
 
 

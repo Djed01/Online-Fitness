@@ -42,10 +42,19 @@ public class AttributeBean implements Serializable {
 	}
 	
 	
-	public boolean updateCategory(AttributeDTO attributeDTO) {
+	public boolean updateAttribute(AttributeDTO attributeDTO) {
 		try {
 			return this.attributeDAO.updateAttribute(attributeDTO);
 		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean insertAttribute(AttributeDTO attributeDTO) {
+		try {
+			return this.attributeDAO.insertAttribute(attributeDTO);
+		}catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}

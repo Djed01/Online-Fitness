@@ -53,15 +53,28 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="categories.jsp"><i class="fas fa-list"></i> Categories</a>
+                    <a class="nav-link" href="Category"><i class="fas fa-list"></i> Categories</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="users.jsp"><i class="fas fa-users"></i> Users</a>
+                    <a class="nav-link" href="User"><i class="fas fa-users"></i> Users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="statistics.jsp"><i class="fas fa-chart-bar"></i> Statistics</a>
+                    <a class="nav-link" href="Advisor"><i class="fas fa-user-tie"></i> Advisors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Log"><i class="fas fa-chart-bar"></i> Statistics</a>
                 </li>
             </ul>
+        </div>
+        <div class="navbar-nav">
+        
+        	<form id="logoutForm" action="Login" method="post">
+            	<input type="hidden" name="action" value="logout">      
+                <button type="submit" class="btn btn-link nav-link text-white">
+			        <i class="fas fa-sign-out-alt"></i> Logout
+			    </button>
+            </form>
+          
         </div>
     </div>
 </header>

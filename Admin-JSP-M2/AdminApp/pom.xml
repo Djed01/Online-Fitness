@@ -1,12 +1,10 @@
-<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>AdminApp</groupId>
   <artifactId>AdminApp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  
   <dependencies>
 	  <dependency>
 	    <groupId>org.webjars</groupId>
@@ -20,6 +18,15 @@
 		<artifactId>mysql-connector-java</artifactId>
 		 <version>8.0.27</version> 
 	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/at.favre.lib/bcrypt -->
+	<dependency>
+	    <groupId>at.favre.lib</groupId>
+	    <artifactId>bcrypt</artifactId>
+	    <version>0.9.0</version>
+	</dependency>
+
+
 
 
   </dependencies>
@@ -30,7 +37,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <release>18</release>
+          <release>20</release>
         </configuration>
       </plugin>
       <plugin>
