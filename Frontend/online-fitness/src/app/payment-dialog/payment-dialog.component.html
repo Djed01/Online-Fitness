@@ -58,7 +58,7 @@
     <div *ngIf="selectedPaymentMethod === 'in_person'">
       <p>Please confirm that you will pay in person.</p>
       <div class="button-container">
-        <button mat-raised-button color="primary" (click)="closeDialog()" [disabled]="false">Confirm</button>
+        <button mat-raised-button color="primary" (click)="submitInPerson()" [disabled]="false">Confirm</button>
       </div>
     </div>
   </div>

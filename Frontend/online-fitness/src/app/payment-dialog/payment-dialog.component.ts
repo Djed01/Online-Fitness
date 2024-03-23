@@ -74,14 +74,19 @@ export class PaymentDialogComponent {
     }
   }
 
+  submitInPerson():void{
+    this.participate();
+    this.snackBar.open("Confirmed successfully.", 'Close', {
+      duration: 3000,
+    });
+  }
+
 
   submitForm(): void {
     if (this.selectedPaymentMethod === 'credit_card') {
       this.submitCreditCardForm(this.creditCardFormValues);
     } else if (this.selectedPaymentMethod === 'paypal') {
       this.submitPayPalForm(this.paypalFormValues);
-    } else if(this.selectedPaymentMethod == 'in_person'){
-      this.participate();
-    }
+    } 
   }
 }

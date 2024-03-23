@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ export class AppComponent {
   title = 'online-fitness';
   isLoggedIn: boolean = false;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private router: Router) {
     this.isLoggedIn = this.isUserLoggedIn();
   }
 
@@ -35,5 +36,6 @@ export class AppComponent {
   logout(): void {
     localStorage.removeItem('token'); // Remove token from local storage
     this.isLoggedIn = false; // Update login status
+    this.router.navigateByUrl('/');
   }
 }

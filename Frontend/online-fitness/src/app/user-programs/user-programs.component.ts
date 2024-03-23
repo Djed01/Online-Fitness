@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild  } from '@angular/core';
 import { ProgramService } from '../services/program.service';
 import { Program } from '../models/program.model';
 import { jwtDecode } from 'jwt-decode';
+import { MatDialog } from '@angular/material/dialog';
+import { TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-user-programs',
@@ -9,11 +11,12 @@ import { jwtDecode } from 'jwt-decode';
   styleUrl: './user-programs.component.css'
 })
 export class UserProgramsComponent {
+  @ViewChild('confirmDialog') confirmDialog!: TemplateRef<any>;
   programs: Program[] = [];
   filteredPrograms: Program[] = [];
   status: boolean = true; 
 
-  constructor(private programService: ProgramService){}
+  constructor(private programService: ProgramService, private dialog: MatDialog){}
 
   ngOnInit() {
     this.loadPrograms();
@@ -43,5 +46,16 @@ export class UserProgramsComponent {
     this.programService.deleteProgram(id).subscribe((response)=>{
       console.log(response);
     })
+  }
+
+
+  openConfirmDialog(commentId: number) {
+    const dialogRef = this.dialog.open(this.confirmDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteProgram(commentId);
+      }
+    });
   }
 }

@@ -2,6 +2,7 @@ package org.unibl.etf.onlinefitness.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.unibl.etf.onlinefitness.models.dto.AttributeDTO;
 import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
@@ -10,6 +11,9 @@ import org.unibl.etf.onlinefitness.models.entities.ProgramEntity;
 import org.unibl.etf.onlinefitness.models.enumeration.LogType;
 import org.unibl.etf.onlinefitness.repositories.ProgramRepository;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -74,6 +78,21 @@ public class ProgramService {
             logService.log(LogType.INFO,"No log service with the provided id found!");
             //Program not found
             return null;
+        }
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?") // Executes at midnight every day
+    public void updateProgramStatus() {
+        List<ProgramEntity> programs = programRepository.findAllByStatus(true);
+        LocalDate today = LocalDate.now();
+        LocalDate fifteenDaysAgo = today.minusDays(15);
+
+        for (ProgramEntity program : programs) {
+            LocalDate creationDate = program.getCreationDate().toLocalDate();
+            if (creationDate.isBefore(fifteenDaysAgo)) {
+                program.setStatus(false);
+                programRepository.save(program);
+            }
         }
     }
 

@@ -9,6 +9,7 @@ import { Category } from '../models/category.model';
 import { ImageService } from '../services/image.service';
 import { jwtDecode } from 'jwt-decode';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-program',
@@ -27,7 +28,8 @@ export class CreateProgramComponent implements OnInit {
     private categoryService:CategoryService,
     private programService:ProgramService,
     private imageService:ImageService,
-    private snackBar: MatSnackBar,) { }
+    private snackBar: MatSnackBar,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.programForm = this.fb.group({
@@ -89,6 +91,7 @@ export class CreateProgramComponent implements OnInit {
         duration: 3000,
       });
       console.log('Program created successfully:', result);
+      this.router.navigateByUrl('/');
     }); 
   }
 
