@@ -19,7 +19,7 @@ public class LogService {
     public void log(LogType type, String log){
         LogEntity logEntity = new LogEntity();
         logEntity.setDate(new Date());
-        logEntity.setType(type);
+        logEntity.setType(type.toString());
         logEntity.setDescription(log);
         this.logRepository.save(logEntity);
     }

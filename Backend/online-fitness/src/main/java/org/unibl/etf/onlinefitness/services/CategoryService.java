@@ -14,6 +14,6 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public List<CategoryEntity> findAll(){
-        return categoryRepository.findAll();
+        return categoryRepository.findAllByStatus(true);
     }
 }

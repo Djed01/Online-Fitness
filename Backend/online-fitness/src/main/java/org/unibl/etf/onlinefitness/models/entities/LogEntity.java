@@ -22,6 +22,6 @@ public class LogEntity {
     private Date date;
     @Basic
     @Column(name = "Type")
-    private LogType type;
+    private String type;
 
 }
