@@ -7,6 +7,7 @@ import org.unibl.etf.onlinefitness.models.dto.AttributeDTO;
 import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
 import org.unibl.etf.onlinefitness.models.entities.CategoryAttributeEntity;
 import org.unibl.etf.onlinefitness.models.entities.ProgramEntity;
+import org.unibl.etf.onlinefitness.models.enumeration.LogType;
 import org.unibl.etf.onlinefitness.repositories.ProgramRepository;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class ProgramService {
     private ProgramRepository programRepository;
 
     private ModelMapper modelMapper;
+    private LogService logService;
 
     public ProgramService(ProgramRepository programRepository, ModelMapper modelMapper){
         this.programRepository = programRepository;
@@ -69,6 +71,7 @@ public class ProgramService {
             programRepository.save(programEntity);
             return modelMapper.map(programEntity, ProgramDTO.class);
         } else {
+            logService.log(LogType.INFO,"No log service with the provided id found!");
             //Program not found
             return null;
         }

@@ -20,9 +20,11 @@ import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
 import org.unibl.etf.onlinefitness.models.dto.UserDTO;
 import org.unibl.etf.onlinefitness.models.entities.TokenEntity;
 import org.unibl.etf.onlinefitness.models.entities.UserEntity;
+import org.unibl.etf.onlinefitness.models.enumeration.LogType;
 import org.unibl.etf.onlinefitness.repositories.TokenRepository;
 import org.unibl.etf.onlinefitness.repositories.UserRepository;
 import org.unibl.etf.onlinefitness.services.EmailService;
+import org.unibl.etf.onlinefitness.services.LogService;
 import org.unibl.etf.onlinefitness.services.TokenService;
 import org.unibl.etf.onlinefitness.services.UserService;
 
@@ -40,6 +42,7 @@ public class AuthService {
     private final EmailService emailService;
     private final ModelMapper modelMapper;
     private final UserService userService;
+    private final LogService logService;
 
 
     public UserEntity signup(SignUpRequestDTO signUpRequest) {
@@ -52,7 +55,7 @@ public class AuthService {
         user.setEmail(signUpRequest.getEmail());
         user.setActivationStatus(false);
         user.setStatus(true);
-        user.setRole("Rola");
+        user.setRole("ROLE_USER");
         userRepository.save(user);
         TokenEntity tokenEntity = generateToken(user);
         tokenRepository.save(tokenEntity);
@@ -70,9 +73,11 @@ public class AuthService {
                 var jwt = jwtService.generateToken(user);
                 return TokenDTO.builder().token(jwt).build();
             } else {
+                logService.log(LogType.INFO,"Account not activated!");
                 throw new NotActivatedException("Account not activated!");
             }
         }catch (AuthenticationException e){
+            logService.log(LogType.INFO,"Invalid username or password.");
             throw new BadCredentialsException("Invalid username or password.");
         }
     }

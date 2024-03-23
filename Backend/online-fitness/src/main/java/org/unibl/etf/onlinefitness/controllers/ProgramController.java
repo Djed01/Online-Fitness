@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.onlinefitness.models.dto.ProgramDTO;
 import org.unibl.etf.onlinefitness.models.entities.ProgramEntity;
+import org.unibl.etf.onlinefitness.models.enumeration.LogType;
+import org.unibl.etf.onlinefitness.services.LogService;
 import org.unibl.etf.onlinefitness.services.ProgramService;
 
 import java.util.List;
@@ -14,9 +16,11 @@ import java.util.List;
 @RequestMapping("api/program")
 public class ProgramController {
     private ProgramService programService;
+    private LogService logService;
 
-    public ProgramController(ProgramService programService){
+    public ProgramController(ProgramService programService, LogService logService){
         this.programService = programService;
+        this.logService = logService;
     }
 
     @GetMapping
@@ -60,6 +64,7 @@ public class ProgramController {
             programService.deleteProgram(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
+            logService.log(LogType.ERROR,"Error occurred while deleting program!");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting program: " + e.getMessage());
         }
     }

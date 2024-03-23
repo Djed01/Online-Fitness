@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.unibl.etf.onlinefitness.models.dto.ActivityDTO;
 import org.unibl.etf.onlinefitness.models.dto.CommentDTO;
 import org.unibl.etf.onlinefitness.models.dto.PdfDTO;
+import org.unibl.etf.onlinefitness.models.enumeration.LogType;
 import org.unibl.etf.onlinefitness.services.ActivityService;
+import org.unibl.etf.onlinefitness.services.LogService;
 import org.unibl.etf.onlinefitness.services.PdfService;
 
 import java.io.IOException;
@@ -22,6 +24,7 @@ import java.util.List;
 public class ActivityController {
     private final ActivityService activityService;
     private final PdfService pdfService;
+    private final LogService logService;
 
     @GetMapping("/{id}")
     public List<ActivityDTO> getAllActivitiesByUserId(@PathVariable Integer id) {
@@ -38,6 +41,7 @@ public class ActivityController {
         try {
             activityService.deleteActivity(id);
         }catch (Exception e){
+            logService.log(LogType.ERROR,"Error occurred while deleting activity!");
             e.printStackTrace();
         }
     }

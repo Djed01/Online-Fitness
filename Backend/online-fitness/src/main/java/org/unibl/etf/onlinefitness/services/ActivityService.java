@@ -8,6 +8,7 @@ import org.unibl.etf.onlinefitness.models.dto.ActivityDTO;
 import org.unibl.etf.onlinefitness.models.dto.MessageDTO;
 import org.unibl.etf.onlinefitness.models.entities.ActivityEntity;
 import org.unibl.etf.onlinefitness.models.entities.UserEntity;
+import org.unibl.etf.onlinefitness.models.enumeration.LogType;
 import org.unibl.etf.onlinefitness.repositories.ActivityRepository;
 
 
@@ -22,6 +23,7 @@ public class ActivityService {
 
     private final ActivityRepository activityRepository;
     private final ModelMapper modelMapper;
+    private final LogService logService;
 
     public List<ActivityDTO> getAllActivityByUserId(Integer id){
         List<ActivityEntity> entities = activityRepository.findAllByUserIdAndStatus(id,true);
@@ -47,6 +49,7 @@ public class ActivityService {
             entity.setStatus(false);
             activityRepository.save(entity);
         }else{
+            logService.log(LogType.INFO,"No activity with provided ID!");
             throw new Exception("No activity with provided ID!");
         }
     }

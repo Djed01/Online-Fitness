@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.unibl.etf.onlinefitness.models.dto.PdfDTO;
 import org.unibl.etf.onlinefitness.models.entities.ActivityEntity;
 import org.unibl.etf.onlinefitness.models.entities.BodyWeightEntity;
+import org.unibl.etf.onlinefitness.models.enumeration.LogType;
 import org.unibl.etf.onlinefitness.repositories.ActivityRepository;
 import org.unibl.etf.onlinefitness.repositories.BodyWeightRepository;
 
@@ -23,6 +24,7 @@ public class PdfService {
 
     private final ActivityRepository activityRepository;
     private final BodyWeightRepository bodyWeightRepository;
+    private final LogService logService;
 
     public PdfDTO generatePDFByUserId(Integer userId) {
         try (PDDocument document = new PDDocument()) {
@@ -50,6 +52,7 @@ public class PdfService {
 
             return new PdfDTO("Activity_" + userId, byteArrayOutputStream.toByteArray());
         } catch (IOException e) {
+            logService.log(LogType.ERROR,"Error occurred while creating PDF!");
             e.printStackTrace(); // Consider handling the exception more gracefully
         }
         return null;

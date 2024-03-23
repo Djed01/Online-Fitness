@@ -2,8 +2,9 @@ package org.unibl.etf.onlinefitness.models.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.unibl.etf.onlinefitness.models.enumeration.LogType;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @Entity
@@ -21,6 +22,6 @@ public class LogEntity {
     private Date date;
     @Basic
     @Column(name = "Type")
-    private String type;
+    private LogType type;
 
 }
