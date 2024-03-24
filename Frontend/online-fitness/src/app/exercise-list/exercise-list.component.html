@@ -1,4 +1,7 @@
 <h1 style="text-align: center;">Daily exercise suggestions</h1>
+<div class="spinner-container">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>
 <div class="exercise-container">
   <div class="exercise-card" *ngFor="let exercise of exercises">
     <div class="exercise-header">

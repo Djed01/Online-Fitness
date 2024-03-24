@@ -34,8 +34,8 @@ export class AppComponent {
   }
 
   logout(): void {
-    localStorage.removeItem('token'); // Remove token from local storage
-    this.isLoggedIn = false; // Update login status
+    localStorage.removeItem('token'); 
+    this.isLoggedIn = false; 
     this.router.navigateByUrl('/');
   }
 }

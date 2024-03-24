@@ -22,3 +22,10 @@
 .exercise-content {
   padding: 10px;
 }
+
+
+.spinner-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -8,27 +8,27 @@
   </div>
   
   <div mat-dialog-content class="form-container">
-    <form [formGroup]="profileForm" (ngSubmit)="submitRegisterForm()" class="form-container">
+    <form #registerForm="ngForm" (ngSubmit)="submitRegisterForm()" class="form-container">
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name">
+        <input matInput placeholder="Name" name="name" [(ngModel)]="profileForm.name" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Surname" formControlName="surname">
+        <input matInput placeholder="Surname" name="surname" [(ngModel)]="profileForm.surname" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="City" formControlName="city">
+        <input matInput placeholder="City" name="city" [(ngModel)]="profileForm.city" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Username" formControlName="username">
+        <input matInput placeholder="Username" name="username" [(ngModel)]="profileForm.username" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Password" formControlName="password">
+        <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="profileForm.password" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Reenter Password" formControlName="repeatPassword">
+        <input matInput type="password" placeholder="Reenter Password" name="repeatPassword" [(ngModel)]="profileForm.repeatPassword" required>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Email" formControlName="email">
+        <input matInput placeholder="Email" name="email" [(ngModel)]="profileForm.email" required email>
       </mat-form-field>
       <div>
         <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none;" #fileInput>
@@ -36,12 +36,13 @@
           <i class="fa-solid fa-image"></i> Upload avatar
         </button>
       </div>
-      <mat-error *ngIf="profileForm.get('password')?.value !== profileForm.get('repeatPassword')?.value">
+      <mat-error *ngIf="profileForm.password !== profileForm.repeatPassword">
         Passwords do not match
       </mat-error>
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit">Register</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.form.valid">Register</button>
       </div>
     </form>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate" style="margin-top: 10px;"></mat-progress-bar>
   </div>
 </div>

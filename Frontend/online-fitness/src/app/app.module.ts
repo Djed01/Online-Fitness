@@ -42,6 +42,8 @@ import { AddActivityDialogComponent } from './add-activity-dialog/add-activity-d
 import { AddWeightDialogComponent } from './add-weight-dialog/add-weight-dialog.component';
 import { SubscriptionComponent } from './subscription/subscription.component';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,9 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCheckboxModule,
     MatDialogModule,
     NgxChartsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     provideAnimationsAsync()

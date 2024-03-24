@@ -29,7 +29,7 @@ public class SubscriptionService {
     private final ModelMapper modelMapper;
 
     public List<SubscriptionDTO> getAllByUserId(Integer userId) {
-        List<CategoryEntity> categories = categoryRepository.findAll();
+        List<CategoryEntity> categories = categoryRepository.findAllByStatus(true);
         Map<Integer, Boolean> subscriptionMap = getSubscriptionMap(userId);
 
         List<SubscriptionDTO> subscriptions = new ArrayList<>();

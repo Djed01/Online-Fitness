@@ -23,6 +23,7 @@ export class CreateProgramComponent implements OnInit {
   attributes: CategoryAttribute[] = []; 
   selectedCategory!: Category;
   selectedFiles: File[] = [];
+  loading: boolean = false;
 
   constructor(private fb: FormBuilder,
     private categoryService:CategoryService,
@@ -56,6 +57,7 @@ export class CreateProgramComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.setCategoryAttributes();
     console.log(this.attributes);
     const formData = this.programForm.value;
@@ -64,12 +66,12 @@ export class CreateProgramComponent implements OnInit {
     };
 
     const token = localStorage.getItem('token');
-      // if(token){
-      //   const decodedToken: any = jwtDecode(token);
-      //   const userId = decodedToken.id;
-      //   if (userId) {
+    if(token){
+        const decodedToken: any = jwtDecode(token);
+        const userId = decodedToken.id;
+        if (userId) {
 
-    program.userId = 1; // KASNIJE DODATI ID KOSRINIKA
+    program.userId = userId; 
     program.categoryId = this.selectedCategory.id;
 
     //console.log('ATRIBUTI PRIJE SUBMITA:', this.attributes.map(attribute => attribute.name).join(','));
@@ -92,7 +94,9 @@ export class CreateProgramComponent implements OnInit {
       });
       console.log('Program created successfully:', result);
       this.router.navigateByUrl('/');
-    }); 
+    }).add(() => this.loading = false);
+  }
+}
   }
 
 

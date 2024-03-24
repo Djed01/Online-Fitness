@@ -158,7 +158,7 @@ public class Category extends HttpServlet {
 	    }
 
 
-	    response.sendRedirect(request.getContextPath());
+	    doGet(request, response);
 	}
 
 }

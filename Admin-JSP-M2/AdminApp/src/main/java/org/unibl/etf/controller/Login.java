@@ -1,5 +1,6 @@
 package org.unibl.etf.controller;
 
+import java.io.Console;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -55,10 +56,12 @@ public class Login extends HttpServlet {
 			LoginBean loginBean = (LoginBean)request.getSession().getAttribute("loginBean");
 			AdminDTO admin = loginBean.login(username, password);
 			if(admin.isLoggedIn()) {
+				System.out.println("Ulogovao se!");
 				HttpSession session = request.getSession();
 		    	session.setAttribute("admin", admin);
 		    	response.sendRedirect("Category");
 			}else {
+				System.out.println("Neispravna lozinka!");
 				response.sendRedirect("Login");
 			}
 		}else if (action != null && action.equals("logout")) {
