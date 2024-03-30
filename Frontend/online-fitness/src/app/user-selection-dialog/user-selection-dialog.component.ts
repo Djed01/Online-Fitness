@@ -28,9 +28,7 @@ export class UserSelectionDialogComponent {
 
   loadUsers() {
     this.userService.getAllUsers().subscribe(users => {
-      // Filter out users that are already in the inbox
       this.users = users.filter(user => !this.isUserInInbox(user));
-      // Filter out the current user
       this.users = this.users.filter(user => user.username !== this.currentUsername);
       this.filteredUsers = this.users;
     });

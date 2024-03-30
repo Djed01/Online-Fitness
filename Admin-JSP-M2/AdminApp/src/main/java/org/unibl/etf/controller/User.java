@@ -87,15 +87,9 @@ public class User extends HttpServlet {
 
 	        // Update the category
 	        UserBean userBean = (UserBean) request.getSession().getAttribute("userBean");
-	        boolean success = userBean.updateUser(userDTO);
+	        userBean.updateUser(userDTO);
 
-	        if (success) {
-	            // Category updated successfully
-	            // Redirect or set a success message as needed
-	        } else {
-	            // Category update failed
-	            // Redirect or set an error message as needed
-	        }
+
 	    }
 	    
 	    response.sendRedirect(request.getContextPath() + "/User");

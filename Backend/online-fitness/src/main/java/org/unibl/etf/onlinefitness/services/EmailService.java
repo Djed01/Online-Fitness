@@ -28,7 +28,6 @@ public class EmailService {
             mailSender.send(message);
         } catch (MessagingException e) {
             logService.log(LogType.ERROR,"Error occurred while sending activation email account!");
-            // Handle exception
             e.printStackTrace();
         }
     }

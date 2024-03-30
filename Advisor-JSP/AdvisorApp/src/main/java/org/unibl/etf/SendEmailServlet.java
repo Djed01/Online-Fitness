@@ -84,8 +84,8 @@ public class SendEmailServlet extends HttpServlet {
         // Get the uploaded file
         Part filePart = request.getPart("attachment");
 
-        final String username = "manastiri1389@gmail.com"; // your email id
-        final String password = "zzcokloxmqoitfjd"; // your password
+        final String username = "manastiri1389@gmail.com"; 
+        final String password = "zzcokloxmqoitfjd"; 
         Properties props = new Properties();
         props.put("mail.smtp.auth", true);
         props.put("mail.smtp.starttls.enable", true);
@@ -101,7 +101,7 @@ public class SendEmailServlet extends HttpServlet {
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username)); // Your email address
+            message.setFrom(new InternetAddress(username)); 
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); // User's email address
             MimeBodyPart textPart = new MimeBodyPart();
             Multipart multipart = new MimeMultipart();

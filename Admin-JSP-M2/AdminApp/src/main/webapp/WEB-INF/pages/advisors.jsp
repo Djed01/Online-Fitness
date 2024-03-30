@@ -71,7 +71,7 @@
                                     <input type="hidden" name="advisorId" value="<%= advisor.getId() %>">
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
                                 </form>
-                                <!-- Add delete form here -->
+                               
                             </td>
                         </tr>
                     <% } %>

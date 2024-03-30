@@ -45,6 +45,7 @@ export class UserProgramsComponent {
     console.log("OP BRISEM ");
     this.programService.deleteProgram(id).subscribe((response)=>{
       console.log(response);
+      this.loadPrograms(); 
     })
   }
 

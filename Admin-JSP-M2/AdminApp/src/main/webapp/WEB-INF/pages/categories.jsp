@@ -45,7 +45,7 @@
         // Function to close attribute list modal when edit attribute modal is closed
         document.querySelectorAll('.edit-attribute-modal').forEach(modal => {
             modal.addEventListener('hidden.bs.modal', function () {
-                // No need to implement anything here since the modal is already closed before opening another modal
+              
             });
         });
     });
@@ -63,8 +63,6 @@
     function submitAddCategoryForm() {
         // Handle form submission for adding a new category
         var categoryName = document.getElementById("newCategoryName").value;
-        // Perform any additional validation if needed
-        // Submit the form using AJAX or let it submit normally
     }
     
     function openAddAttributeModal(categoryId) {
@@ -77,12 +75,8 @@
 
 
     function submitAddAttributeForm() {
-        // Handle form submission for adding a new attribute
          var attributeName = document.getElementById("newAttributeName").value;
-    	 var categoryId = document.getElementById("categoryId").value; // Corrected line
-    	//console.log("CategoryID="+categoryId);
-        // Perform any additional validation if needed
-        // Submit the form using AJAX or let it submit normally
+    	 var categoryId = document.getElementById("categoryId").value; 
     }
 </script>
     
@@ -246,9 +240,6 @@
                                     <label for="editAttributeName" class="form-label">Attribute Name</label>
                                     <input type="text" class="form-control" id="editAttributeName" name="editAttributeName" value="<%= attribute.getName() %>">
                                 </div>
-          var attributeName = document.getElementById("newAttributeName").value;
-    var categoryId = document.getElementById("categoryId").value; // Corrected line
-                           <!-- Add other fields for updating category attributes if needed -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Save changes</button>

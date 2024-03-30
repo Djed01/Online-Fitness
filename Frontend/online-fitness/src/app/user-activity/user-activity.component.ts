@@ -42,7 +42,7 @@ export class UserActivityComponent implements OnInit {
     const token = localStorage.getItem('token');
     if (token) {
       const decodedToken: any = jwtDecode(token);
-      this.userId = decodedToken.id;// Move this here
+      this.userId = decodedToken.id;
       if (this.userId) {
         this.activityService.getActivities(this.userId).subscribe(activities => {
           console.log("ACTIVITIES:"+activities);
@@ -92,7 +92,7 @@ export class UserActivityComponent implements OnInit {
   openAddWeightDialog() {
     const dialogRef = this.dialog.open(AddWeightDialogComponent, {});
     dialogRef.componentInstance.weightAdded.subscribe((addedWeight) => {
-      if (addedWeight) { // Check if addedWeight is not undefined
+      if (addedWeight) { 
         this.weightData.push(addedWeight);
         if(this.userId)
         this.fetchWeightData(this.userId);
@@ -106,15 +106,15 @@ export class UserActivityComponent implements OnInit {
 
 
   downloadPdf(event: Event) {
-    event.preventDefault(); // Prevent default behavior of anchor element
-    const userId = this.userId; // Replace with actual user ID
+    event.preventDefault(); 
+    const userId = this.userId; 
     const url = `http://localhost:8080/api/activity/pdf/${userId}`;
     this.http.get(url, { responseType: 'blob' }).subscribe(response => {
       const blob = new Blob([response], { type: 'application/pdf' });
       const url = window.URL.createObjectURL(blob);
       const downloadLink = document.createElement('a');
       downloadLink.href = url;
-      downloadLink.download = 'activity_report.pdf'; // You can change the filename here
+      downloadLink.download = 'activity_report.pdf'; 
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);

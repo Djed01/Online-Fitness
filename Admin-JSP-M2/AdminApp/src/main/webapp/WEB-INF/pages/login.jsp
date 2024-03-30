@@ -10,7 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa; /* Light background */
+            background-color: #f8f9fa; 
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -29,7 +29,7 @@
         .login-container h2 {
             text-align: center;
             margin-bottom: 30px;
-            color: #007bff; /* Primary color */
+            color: #007bff; 
         }
 
         .form-group {
@@ -45,7 +45,7 @@
         }
 
         .form-control {
-            padding-left: 40px; /* Adjust padding to accommodate icon */
+            padding-left: 40px; 
             border-radius: 20px;
             padding: 15px;
             padding-left: 40px;
@@ -61,7 +61,7 @@
         }
 
         .btn-primary:hover {
-            background-color: #0056b3; /* Darker hover color */
+            background-color: #0056b3;
         }
     </style>
 </head>

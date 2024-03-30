@@ -51,7 +51,7 @@ export class ProgramsComponent implements OnInit {
         if (program.images && program.images.length > 0 && program.images[0].id) {
           return this.imageService.downloadImage(program.images[0].id);
         } else {
-          return of(this.photo); // Use a default photo if no image is available
+          return of(this.photo); // Default photo if no image is available
         }
       });
   
@@ -154,11 +154,9 @@ export class ProgramsComponent implements OnInit {
               duration: 3000,
             });
             console.log('Activation successful:', response);
-            // Optionally, you can redirect the user to another page after activation
           },
           error => {
             console.error('Error occurred during activation:', error);
-            // Handle error as needed
           }
         );
       }

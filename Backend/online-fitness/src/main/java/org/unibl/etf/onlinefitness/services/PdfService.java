@@ -53,7 +53,7 @@ public class PdfService {
             return new PdfDTO("Activity_" + userId, byteArrayOutputStream.toByteArray());
         } catch (IOException e) {
             logService.log(LogType.ERROR,"Error occurred while creating PDF!");
-            e.printStackTrace(); // Consider handling the exception more gracefully
+            e.printStackTrace();
         }
         return null;
     }

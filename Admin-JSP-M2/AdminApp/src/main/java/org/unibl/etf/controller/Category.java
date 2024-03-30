@@ -63,34 +63,21 @@ public class Category extends HttpServlet {
 	    if (action != null && action.equals("delete")) {
 	        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
 	        CategoryBean categoryBean = (CategoryBean) request.getSession().getAttribute("categoryBean");
-	        boolean success = categoryBean.deleteCategory(categoryId);
-	        if (success) {
-	        	System.out.println("\n\n\nDeleted!\n\n\n");
-	            // TODO Success
-	        } else {
-	        	System.out.println("\n\n\nNot Deleted!\n\n\n");
-	            // TODO Error
-	        }
+	        categoryBean.deleteCategory(categoryId);
+
 	    }else if (action != null && action.equals("update")) {
 	        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
 	        String categoryName = request.getParameter("editCategoryName");
 
-	        // Construct a Category object with updated values
+
 	        CategoryDTO updatedCategory = new CategoryDTO();
 	        updatedCategory.setId(categoryId);
 	        updatedCategory.setName(categoryName);
 
 	        // Update the category
 	        CategoryBean categoryBean = (CategoryBean) request.getSession().getAttribute("categoryBean");
-	        boolean success = categoryBean.updateCategory(updatedCategory);
+	        categoryBean.updateCategory(updatedCategory);
 
-	        if (success) {
-	            // Category updated successfully
-	            // Redirect or set a success message as needed
-	        } else {
-	            // Category update failed
-	            // Redirect or set an error message as needed
-	        }
 	    }else if(action != null && action.equals("add")){
 	    	String categoryName = request.getParameter("newCategoryName");
 	    	
@@ -98,26 +85,13 @@ public class Category extends HttpServlet {
 	    	newCategory.setName(categoryName);
 	    	// Add the category
 	        CategoryBean categoryBean = (CategoryBean) request.getSession().getAttribute("categoryBean");
-	        boolean success = categoryBean.insertCategory(newCategory);
-	        if (success) {
-	            // Category added successfully
-	            // Redirect or set a success message as needed
-	        } else {
-	            // Category add failed
-	            // Redirect or set an error message as needed
-	        }
+	        categoryBean.insertCategory(newCategory);
 	    	
 	    }else if (action != null && action.equals("delete_attribute")) {
 	    	int attributeId = Integer.parseInt(request.getParameter("attributeId"));
 	    	AttributeBean attributeBean = (AttributeBean) request.getSession().getAttribute("attributeBean");
-	    	boolean success = attributeBean.deleteAttribute(attributeId);
-	        if (success) {
-	        	System.out.println("\n\n\nDeleted!\n\n\n");
-	            // TODO Success
-	        } else {
-	        	System.out.println("\n\n\nNot Deleted!\n\n\n");
-	            // TODO Error
-	        }
+	    	attributeBean.deleteAttribute(attributeId);
+	    	
 	    }else if (action != null && action.equals("update_attribute")) {
 	    	int attributeId = Integer.parseInt(request.getParameter("attributeId"));
 	    	String attributeName = request.getParameter("editAttributeName");
@@ -127,15 +101,8 @@ public class Category extends HttpServlet {
 	    	updatedAttribute.setName(attributeName);
 	    	
 	    	AttributeBean attributeBean = (AttributeBean) request.getSession().getAttribute("attributeBean");
-	        boolean success = attributeBean.updateAttribute(updatedAttribute);
+	        attributeBean.updateAttribute(updatedAttribute);
 	        
-	        if (success) {
-	            // Category updated successfully
-	            // Redirect or set a success message as needed
-	        } else {
-	            // Category update failed
-	            // Redirect or set an error message as needed
-	        }
 	    }else if(action != null && action.equals("add_attribute")){
 	    	String attributeName = request.getParameter("newAttributeName");
 	    	System.out.println("\n\n\n\n"+request.getParameter("categoryId")+"\n\n\n\n\n");
@@ -146,14 +113,7 @@ public class Category extends HttpServlet {
 	    	newAttribute.setCategoryId(categoryId);
 	    	// Add the category
 	        AttributeBean attributeBean = (AttributeBean) request.getSession().getAttribute("attributeBean");
-	        boolean success = attributeBean.insertAttribute(newAttribute);
-	        if (success) {
-	            // Category added successfully
-	            // Redirect or set a success message as needed
-	        } else {
-	            // Category add failed
-	            // Redirect or set an error message as needed
-	        }
+	        attributeBean.insertAttribute(newAttribute);
 	    	
 	    }
 

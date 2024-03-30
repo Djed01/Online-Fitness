@@ -69,12 +69,11 @@ export class ConcreteProgramComponent implements OnInit {
             },
               error => {
                 console.error('Error occurred during fetching images:', error);
-                // Handle error as needed
               }
             );
             }
           } else {
-            this.images.push(this.photo) // Set a default photo if no image is available
+            this.images.push(this.photo) // Default photo if no image is available
           }
           console.log(data);
           }
@@ -139,6 +138,7 @@ export class ConcreteProgramComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.checkParticipation();
     }); 
   }
 

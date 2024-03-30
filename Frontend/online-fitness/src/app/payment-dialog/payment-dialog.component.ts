@@ -42,7 +42,7 @@ export class PaymentDialogComponent {
           this.participation.programId = this.programId;
           this.participation.userId = userId;
           this.participationService.addParticipation(this.participation).subscribe((response)=>{
-          this.closeDialog();
+            this.closeDialog();
           });
         }
       }

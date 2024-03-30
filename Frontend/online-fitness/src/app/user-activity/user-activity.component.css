@@ -1,5 +1,5 @@
 .activity-container {
-  max-width: 900px; /* adjust as needed */
+  max-width: 900px; 
   margin: 0 auto;
 }
 
@@ -92,15 +92,15 @@
   overflow-y: auto;
 }
 
-/* Adjust chart size for smaller screens */
+
 @media screen and (max-width: 768px) {
   .activity-container {
-    max-width: 100%; /* Adjust container width for smaller screens */
+    max-width: 100%; 
   }
 
   .ngx-charts-bar-vertical {
-    width: 100%; /* Make the chart fill the container */
-    height: 300px; /* Adjust chart height for smaller screens */
+    width: 100%; 
+    height: 300px; 
   }
 }
 
@@ -116,15 +116,15 @@
   overflow-y: auto;
 }
 
-/* Adjust chart size for smaller screens */
+
 @media screen and (max-width: 768px) {
   .activity-container {
-    max-width: 100%; /* Adjust container width for smaller screens */
+    max-width: 100%; 
   }
 
   .ngx-charts-bar-vertical {
-    width: 100%; /* Make the chart fill the container */
-    height: 300px; /* Adjust chart height for smaller screens */
+    width: 100%; 
+    height: 300px; 
   }
 
   .activity-header {

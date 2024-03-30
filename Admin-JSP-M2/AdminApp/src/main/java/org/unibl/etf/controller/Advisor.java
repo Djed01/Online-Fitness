@@ -57,14 +57,8 @@ public class Advisor extends HttpServlet {
 	    if (action != null && action.equals("delete")) {
 	        int advisorId = Integer.parseInt(request.getParameter("advisorId"));
 	        AdvisorBean advisorBean = (AdvisorBean) request.getSession().getAttribute("advisorBean");
-	        boolean success = advisorBean.deleteAdvisor(advisorId);
-	        if (success) {
-	        	System.out.println("\n\n\nDeleted!\n\n\n");
-	            // TODO Success
-	        } else {
-	        	System.out.println("\n\n\nNot Deleted!\n\n\n");
-	            // TODO Error
-	        }
+	        advisorBean.deleteAdvisor(advisorId);
+
 	    }else if (action != null && action.equals("update")) {
 	        int advisorId = Integer.parseInt(request.getParameter("advisorId"));
 	        String username = request.getParameter("editAdvisorUsername");
@@ -82,15 +76,8 @@ public class Advisor extends HttpServlet {
 
 	        // Update the category
 	        AdvisorBean advisorBean = (AdvisorBean) request.getSession().getAttribute("advisorBean");
-	        boolean success = advisorBean.updateAdvisor(advisorDTO);
+	        advisorBean.updateAdvisor(advisorDTO);
 
-	        if (success) {
-	            // Category updated successfully
-	            // Redirect or set a success message as needed
-	        } else {
-	            // Category update failed
-	            // Redirect or set an error message as needed
-	        }
 	    }else if(action != null && action.equals("add")){
 	        String username = request.getParameter("newAdvisorUsername");
 	        String name = request.getParameter("newAdvisorName");
@@ -107,15 +94,8 @@ public class Advisor extends HttpServlet {
 	        advisorDTO.setPassword(password);
 	    	// Add the category
 	        AdvisorBean advisorBean = (AdvisorBean) request.getSession().getAttribute("advisorBean");
-	        boolean success = advisorBean.addNewAdvisor(advisorDTO);
-	        if (success) {
-	            // Category added successfully
-	            // Redirect or set a success message as needed
-	        } else {
-	            // Category add failed
-	            // Redirect or set an error message as needed
-	        }
-	    	
+	        advisorBean.addNewAdvisor(advisorDTO);
+
 	    }
 		
 		response.sendRedirect(request.getContextPath() + "/Advisor");

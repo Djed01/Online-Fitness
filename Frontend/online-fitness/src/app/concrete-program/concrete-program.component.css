@@ -6,20 +6,20 @@
   }
   
   .program-info {
-    max-width: 800px; /* Increase max-width for larger card */
+    max-width: 800px; 
     width: 90%;
     margin-top: 100px;
   }
   
   .program-card {
-    width: 100%; /* Set card width to 100% */
+    width: 100%; 
     margin-bottom: 20px;
   }
   
   .program-image {
     background-size: cover;
-    width: 120px; /* Increase image size */
-    height: 120px; /* Increase image size */
+    width: 120px; 
+    height: 120px;
     border-radius: 50%;
     margin-right: 10px;
   }

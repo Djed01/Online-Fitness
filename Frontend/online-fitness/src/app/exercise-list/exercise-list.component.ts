@@ -1,4 +1,3 @@
-// exercise-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ExerciseService } from '../services/exercise.service';
 import { Observable } from 'rxjs';

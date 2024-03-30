@@ -46,7 +46,7 @@ public class AvatarService {
         avatar.setUserId(userId);
         var avatarEntity =  modelMapper.map(avatar, AvatarEntity.class);
         avatarRepository.saveAndFlush(avatarEntity);
-        entityManager.refresh(avatarEntity);//dobio sam id od baze sada cuvamo na fajl sistemu
+        entityManager.refresh(avatarEntity);
         Files.write(Path.of(generatePath(avatarEntity)), file.getBytes());
         return avatarEntity.getId();
     }

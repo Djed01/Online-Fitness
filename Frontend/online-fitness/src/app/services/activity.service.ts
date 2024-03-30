@@ -28,7 +28,6 @@ export class ActivityService {
     return this.http.get<any[]>(`http://localhost:8080/api/body-weight/${id}`);
   }
 
-  // Mock function to add a new record of body weight
   addBodyWeightRecord(weight: number, id:number): Observable<any> {
     return this.http.post(`http://localhost:8080/api/body-weight/${id}`,weight);
   }

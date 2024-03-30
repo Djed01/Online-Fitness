@@ -83,10 +83,8 @@ export class ChatComponent {
       console.log(this.ownUsername);
       if (userId) {
         this.messageService.getMessagesByUserId(userId).subscribe((response) => {
-          // Assuming response is in the format you provided
           // Map messages to users
           this.users = this.mapMessagesToUsers(response);
-          //this.users = this.users.filter(user => user.username !== ownUsername);
           console.log(this.users);
         });
       }
@@ -145,7 +143,7 @@ export class ChatComponent {
                 })
               );
             } else {
-              return of(null); // Return a placeholder if no avatarId is available
+              return of(null); // Placeholder if no avatarId is available
             }
           })
         )
@@ -171,14 +169,14 @@ export class ChatComponent {
   openUserSelectionDialog(): void {
     const dialogRef = this.dialog.open(UserSelectionDialogComponent, {
       data: {
-        users: this.users, // Pass the users already in the inbox
-        currentUsername: this.ownUsername // Pass the current user's username
+        users: this.users, // Users already in the inbox
+        currentUsername: this.ownUsername // Current user's username
       }
     });
     
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      console.log(result); // Result will be the selected user
+      console.log(result); // Selected user
       if (result) {
         this.selectUser(result);
         this.avatarService.downloadAvatar(result.avatarId).subscribe(

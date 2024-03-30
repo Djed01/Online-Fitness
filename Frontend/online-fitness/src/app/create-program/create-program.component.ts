@@ -78,7 +78,7 @@ export class CreateProgramComponent implements OnInit {
     program.attributes = [];
     this.attributes.forEach(attribute => {
       const attributeControl = this.programForm.get(`attribute${attribute.id}`)!;
-      // Check if the checkbox is checked
+      // If the checkbox is checked
       if (attributeControl.value) {
         // If selected, add the attribute to the program's attributes array
         program.attributes.push(attribute);

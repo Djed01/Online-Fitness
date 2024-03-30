@@ -40,7 +40,7 @@
         Passwords do not match
       </mat-error>
       <div class="button-container">
-        <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.form.valid">Register</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.form.valid || loading">Register</button>
       </div>
     </form>
     <mat-progress-bar *ngIf="loading" mode="indeterminate" style="margin-top: 10px;"></mat-progress-bar>

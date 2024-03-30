@@ -10,7 +10,6 @@
     <mat-form-field class="half-width" style="margin-right: 4%;">
       <input matInput type="number" placeholder="Price ($)" formControlName="price">
     </mat-form-field>
-    <!-- Add image upload functionality here -->
     <mat-form-field class="half-width">
       <input matInput type="number" placeholder="Duration (min)" formControlName="duration">
     </mat-form-field>
@@ -35,7 +34,6 @@
     <mat-form-field class="full-width">
       <input matInput placeholder="Instructor Contact" formControlName="instructorContact">
     </mat-form-field>
-    <!-- Creation date is automatically set -->
     <mat-form-field class="full-width">
       <mat-select placeholder="Category" formControlName="categoryName" (selectionChange)="setCategoryAttributes()">
         <mat-option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</mat-option>
@@ -55,9 +53,8 @@
         <i class="fa-solid fa-image"></i> Upload images
       </button>
     </div>
-    <!-- User ID is usually handled on the backend -->
     <div class="submit-button-container">
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="loading">Submit</button>
     </div>
     <mat-progress-bar *ngIf="loading" mode="indeterminate" style="margin-top: 20px;"></mat-progress-bar>
   </form>

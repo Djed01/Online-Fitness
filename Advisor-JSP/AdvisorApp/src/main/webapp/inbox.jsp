@@ -8,8 +8,7 @@
 	if(advisor == null || !advisor.isLoggedIn()){
 		response.sendRedirect("login.jsp");
 	}
-    // Define function to update seen status directly in the JSP
-    // This function sends an AJAX request to update seen status and updates the icon on success
+    // Update seen status
     if ("seen".equals(request.getParameter("action"))) {
         int id = Integer.parseInt(request.getParameter("id"));
         QuestionBean questionBean = new QuestionBean();
@@ -85,7 +84,7 @@
         window.location.href = 'reply.jsp?userEmail=' + encodeURIComponent(userEmail);
     }
     
-    // JavaScript function to update the seen icon and send AJAX request to mark question as seen
+    // Update the seen icon and send AJAX request to mark question as seen
     function markAsSeen(questionId) {
         // Retrieve the current icon status
         var iconSpan = document.getElementById("seenIcon" + questionId);
@@ -95,7 +94,7 @@
         if (!isSeen) {
             $.ajax({
                 type: "GET",
-                url: "inbox.jsp", // Replace with your servlet or controller URL
+                url: "inbox.jsp",
                 data: {
                     action: "seen",
                     id: questionId
@@ -111,7 +110,7 @@
         }
     }
 
-    // JavaScript function to update the seen icon
+    // Update the seen icon
     function updateSeenIcon(questionId, seen) {
         var iconSpan = document.getElementById("seenIcon" + questionId);
         if (seen) {

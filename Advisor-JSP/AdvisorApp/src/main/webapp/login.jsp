@@ -11,21 +11,20 @@
 	    String password = request.getParameter("password");
 	    String errorMessage = "";
 	
-	    // Check if the form has been submitted
+
 	    if (request.getMethod().equals("POST")) {
-	        // Perform login process using AdvisorBean
+
 	        AdvisorBean advisorBean = new AdvisorBean();
 	        AdvisorDTO advisorDTO = advisorBean.login(username, password);
 	
-	        // Check login result
+
 	        if (advisorDTO != null && advisorDTO.isLoggedIn()) {
 	        	System.out.println("IMA");
 	        	session.setAttribute("advisor", advisorDTO);
-	            // Redirect to success page or perform any other action
+	            // Redirect to inbox page
 	            response.sendRedirect("inbox.jsp");
 	        } else {
 	        	System.out.println("NEMA");
-	            // Set error message
 	            errorMessage = "Invalid username or password";
 	        }
 	    }
@@ -42,7 +41,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa; /* Light background */
+            background-color: #f8f9fa; 
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -61,7 +60,7 @@
         .login-container h2 {
             text-align: center;
             margin-bottom: 30px;
-            color: #007bff; /* Primary color */
+            color: #007bff; 
         }
 
         .form-group {
@@ -77,7 +76,7 @@
         }
 
         .form-control {
-            padding-left: 40px; /* Adjust padding to accommodate icon */
+            padding-left: 40px; 
             border-radius: 20px;
             padding: 15px;
             padding-left: 40px;
@@ -93,7 +92,7 @@
         }
 
         .btn-primary:hover {
-            background-color: #0056b3; /* Darker hover color */
+            background-color: #0056b3; 
         }
     </style>
 </head>

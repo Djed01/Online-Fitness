@@ -1,12 +1,12 @@
 .form-container {
   display: flex;
   justify-content: center;
-  height: 100%; /* Adjust as needed */
+  height: 100%; 
 }
 
 .program-form {
-  width: 80%; /* Adjust as needed */
-  max-width: 600px; /* Adjust as needed */
+  width: 80%; 
+  max-width: 600px; 
 }
 
 .full-width {
@@ -14,7 +14,7 @@
 }
 
 .half-width {
-  width: 48%; /* Adjust as needed */
+  width: 48%; 
   display: inline-block;
 }
 
