@@ -1,6 +1,8 @@
 # Online-Fitness
 Projektni zadatak iz predmeta Internet programiranje
 
+Detaljna specifikacija se može pročitati u <a href="https://github.com/Djed01/Online-Fitness/blob/main/IP%20Projektni%202023.pdf" target="_blank">.pdf fajlu</a>
+
 ![](https://github.com/Djed01/Online-Fitness/blob/main/Backend/online-fitness/src/main/resources/demo/Screenshot_2024-04-15_21-13-52.png)
 
 ![](https://github.com/Djed01/Online-Fitness/blob/main/Backend/online-fitness/src/main/resources/demo/Screenshot_2024-04-15_21-14-29.png)
